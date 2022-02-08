@@ -1,5 +1,4 @@
-package nl.maastrichtuniversity.dke.gamecontrollersample;
-
+package project_group11;
 import javax.swing.*;
 import java.awt.*;
 
