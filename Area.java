@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nl.maastrichtuniversity.dke.gamecontrollersample;
+// package nl.maastrichtuniversity.dke.gamecontrollersample;
 
 /**
  *
@@ -43,4 +43,9 @@ public class Area {
     public boolean isHit(double x,double y,double radius){
         return false;
     }
+
+    public int getTopBoundry(){ return topBoundary;}
+    public int getBottomBoundary(){ return bottomBoundary;}
+    public int getLeftBoundry(){ return leftBoundary;}
+    public int getRightBoundry(){ return rightBoundary;}
 }

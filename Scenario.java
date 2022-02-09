@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nl.maastrichtuniversity.dke.gamecontrollersample;
+//package nl.maastrichtuniversity.dke.gamecontrollersample;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -42,6 +42,7 @@ public class Scenario {
     protected ArrayList<Area> walls;
     protected ArrayList<TelePortal> teleports;
     protected ArrayList<Area> shaded;
+    protected ArrayList<ArrayList<Integer>> map;
     
     public Scenario(String mapFile){
         // set parameters
@@ -54,7 +55,7 @@ public class Scenario {
         
         // read scenario
         filePath = Paths.get(mapDoc); // get path
-        System.out.println(filePath);
+        System.out.println("file path is: "+ filePath);
         readMap();
     }
     
@@ -66,6 +67,7 @@ public class Scenario {
         }
         catch(Exception e)
         {
+            System.out.println("Please input the file.");
         }
     }
     
@@ -145,6 +147,7 @@ public class Scenario {
                     case "texture":
                         // still to do. First the coordinates, then an int with texture type and then a double with orientation
                 }
+                map = new ArrayList<>(mapHeight);
             }
         }
     }  
@@ -177,7 +180,7 @@ public class Scenario {
     
     public double[][] spawnGuards(){
         double[][] tmp = new double[numGuards][4];
-        double dx=spawnAreaGuards.rightBoundary-spawnAreaGuards.rightBoundary;
+        double dx=spawnAreaGuards.rightBoundary-spawnAreaGuards.leftBoundary;
         double dy=spawnAreaGuards.topBoundary-spawnAreaGuards.bottomBoundary;
         for(int i=0; i<numGuards; i++){
             tmp[i][0]=spawnAreaGuards.leftBoundary+Math.random()*dx;
@@ -189,7 +192,7 @@ public class Scenario {
 
     public double[][] spawnIntruders(){
         double[][] tmp = new double[numIntruders][4];
-        double dx=spawnAreaIntruders.rightBoundary-spawnAreaIntruders.rightBoundary;
+        double dx=spawnAreaIntruders.rightBoundary-spawnAreaIntruders.leftBoundary;
         double dy=spawnAreaIntruders.topBoundary-spawnAreaIntruders.bottomBoundary;
         for(int i=0; i<numIntruders; i++){
             tmp[i][0]=spawnAreaIntruders.leftBoundary+Math.random()*dx;
