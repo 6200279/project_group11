@@ -11,6 +11,8 @@ public class AreaComponent extends JComponent {
     ArrayList<TelePortal>telePortals = scenario.teleports ;
     ArrayList<Area>shaded = scenario.shaded ;
 
+
+
     public void paintComponent(Graphics g) {
 
         for (int i = 0; i < walls.size(); i++) {
@@ -117,4 +119,6 @@ public class AreaComponent extends JComponent {
 
 
     }
+
+
 }
