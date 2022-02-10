@@ -67,4 +67,28 @@ public class Block {
         else if(isPortal) return "portal";
         else return "floor";
     }
+
+    public ArrayList<Block> getMyNeighbours(ArrayList<ArrayList<Block>> gridMap){
+        ArrayList<Block> neighbours = new ArrayList<>();
+        if(isPortal){
+            neighbours.add(tlpTarget);
+            return neighbours;
+        }
+        for(int i=x-1; i <=x+1; i++){
+            for(int j=y-1; j<=y+1; j++){
+                 if(i<0 || j<0 || i>=gridMap.size() ||j>=gridMap.get(0).size()|| (i==x&&j==y)){
+                     continue;
+                 }
+                 Block neighbour = gridMap.get(i).get(j);
+                 if(neighbour.getIsWall()){
+                     continue;
+                 }
+                else{
+                    neighbours.add(neighbour);
+                }
+            }
+        }
+        return neighbours;
+    }
+
 }

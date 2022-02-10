@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-import javax.swing.SortingFocusTraversalPolicy;
 
 // import nl.maastrichtuniversity.dke.gamecontrollersample.Area;
 // import nl.maastrichtuniversity.dke.gamecontrollersample.TelePortal;
@@ -13,27 +12,23 @@ public class Grid {
 
     public static void main(String[] args) {
        Grid g= new Grid(8,8);
-       g.gridMap.get(3).get(4).setIsWall(true);
-       g.gridMap.get(4).get(4).setIsWall(true);
-       g.gridMap.get(5).get(4).setIsWall(true);
-       g.gridMap.get(6).get(4).setIsWall(true);
-       g.gridMap.get(3).get(6).makePortal(g.gridMap.get(7).get(7));
-       g.gridMap.get(2).get(4).setPlayerOnBlock(new Player(g.gridMap.get(2).get(4)));
        
+       g.buildWall(3,4,7,4);
+       g.buildWall(0,1,6,1);
+       g.buildPortal(4,2,2,7);
+       
+       Player p1 = new Player(g.gridMap.get(0).get(0));
+       
+       g.gridMap.get(0).get(0).setPlayerOnBlock(p1);
        
        g.printGrid();
-       Player p1 = g.gridMap.get(2).get(4).getPlayerOnBlock();
-       ArrayList<Block> path= new ArrayList<>();
-       path.add(g.gridMap.get(1).get(4));
-       path.add(g.gridMap.get(1).get(5));
-       path.add(g.gridMap.get(1).get(6));
-       path.add(g.gridMap.get(1).get(7));
-       p1.walk(path, g.gridMap);
-    //    p1.move(g.gridMap.get(5).get(4));
-    //    System.out.println();
-    //    g.printGrid();
-    //    System.out.println();
-    //    p1.move(g.gridMap.get(3).get(6));
+
+       Block start = p1.location;
+       Block end = g.gridMap.get(7).get(7);
+       
+       ArrayList<Block> path2= new Path_Calculator(g.gridMap).BFS_Path(start,end);
+       
+       p1.walk(path2, g.gridMap);
        g.printGrid();
     }
 
@@ -53,13 +48,14 @@ public class Grid {
 
 
     public void printGrid(){
+        System.out.println();
         for(ArrayList<Block> row : gridMap){
             System.out.println();
             for(Block b: row){
                 if(b.getIsOccpied() && !b.getIsPortal()){ //if guard
                     System.out.print(" g ");
                 }
-                else if(b.getBlockType().equals("wall")){
+                else if(b.getIsWall()){
                     System.out.print(" w ");
                 }
                 else if(b.getIsPortal()){
@@ -99,5 +95,21 @@ public class Grid {
         double d = Math.sqrt(xDist+yDist);
         return d;
     }
+
+    public void buildWall(int x1,int y1,int x2,int y2){
+        for(int i=x1; i<=x2; i++){
+            for(int j=y1; j<=y2; j++){
+                gridMap.get(i).get(j).setIsWall(true);
+            }
+        }
+    }
+
+    public void buildPortal(int x1,int y1, int x2, int y2){
+        Block portal = gridMap.get(x1).get(y1);
+        Block target = gridMap.get(x2).get(y2);
+        portal.setIsPortal(true);
+        portal.setTlpTarget(target);
+    }
+
 }
 
