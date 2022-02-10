@@ -29,31 +29,7 @@ public final class terraingenerator
 
     private static final int DEFAULT_WIDTH = 120;
 
-    public static void main(String[] args)
-    {
 
-        int height = DEFAULT_HEIGHT;
-        int width = DEFAULT_WIDTH;
-        //long seed = System.currentTimeMillis();
-        long seed =100;
-        if (args.length == 3)
-        {
-            height = Integer.parseInt(args[0]);
-            width = Integer.parseInt(args[1]);
-            seed = Long.parseLong(args[2]);
-        }
-
-
-        Random rand = new Random(seed);
-        double z = rand.nextDouble();
-
-        JFrame window = new JFrame();
-        window.setSize(width * 7, height * 7);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().add(new Map(height, width, z));
-        window.setVisible(true);
-        window.setTitle("Seed: " + seed);
-    }
 
     static class MyCoord{
         private int X;
@@ -81,13 +57,14 @@ public final class terraingenerator
     }
 
 
-    public static class Map extends JPanel
+    public static class Map<Terrain_map> extends JPanel
     {
         Scenario scenario = new Scenario("testmap.txt");
         ArrayList<Area>walls = scenario.getWalls() ;
         ArrayList<TelePortal>telePortals = scenario.teleports ;
         ArrayList<Area>shaded = scenario.shaded ;
         HashMap<String, MyCoord> map = new HashMap<String,MyCoord>();
+
 
 
         private static int height;
@@ -103,6 +80,84 @@ public final class terraingenerator
             this.width = width;
             this.z = z;
         }
+        public  HashMap<String, MyCoord> Terrain_map (){
+        HashMap<String, MyCoord> Terrain = new HashMap<String, MyCoord>();
+         for (int i = 0; i < width; ++i)
+             { // y
+                for (int j = 0; j < height; ++j) { // x
+                    double x = (double) j / ((double) width);
+                    double y = (double) i / ((double) height);
+                    double n = noise(10 * x, 10 * y, z);
+
+
+            if (n < 0.25) {
+                // FOREST
+                Terrain.put( "FOREST", new MyCoord(j, i));
+
+
+            } else if (n >= 0.25 && n < 0.30) {
+               // HILLS
+                Terrain.put("HILLS", new MyCoord(j, i));
+            }
+            // DESERT
+            else if (n >= 0.30 && n < 0.40) {
+
+                Terrain.put("DESERT", new MyCoord(j, i));
+
+            } else if (n >= 0.40 && n < 0.5) {
+              //LAKE
+                Terrain.put("LAKE", new MyCoord(j, i));
+            } else if (n >= 0.5 && n < 0.70) {
+                // PLAINS
+                Terrain.put("PLAINS", new MyCoord(j, i));
+            } else if (n >= 0.70 && n < 0.75) {
+                // FOREST
+                Terrain.put("FOREST", new MyCoord(j, i));
+            }
+            // MOUNTAINS
+            else if (n >= 0.75 && n < 0.85) {
+
+                Terrain.put("MOUNTAINS", new MyCoord(j, i));
+            }
+            // Ice (or Snow)
+            else {
+
+                Terrain.put("SNOW", new MyCoord(j, i));
+            }
+        }
+    }
+    return Terrain;
+        }
+
+
+
+        public static void main(String[] args)
+        {
+
+            int height = DEFAULT_HEIGHT;
+            int width = DEFAULT_WIDTH;
+            //long seed = System.currentTimeMillis();
+            long seed =100;
+            if (args.length == 3)
+            {
+                height = Integer.parseInt(args[0]);
+                width = Integer.parseInt(args[1]);
+                seed = Long.parseLong(args[2]);
+            }
+
+
+
+            Random rand = new Random(seed);
+            double z = rand.nextDouble();
+
+            JFrame window = new JFrame();
+            window.setSize(width * 7, height * 7);
+            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            window.getContentPane().add(new Map(height, width, z));
+            window.setVisible(true);
+            window.setTitle("Seed: " + seed);
+        }
+
 
 
 
