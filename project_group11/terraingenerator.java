@@ -87,7 +87,8 @@ public final class terraingenerator
             this.width = width;
             this.z = z;
         }
-        public static  List<Point> Terrain_mapper (){
+        public static  List<Point> Terrain_mapper (String terrainTYPE){
+            List<Point> listempty = new ArrayList<>();
             List<Point> FOREST_points = new ArrayList<>();
             List<Point> HILLs_points = new ArrayList<>();
             List<Point> Desert_points = new ArrayList<>();
@@ -95,6 +96,7 @@ public final class terraingenerator
             List<Point> MOUNTAINS_points = new ArrayList<>();
             List<Point> PLAINS_points = new ArrayList<>();
             List<Point> SNOW_points = new ArrayList<>();
+
          for (int i = 0; i < width; ++i)
              { // y
                 for (int j = 0; j < height; ++j) { // x
@@ -106,7 +108,7 @@ public final class terraingenerator
             if (n < 0.25) {
                 // FOREST
                 FOREST_points.add(new Point(j,i));
-                System.out.println("forestpoints:"+FOREST_points.size());
+               // System.out.println("forestpoints:"+FOREST_points.size());
 
 
             } else if (n >= 0.25 && n < 0.30) {
@@ -136,14 +138,27 @@ public final class terraingenerator
             }
             // Ice (or Snow)
             else {
-
                 SNOW_points.add(new Point(j,i));
-                System.out.println("Snowpoints:"+SNOW_points.size());
+                //System.out.println("Snowpoints:"+SNOW_points.size());
             }
         }
     }
-
-       return SNOW_points; }
+    if(terrainTYPE == "SNOW")
+        return SNOW_points;
+    if (terrainTYPE== "PLAINS")
+        return PLAINS_points;
+    if (terrainTYPE== "LAKE")
+        return LAKE_points;
+    if(terrainTYPE == "MOUNTAINS")
+        return MOUNTAINS_points;
+    if (terrainTYPE == "FOREST")
+        return FOREST_points;
+    if (terrainTYPE== "HILLS")
+        return HILLs_points;
+    if (terrainTYPE == "DESERT")
+        return Desert_points;
+    else
+       return listempty; }
 
 
 
@@ -165,16 +180,31 @@ public final class terraingenerator
                 seed = Long.parseLong(args[2]);
             }
 
-            //List<Point>snowpoints = Terrain_mapper();
-            //System.out.println(snowpoints.size());
-
-            Map terrain = new Map(height, width, z);
-            List<Point> snow = Map.Terrain_mapper();
-            System.out.println(snow.size());
-
-
             Random rand = new Random(seed);
             double z = rand.nextDouble();
+
+            Map terrain = new Map(height, width, z);
+            List<Point> snow = Map.Terrain_mapper("SNOW");
+            List<Point> forest = Map.Terrain_mapper("FOREST");
+            List<Point> hills = Map.Terrain_mapper("HILLS");
+            List<Point> Mountains = Map.Terrain_mapper("MOUNTAINS");
+            List<Point> Desert = Map.Terrain_mapper("DESERT");
+            List<Point> Lake = Map.Terrain_mapper("LAKE");
+            List<Point> plains = Map.Terrain_mapper("PLAINS");
+
+
+
+
+            System.out.println("Amount of snowpoints:"+snow.size());
+            System.out.println("Amount of forest points:"+forest.size());
+            System.out.println("Amount of hills points:"+hills.size());
+            System.out.println("Amount of Mountains points:"+Mountains.size());
+            System.out.println("Amount of Desert points:"+Desert.size());
+            System.out.println("Amount of lake points:"+Lake.size());
+            System.out.println("Amount of plains points:"+plains.size());
+
+
+
 
             JFrame window = new JFrame();
             window.setSize(width * 7, height * 7);
