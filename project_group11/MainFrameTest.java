@@ -37,6 +37,15 @@ public class MainFrameTest {
         List<Point> Lake = terraingenerator.Map.Terrain_mapper("LAKE");
         List<Point> plains = terraingenerator.Map.Terrain_mapper("PLAINS");
 
+        System.out.println("BIOME TYPE :"+ biome);
+        System.out.println("Amount of snowpoints:"+snow.size());
+        System.out.println("Amount of forest points:"+forest.size());
+        System.out.println("Amount of hills points:"+hills.size());
+        System.out.println("Amount of Mountains points:"+Mountains.size());
+        System.out.println("Amount of Desert points:"+Desert.size());
+        System.out.println("Amount of lake points:"+Lake.size());
+        System.out.println("Amount of plains points:"+plains.size());
+
 
         JFrame frame = new JFrame();
         frame.setSize(120*scale, 80*scale);
