@@ -1,6 +1,7 @@
 package project_group11;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.util.Random;
 
 public class MainFrameTest {
@@ -25,14 +26,22 @@ public class MainFrameTest {
         Random rand = new Random(seed);
         double z = rand.nextDouble();
 
+        terraingenerator.Map terrain = new terraingenerator.Map(height, width, z);
+        List<Point> snow = terraingenerator.Map.Terrain_mapper("SNOW");
+        List<Point> forest = terraingenerator.Map.Terrain_mapper("FOREST");
+        List<Point> hills = terraingenerator.Map.Terrain_mapper("HILLS");
+        List<Point> Mountains = terraingenerator.Map.Terrain_mapper("MOUNTAINS");
+        List<Point> Desert = terraingenerator.Map.Terrain_mapper("DESERT");
+        List<Point> Lake = terraingenerator.Map.Terrain_mapper("LAKE");
+        List<Point> plains = terraingenerator.Map.Terrain_mapper("PLAINS");
 
 
         JFrame frame = new JFrame();
-        frame.setSize(120*7+25, 80*7+25);
+        frame.setSize(120*10, 80*10);
         frame.setTitle("Test");
         //AreaComponent ac = new AreaComponent() ;
 
-        frame.getContentPane().add(new terraingenerator.Map(height, width, z));
+        frame.getContentPane().add(terrain);
 
         //frame.getContentPane().add(ac) ;
 

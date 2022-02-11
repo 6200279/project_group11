@@ -1,19 +1,14 @@
 package project_group11;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Random;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import java.util.Objects;
 
 
 public final class terraingenerator
@@ -34,7 +29,7 @@ public final class terraingenerator
     private static final int DEFAULT_WIDTH = 120;
 
 
-
+// TODO hashmap is useless ill keep it in for now, use arraylist<point>
     static class MyCoord{
         private int X;
         private int Y;
@@ -61,12 +56,13 @@ public final class terraingenerator
     }
 
 
-    public static class Map<Terrain_map> extends JPanel
+    public static class Map extends JPanel
     {
 
 
 
         Scenario scenario = new Scenario("testmap.txt");
+
         ArrayList<Area>walls = scenario.getWalls() ;
         ArrayList<TelePortal>telePortals = scenario.teleports ;
         ArrayList<Area>shaded = scenario.shaded ;
@@ -398,9 +394,9 @@ public final class terraingenerator
             z -= Math.floor(z);
 
             // Compute fade curves for each of x, y, z
-            double u = fade(x);
-            double v = fade(y);
-            double w = fade(z);
+            double u = fading(x);
+            double v = fading(y);
+            double w = fading(z);
 
             // Hash coordinates of the 8 cube corners
             int A = p[X] + Y;
@@ -413,16 +409,16 @@ public final class terraingenerator
             // Add blended results from 8 corners of cube
             double res = lerp(
                     w,
-                    lerp(v, lerp(u, grad(p[AA], x, y, z), grad(p[BA], x - 1, y, z)),
-                            lerp(u, grad(p[AB], x, y - 1, z), grad(p[BB], x - 1, y - 1, z))),
-                    lerp(v, lerp(u, grad(p[AA + 1], x, y, z - 1), grad(p[BA + 1], x - 1, y, z - 1)),
-                            lerp(u, grad(p[AB + 1], x, y - 1, z - 1), grad(p[BB + 1], x - 1, y - 1, z - 1))));
+                    lerp(v, lerp(u, gradiant(p[AA], x, y, z), gradiant(p[BA], x - 1, y, z)),
+                            lerp(u, gradiant(p[AB], x, y - 1, z), gradiant(p[BB], x - 1, y - 1, z))),
+                    lerp(v, lerp(u, gradiant(p[AA + 1], x, y, z - 1), gradiant(p[BA + 1], x - 1, y, z - 1)),
+                            lerp(u, gradiant(p[AB + 1], x, y - 1, z - 1), gradiant(p[BB + 1], x - 1, y - 1, z - 1))));
             return (res + 1.0) / 2.0;
         }
 
-        private static double fade(double t)
+        private static double fading(double constant)
         {
-            return t * t * t * (t * (t * 6 - 15) + 10);
+            return constant * constant * constant * (constant * (constant * 6 - 15) + 10);
         }
 
         private static double lerp(double t, double a, double b)
@@ -430,10 +426,10 @@ public final class terraingenerator
             return a + t * (b - a);
         }
 
-        private static double grad(int hash, double x, double y, double z)
+        private static double gradiant(int hash, double x, double y, double z)
         {
-            int h = hash & 15; // CONVERT LO 4 BITS OF HASH CODE
-            double u = h < 8 ? x : y, // INTO 12 GRADIENT DIRECTIONS.
+            int h = hash & 15;
+            double u = h < 8 ? x : y,
                     v = h < 4 ? y : h == 12 || h == 14 ? x : z;
             return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
         }
