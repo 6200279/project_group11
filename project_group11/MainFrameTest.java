@@ -14,6 +14,7 @@ public class MainFrameTest {
     public static void main(String[] args) {
         int height = DEFAULT_HEIGHT;
         int width = DEFAULT_WIDTH;
+        int scale = 10; // scale the map size
         //long seed = System.currentTimeMillis();
         long seed =13515420;
         if (args.length == 3)
@@ -25,8 +26,9 @@ public class MainFrameTest {
 
         Random rand = new Random(seed);
         double z = rand.nextDouble();
-
-        terraingenerator.Map terrain = new terraingenerator.Map(height, width, z);
+        // BIOME TYPES include, GREEK, SAHARA
+        String biome = "GREEK";
+        terraingenerator.Map terrain = new terraingenerator.Map(height, width, z,scale, biome);
         List<Point> snow = terraingenerator.Map.Terrain_mapper("SNOW");
         List<Point> forest = terraingenerator.Map.Terrain_mapper("FOREST");
         List<Point> hills = terraingenerator.Map.Terrain_mapper("HILLS");
@@ -37,7 +39,7 @@ public class MainFrameTest {
 
 
         JFrame frame = new JFrame();
-        frame.setSize(120*10, 80*10);
+        frame.setSize(120*scale, 80*scale);
         frame.setTitle("Test");
         //AreaComponent ac = new AreaComponent() ;
 

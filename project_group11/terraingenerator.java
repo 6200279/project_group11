@@ -60,7 +60,7 @@ public final class terraingenerator
     {
 
 
-
+        private final int scale;
         Scenario scenario = new Scenario("testmap.txt");
 
         ArrayList<Area>walls = scenario.getWalls() ;
@@ -77,11 +77,15 @@ public final class terraingenerator
 
         private static double z;
 
-        public  Map(int height, int width, double z)
+        private static String BIOME;
+
+        public  Map(int height, int width, double z,int scale, String biome)
         {
             this.height = height;
             this.width = width;
             this.z = z;
+            this.BIOME = biome;
+            this.scale = scale;
         }
         public static  List<Point> Terrain_mapper (String terrainTYPE){
             List<Point> listempty = new ArrayList<>();
@@ -92,53 +96,102 @@ public final class terraingenerator
             List<Point> MOUNTAINS_points = new ArrayList<>();
             List<Point> PLAINS_points = new ArrayList<>();
             List<Point> SNOW_points = new ArrayList<>();
-
-         for (int i = 0; i < width; ++i)
-             { // y
-                for (int j = 0; j < height; ++j) { // x
-                    double x = (double) j / ((double) width);
-                    double y = (double) i / ((double) height);
-                    double n = noise(10 * x, 10 * y, z);
+if (BIOME == "GREEK") {
+    for (int i = 0; i < width; ++i) { // y
+        for (int j = 0; j < height; ++j) { // x
+            double x = (double) j / ((double) width);
+            double y = (double) i / ((double) height);
+            double n = noise(10 * x, 10 * y, z);
 
 
             if (n < 0.25) {
                 // FOREST
-                FOREST_points.add(new Point(j,i));
-               // System.out.println("forestpoints:"+FOREST_points.size());
+                FOREST_points.add(new Point(j, i));
+                // System.out.println("forestpoints:"+FOREST_points.size());
 
 
             } else if (n >= 0.25 && n < 0.30) {
-               // HILLS
-                HILLs_points.add(new Point(j,i));
+                // HILLS
+                HILLs_points.add(new Point(j, i));
             }
             // DESERT
             else if (n >= 0.30 && n < 0.40) {
 
-                Desert_points.add(new Point(j,i));
+                Desert_points.add(new Point(j, i));
 
 
             } else if (n >= 0.40 && n < 0.5) {
-              //LAKE
-                LAKE_points.add(new Point(j,i));
+                //LAKE
+                LAKE_points.add(new Point(j, i));
             } else if (n >= 0.5 && n < 0.70) {
                 // PLAINS
-                PLAINS_points.add(new Point(j,i));
+                PLAINS_points.add(new Point(j, i));
             } else if (n >= 0.70 && n < 0.75) {
                 // FOREST
-                FOREST_points.add(new Point(j,i));
+                FOREST_points.add(new Point(j, i));
             }
             // MOUNTAINS
             else if (n >= 0.75 && n < 0.85) {
 
-                MOUNTAINS_points.add(new Point(j,i));
+                MOUNTAINS_points.add(new Point(j, i));
             }
             // Ice (or Snow)
             else {
-                SNOW_points.add(new Point(j,i));
+                SNOW_points.add(new Point(j, i));
                 //System.out.println("Snowpoints:"+SNOW_points.size());
             }
         }
     }
+}
+if (BIOME == "SAHARA"){
+    for (int i = 0; i < width; ++i) { // y
+        for (int j = 0; j < height; ++j) { // x
+            double x = (double) j / ((double) width);
+            double y = (double) i / ((double) height);
+            double n = noise(10 * x, 10 * y, z);
+
+
+            if (n < 0.25) {
+                // FOREST
+                Desert_points.add(new Point(j, i));
+                // System.out.println("forestpoints:"+FOREST_points.size());
+
+
+            } else if (n >= 0.25 && n < 0.30) {
+                // HILLS
+                Desert_points.add(new Point(j, i));
+            }
+            // DESERT
+            else if (n >= 0.30 && n < 0.40) {
+
+                Desert_points.add(new Point(j, i));
+
+
+            } else if (n >= 0.40 && n < 0.5) {
+                //LAKE
+                Desert_points.add(new Point(j, i));
+            } else if (n >= 0.5 && n < 0.70) {
+                // PLAINS
+                Desert_points.add(new Point(j, i));
+            } else if (n >= 0.70 && n < 0.75) {
+                // FOREST
+                Desert_points.add(new Point(j, i));
+            }
+            // MOUNTAINS
+            else if (n >= 0.75 && n < 0.85) {
+
+                MOUNTAINS_points.add(new Point(j, i));
+            }
+            // Ice (or Snow)
+            else {
+                SNOW_points.add(new Point(j, i));
+                //System.out.println("Snowpoints:"+SNOW_points.size());
+            }
+        }
+    }
+
+}
+
     if(terrainTYPE == "SNOW")
         return SNOW_points;
     if (terrainTYPE== "PLAINS")
@@ -164,7 +217,7 @@ public final class terraingenerator
             points.add(new Point (1,2));
             points.toString();
 
-
+            int scale = 10;
             int height = DEFAULT_HEIGHT;
             int width = DEFAULT_WIDTH;
             //long seed = System.currentTimeMillis();
@@ -179,7 +232,9 @@ public final class terraingenerator
             Random rand = new Random(seed);
             double z = rand.nextDouble();
 
-            Map terrain = new Map(height, width, z);
+            // current biomes, GREEK, SAHARA
+            String biome= "SAHARA";
+            Map terrain = new Map(height, width, z,scale, biome);
             List<Point> snow = Map.Terrain_mapper("SNOW");
             List<Point> forest = Map.Terrain_mapper("FOREST");
             List<Point> hills = Map.Terrain_mapper("HILLS");
@@ -190,7 +245,7 @@ public final class terraingenerator
 
 
 
-
+            System.out.println("BIOME TYPE :"+ biome);
             System.out.println("Amount of snowpoints:"+snow.size());
             System.out.println("Amount of forest points:"+forest.size());
             System.out.println("Amount of hills points:"+hills.size());
@@ -203,7 +258,7 @@ public final class terraingenerator
 
 
             JFrame window = new JFrame();
-            window.setSize(width * 7, height * 7);
+            window.setSize(width * scale, height * scale);
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             window.getContentPane().add(terrain);
             window.setVisible(true);
@@ -215,78 +270,118 @@ public final class terraingenerator
 
         public void paint(Graphics g)
         {
+    if (BIOME =="GREEK") {
+        for (int i = 0; i < width; ++i) { // y
+            for (int j = 0; j < height; ++j) { // x
+                double x = (double) j / ((double) width);
+                double y = (double) i / ((double) height);
+                double n = noise(10 * x, 10 * y, z);
 
-            for (int i = 0; i < width; ++i)
-            { // y
-                for (int j = 0; j < height; ++j)
-                { // x
-                    double x = (double)j / ((double)width);
-                    double y = (double)i / ((double)height);
-                    double n = noise(10 * x, 10 * y, z);
+                // Watter (or a Lakes)
 
-                    // Watter (or a Lakes)
+                if (n < 0.25) {
+                    g.setColor(FOREST);
 
-                    if (n < 0.25)
-                    {
-                        g.setColor(FOREST);
-
-                        map.put("FOREST",new MyCoord(j,i));
+                    map.put("FOREST", new MyCoord(j, i));
 
 
-
-                    }
-                    else if (n>= 0.25 && n< 0.30){
-                        g.setColor(HILLS);
-                        map.put("HILLS",new MyCoord(j,i));
-                    }
-                    // Floors (or Planes)
-                    else if (n >= 0.30 && n < 0.40)
-                    {
-                        g.setColor(DESERT);
-                        map.put("DESERT",new MyCoord(j,i));
-
-                    }
-                    else if (n >= 0.40 && n < 0.5)
-                    {
-                        g.setColor(LAKE);
-                        map.put("LAKE",new MyCoord(j,i));
-                    }
-                    else if (n >= 0.5 && n < 0.70)
-                    {
-                        g.setColor(PLAINS);
-                        map.put("PLAINS",new MyCoord(j,i));
-                    }
-                    else if (n >= 0.70 && n < 0.75)
-                    {
-                        g.setColor(FOREST);
-                        map.put("FOREST",new MyCoord(j,i));
-                    }
-                    // Walls (or Mountains)
-                    else if (n >= 0.75 && n < 0.85)
-                    {
-                        g.setColor(Color.GRAY);
-                        map.put("MOUNTAINS",new MyCoord(j,i));
-                    }
-                    // Ice (or Snow)
-                    else
-                    {
-                        g.setColor(Color.white);
-                        map.put("SNOW",new MyCoord(j,i));
-                    }
-                    g.fillRect(i * 10, j * 10, 10, 10);
-                    MyCoord coord =map.get("FOREST");
-
-                   // System.out.println(coord.getX() +" : "+coord.getY());
+                } else if (n >= 0.25 && n < 0.30) {
+                    g.setColor(HILLS);
+                    map.put("HILLS", new MyCoord(j, i));
                 }
+                // Floors (or Planes)
+                else if (n >= 0.30 && n < 0.40) {
+                    g.setColor(DESERT);
+                    map.put("DESERT", new MyCoord(j, i));
+
+                } else if (n >= 0.40 && n < 0.5) {
+                    g.setColor(LAKE);
+                    map.put("LAKE", new MyCoord(j, i));
+                } else if (n >= 0.5 && n < 0.70) {
+                    g.setColor(PLAINS);
+                    map.put("PLAINS", new MyCoord(j, i));
+                } else if (n >= 0.70 && n < 0.75) {
+                    g.setColor(FOREST);
+                    map.put("FOREST", new MyCoord(j, i));
+                }
+                // Walls (or Mountains)
+                else if (n >= 0.75 && n < 0.85) {
+                    g.setColor(Color.GRAY);
+                    map.put("MOUNTAINS", new MyCoord(j, i));
+                }
+                // Ice (or Snow)
+                else {
+                    g.setColor(Color.white);
+                    map.put("SNOW", new MyCoord(j, i));
+                }
+                g.fillRect(i * 10, j * 10, 10, 10);
+                MyCoord coord = map.get("FOREST");
+
+                // System.out.println(coord.getX() +" : "+coord.getY());
             }
+        }
+    }
+    if (BIOME == "SAHARA"){
+        for (int i = 0; i < width; ++i) { // y
+            for (int j = 0; j < height; ++j) { // x
+                double x = (double) j / ((double) width);
+                double y = (double) i / ((double) height);
+                double n = noise(10 * x, 10 * y, z);
+
+                // Watter (or a Lakes)
+
+                if (n < 0.25) {
+                    g.setColor(DESERT);
+
+
+
+
+                } else if (n >= 0.25 && n < 0.30) {
+                    g.setColor(DESERT);
+                    map.put("HIlls", new MyCoord(j, i));
+                }
+                // Floors (or Planes)
+                else if (n >= 0.30 && n < 0.40) {
+                    g.setColor(DESERT);
+                    map.put("DESERT", new MyCoord(j, i));
+
+                } else if (n >= 0.40 && n < 0.5) {
+                    g.setColor(DESERT);
+                    map.put("LAKE", new MyCoord(j, i));
+                } else if (n >= 0.5 && n < 0.70) {
+                    g.setColor(DESERT);
+                    map.put("PLAINS", new MyCoord(j, i));
+                } else if (n >= 0.70 && n < 0.75) {
+                    g.setColor(DESERT);
+                    map.put("FOREST", new MyCoord(j, i));
+                }
+                // Walls (or Mountains)
+                else if (n >= 0.75 && n < 0.85) {
+                    g.setColor(Color.GRAY);
+                    map.put("MOUNTAINS", new MyCoord(j, i));
+                }
+                // Ice (or Snow)
+                else {
+                    g.setColor(Color.white);
+                    map.put("SNOW", new MyCoord(j, i));
+                }
+                g.fillRect(i * 10, j * 10, 10, 10);
+                MyCoord coord = map.get("FOREST");
+
+                // System.out.println(coord.getX() +" : "+coord.getY());
+            }
+        }
+
+    }
+
 
 
 
             for (int i = 0; i < walls.size(); i++) {
-                int x1 = walls.get(i).getX1()*7 ;
-                int x2 = walls.get(i).getX2()*7 ;
-                int y1 = walls.get(i).getY1()*7 ;
-                int y2 = walls.get(i).getY2()*7 ;
+                int x1 = walls.get(i).getX1()*scale ;
+                int x2 = walls.get(i).getX2()*scale ;
+                int y1 = walls.get(i).getY1()*scale ;
+                int y2 = walls.get(i).getY2()*scale ;
 
                 int x = Math.min(x1,x2);
                 int y = Math.min(y1,y2) ;
@@ -300,10 +395,10 @@ public final class terraingenerator
             }
 
             for (int i = 0; i < telePortals.size(); i++) {
-                int x1 = telePortals.get(i).getX1()*7 ;
-                int x2 = telePortals.get(i).getX2()*7 ;
-                int y1 = telePortals.get(i).getY1()*7 ;
-                int y2 = telePortals.get(i).getY2()*7 ;
+                int x1 = telePortals.get(i).getX1()*scale ;
+                int x2 = telePortals.get(i).getX2()*scale ;
+                int y1 = telePortals.get(i).getY1()*scale ;
+                int y2 = telePortals.get(i).getY2()*scale ;
 
                 int x = Math.min(x1,x2);
                 int y = Math.min(y1,y2) ;
@@ -317,10 +412,10 @@ public final class terraingenerator
             }
 
             for (int i = 0; i < shaded.size(); i++) {
-                int x1 = shaded.get(i).getX1()*7 ;
-                int x2 = shaded.get(i).getX2()*7 ;
-                int y1 = shaded.get(i).getY1()*7 ;
-                int y2 = shaded.get(i).getY2()*7 ;
+                int x1 = shaded.get(i).getX1()*scale ;
+                int x2 = shaded.get(i).getX2()*scale ;
+                int y1 = shaded.get(i).getY1()*scale ;
+                int y2 = shaded.get(i).getY2()*scale ;
 
                 int x = Math.min(x1,x2);
                 int y = Math.min(y1,y2) ;
@@ -334,10 +429,10 @@ public final class terraingenerator
             }
 
             Area targetArea = scenario.targetArea;
-            int x1 = targetArea.getX1()*7 ;
-            int x2 = targetArea.getX2()*7 ;
-            int y1 = targetArea.getY1()*7 ;
-            int y2 = targetArea.getY2()*7 ;
+            int x1 = targetArea.getX1()*scale ;
+            int x2 = targetArea.getX2()*scale ;
+            int y1 = targetArea.getY1()*scale ;
+            int y2 = targetArea.getY2()*scale ;
 
             int x = Math.min(x1,x2);
             int y = Math.min(y1,y2) ;
@@ -349,10 +444,10 @@ public final class terraingenerator
             g.fillRect(x,y,width,height);
 
             Area spawnAreaIntruders = scenario.spawnAreaIntruders ;
-            x1 = spawnAreaIntruders.getX1()*7 ;
-            x2 = spawnAreaIntruders.getX2()*7 ;
-            y1 = spawnAreaIntruders.getY1()*7 ;
-            y2 = spawnAreaIntruders.getY2()*7 ;
+            x1 = spawnAreaIntruders.getX1()*scale ;
+            x2 = spawnAreaIntruders.getX2()*scale ;
+            y1 = spawnAreaIntruders.getY1()*scale ;
+            y2 = spawnAreaIntruders.getY2()*scale ;
 
             x = Math.min(x1,x2);
             y = Math.min(y1,y2) ;
@@ -365,10 +460,10 @@ public final class terraingenerator
 
 
             Area spawnAreaGuards = scenario.spawnAreaGuards;
-            x1 = spawnAreaGuards.getX1()*7 ;
-            x2 = spawnAreaGuards.getX2()*7 ;
-            y1 = spawnAreaGuards.getY1()*7 ;
-            y2 = spawnAreaGuards.getY2()*7 ;
+            x1 = spawnAreaGuards.getX1()*scale ;
+            x2 = spawnAreaGuards.getX2()*scale ;
+            y1 = spawnAreaGuards.getY1()*scale ;
+            y2 = spawnAreaGuards.getY2()*scale ;
 
             x = Math.min(x1,x2);
             y = Math.min(y1,y2) ;
