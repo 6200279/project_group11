@@ -42,15 +42,19 @@ public class Scenario {
     protected ArrayList<Area> walls;
     protected ArrayList<TelePortal> teleports;
     protected ArrayList<Area> shaded;
+    protected ArrayList<Area> windows;
+    protected ArrayList<Area> doors;
     
     public Scenario(String mapFile){
         // set parameters
         mapDoc=mapFile;
                 
         // initialize variables
-         walls = new ArrayList<>(); // create list of walls
-         shaded = new ArrayList<>(); // create list of low-visability areas
-         teleports = new ArrayList<>(); // create list of teleports e.g. stairs
+        walls = new ArrayList<>(); // create list of walls
+        shaded = new ArrayList<>(); // create list of low-visability areas
+        teleports = new ArrayList<>(); // create list of teleports e.g. stairs
+        windows = new ArrayList<>();
+        doors = new ArrayList<>();
         
         // read scenario
         filePath = Paths.get(mapDoc); // get path
@@ -142,6 +146,14 @@ public class Scenario {
                         TelePortal teletmp = new TelePortal(Integer.parseInt(items[0]),Integer.parseInt(items[1]),Integer.parseInt(items[2]),Integer.parseInt(items[3]),Integer.parseInt(items[4]),Integer.parseInt(items[5]),Double.parseDouble(items[6]));
                         teleports.add(teletmp);
                         break;
+                    case "door":
+                        tmp = new Area(Integer.parseInt(items[0]),Integer.parseInt(items[1]),Integer.parseInt(items[2]),Integer.parseInt(items[3]));
+                        doors.add(tmp);
+                        break;
+                    case "window":
+                        tmp = new Area(Integer.parseInt(items[0]),Integer.parseInt(items[1]),Integer.parseInt(items[2]),Integer.parseInt(items[3]));
+                        windows.add(tmp);
+                        break;
                     case "texture":
                         // still to do. First the coordinates, then an int with texture type and then a double with orientation
                 }
@@ -152,11 +164,37 @@ public class Scenario {
     public ArrayList<Area> getWalls(){
         return walls;
     }
+    public ArrayList<Area> getWindows(){
+        return windows;
+    }
+    public ArrayList<Area> getDoors(){
+        return doors;
+    }
 
     public boolean inWall(double x, double y){
         boolean tmp = false;
         for(int j=0;j<walls.size();j++){
             if(walls.get(j).isHit(x,y)){
+                tmp=true;
+            }
+        }
+        return(tmp);
+    }
+
+    public boolean inDoor(double x, double y){
+        boolean tmp = false;
+        for(int j=0;j<doors.size();j++){
+            if(doors.get(j).isHit(x,y)){
+                tmp=true;
+            }
+        }
+        return(tmp);
+    }
+
+    public boolean inWindow(double x, double y){
+        boolean tmp = false;
+        for(int j=0;j<windows.size();j++){
+            if(windows.get(j).isHit(x,y)){
                 tmp=true;
             }
         }
