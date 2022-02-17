@@ -1,31 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="51e95f2d-6f88-46f2-a123-c7c6258cc3a2" name="Default Changelist" comment="merged branches">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_group11/project_group11/AgentViewPoints.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_group11/project_group11/Block.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_group11/project_group11/Grid.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_group11/project_group11/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_group11/project_group11/project_group11.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Block.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Grid.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Path_Calculator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/Area.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/Area.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/AreaComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/AreaComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/FileWatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/FileWatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/GamePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/GamePlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/GameRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/GameRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/MainFrameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/MainFrameTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/Scenario.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/Scenario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/TelePortal.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/TelePortal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/terraingenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/terraingenerator.java" afterDir="false" />
+    <list default="true" id="51e95f2d-6f88-46f2-a123-c7c6258cc3a2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/MainFrameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/MainFrameTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,10 +131,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MainFrameTest" />
         <item itemvalue="Application.terraingenerator$Map" />
         <item itemvalue="Application.terraingenerator" />
         <item itemvalue="Application.Path_Calculator" />
-        <item itemvalue="Application.MainFrameTest" />
         <item itemvalue="Application.GameRunner (1)" />
       </list>
     </recent_temporary>
@@ -257,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645096558841</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="merged branches">
+      <created>1645099509850</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1645099509851</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
