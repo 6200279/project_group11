@@ -3,22 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="51e95f2d-6f88-46f2-a123-c7c6258cc3a2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/AgentViewPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/AgentViewPoints.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/Area.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/Area.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/AreaComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/AreaComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/FileWatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/FileWatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/GUI_TEST.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/GamePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/GamePlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/GameRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/GameRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/MainFrameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/MainFrameTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/Mainframetest2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/Scenario.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/Scenario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/TelePortal.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/TelePortal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/project_group11.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/terraingenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/terraingenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/MainFrameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/MainFrameTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,7 +288,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645101910950</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="merged branches">
+      <created>1645102970462</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1645102970463</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

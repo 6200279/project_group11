@@ -49,7 +49,7 @@ public class MainFrameTest {
         JFrame frame = new JFrame();
         JFrame frame2 = new JFrame();
         frame.setSize(120*scale, 80*scale);
-        final ImageIcon image = new ImageIcon(new ImageIcon("/Users/stijnoverwater/Documents/GitHub/project_group11/project_group11/assets/img.jpeg").getImage().getScaledInstance(120*10, 80*10, Image.SCALE_DEFAULT));
+        final ImageIcon image = new ImageIcon(new ImageIcon("project_group11/assets/img.jpeg").getImage().getScaledInstance(120*10, 80*10, Image.SCALE_DEFAULT));
         frame.setLayout(new BorderLayout());
 
         // Start Button
@@ -58,7 +58,7 @@ public class MainFrameTest {
         bg.setLayout(null);
         int fixedButtonWidth = 250;
         int fixedButtonHeight = 20;
-        final ImageIcon image2= new ImageIcon(new ImageIcon("assets/img2.jpeg").getImage().getScaledInstance(fixedButtonWidth,fixedButtonHeight,Image.SCALE_DEFAULT));
+        final ImageIcon image2= new ImageIcon(new ImageIcon("/Users/stijnoverwater/Documents/GitHub/project_group11/project_group11/assets/img.jpeg").getImage().getScaledInstance(fixedButtonWidth,fixedButtonHeight,Image.SCALE_DEFAULT));
         JButton b= new JButton("Start the game",image2);
         b.setHorizontalTextPosition(SwingConstants.CENTER);
         b.setSize(150, 22);
@@ -68,8 +68,8 @@ public class MainFrameTest {
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(true);
-                frame2.setVisible(false);
+                frame.setVisible(false);
+                frame2.setVisible(true);
             }
         });
         bg.add(b);
