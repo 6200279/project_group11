@@ -21,7 +21,7 @@ public class MainFrameTest {
         Random rand = new Random(seed);
         double z = rand.nextDouble();
         // BIOME TYPES include, GREEK, SAHARA
-        String biome = "SAHARA";
+        String biome = "GREEK";
         terraingenerator.Map terrain = new terraingenerator.Map(height, width, z,scale, biome);
         List<Point> snow = terraingenerator.Map.Terrain_mapper("SNOW");
         List<Point> forest = terraingenerator.Map.Terrain_mapper("FOREST");
