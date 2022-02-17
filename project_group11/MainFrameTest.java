@@ -5,6 +5,7 @@ import java.util.Random;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 
 
@@ -65,6 +66,28 @@ public class MainFrameTest {
         b.setForeground(Color.WHITE);
         b.setFont(new Font("Dialog", Font.PLAIN,15));
         b.setLocation(frame.getWidth()/2, frame.getHeight()/2+170);
+
+        //TODO BUTTONSS
+        JRadioButton birdButton = new JRadioButton("GREEK");
+        birdButton.setMnemonic(KeyEvent.VK_B);
+        birdButton.setActionCommand("Greek");
+        birdButton.setSelected(true);
+
+        JRadioButton catButton = new JRadioButton("SAHARA");
+        catButton.setMnemonic(KeyEvent.VK_C);
+        catButton.setActionCommand("SAHARA");
+
+        JRadioButton dogButton = new JRadioButton("something else ");
+        dogButton.setMnemonic(KeyEvent.VK_D);
+        dogButton.setActionCommand("SOMRTHING");
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(birdButton);
+        group.add(catButton);
+        group.add(dogButton);
+
+
+
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
