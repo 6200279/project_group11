@@ -58,7 +58,7 @@ public class MainFrameTest {
         b.setSize(150, 22);
         b.setForeground(Color.WHITE);
         b.setFont(new Font("Dialog", Font.PLAIN,15));
-        b.setLocation(frame.getWidth()/2-40, frame.getHeight()/2+170);
+        b.setLocation(frame.getWidth()/2, frame.getHeight()/2+170);
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,6 +67,12 @@ public class MainFrameTest {
             }
         });
         bg.add(b);
+
+        JComboBox<String>cb = new JComboBox<String>() ;
+        cb.setVisible(true);
+        cb.setSize(150,22);
+        cb.setLocation(frame.getWidth()/2-200,frame.getHeight()/2+170);
+        bg.add(cb) ;
 
         // Music
         JCheckBox bMusic= new JCheckBox("Music");
@@ -91,7 +97,23 @@ public class MainFrameTest {
         frame2.setSize(120*10, 80*10);
         frame2.setTitle("Test");
         //AreaComponent ac = new AreaComponent() ;
-        frame2.getContentPane().add(terrain);
+        frame2.getContentPane().add(BorderLayout.CENTER,terrain);
+
+        JPanel panelWest = new JPanel() ;
+        JPanel panelEast = new JPanel() ;
+
+        panelEast.setBackground(new Color(199, 133, 133));
+        panelWest.setBackground(new Color(199,133,133));
+
+        JButton button = new JButton("TEST") ;
+        JButton button1 = new JButton("TEST") ;
+
+        panelEast.add(button1) ;
+        panelWest.add(button) ;
+
+
+        frame2.add(BorderLayout.EAST,panelEast) ;
+        frame2.add(BorderLayout.WEST,panelWest) ;
         //frame2.getContentPane().add(ac) ;
         frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

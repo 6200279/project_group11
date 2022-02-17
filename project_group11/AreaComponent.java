@@ -112,12 +112,6 @@ public class AreaComponent extends JComponent {
         g.drawRect(x,y,width,height);
         g.fillRect(x,y,width,height);
 
-
-
-
-
-
-
     }
 
 
