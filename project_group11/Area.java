@@ -18,6 +18,9 @@ public class Area {
     private int x2 ;
     private int y1 ;
     private  int y2 ;
+    private Point agentpoint;
+    private Point rightview;
+    private Point leftview;
     
     public Area(){
         leftBoundary=0;
@@ -35,6 +38,13 @@ public class Area {
         rightBoundary=Math.max(x1,x2);
         topBoundary=Math.max(y1,y2);
         bottomBoundary=Math.min(y1,y2);
+    }
+
+    public Area(Point agentpoint, Point rightview, Point leftview){
+
+        this.agentpoint = agentpoint;
+        this.rightview = rightview;
+        this.leftview = leftview;
     }
     
     /*
