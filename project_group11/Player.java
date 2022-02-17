@@ -1,4 +1,4 @@
-
+package project_group11;
 import project_group11.Point;
 import project_group11.Area;
 public class Player {
@@ -6,14 +6,13 @@ public class Player {
     Point location;
     Point pov;
     double speed;
-    int radius;
+    private final int radius = 20 ;
 
 
-    public Player(Point location, Point pov, double speed, int radius){
+    public Player(Point location, Point pov, double speed){
         this.location = location;
         this.pov = pov;
         this.speed = speed;
-        this.radius = radius;
     }   
 
     public Point getLocation(){ return location;}
@@ -24,7 +23,6 @@ public class Player {
     public void setLocation(Point location){ this.location =  location;}
     public void setPov(Point POV){ this.pov = POV;}
     public void setSpeed(double speed){ this.speed = speed;}
-    public void setRadius(int radius){ this.radius = radius;}
     
     public void moveToPoint(Point target){ 
         if(target.getIsWall() || target.getIsWindow()){
@@ -40,9 +38,6 @@ public class Player {
     public void markSeenArea(Area fov){ //field of vision 
         
     }
-
-
-
 
     // public void markSeenArea(Area triangle){
         
