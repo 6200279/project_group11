@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51e95f2d-6f88-46f2-a123-c7c6258cc3a2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/project_group11/project_group11/Mainframetest2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11/Grid.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_group11/assets/assets_music.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_group11/assets/img.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_group11/assets/img2.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project_group11/project_group11/MainFrameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11/MainFrameTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +58,7 @@
       <recent name="$PROJECT_DIR$/project_group11/project_group11" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainFrameTest">
+  <component name="RunManager" selected="Application.GUI_TEST">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -66,6 +66,19 @@
         </value>
       </option>
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GUI_TEST" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="project_group11.GUI_TEST" />
+      <module name="project_group11" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="project_group11.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -98,13 +111,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Path_Calculator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Path_Calculator" />
-      <module name="project_group11" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="terraingenerator$Map" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="project_group11.terraingenerator$Map" />
       <module name="project_group11" />
@@ -133,18 +139,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.MainFrameTest" />
-      <item itemvalue="Application.Path_Calculator" />
       <item itemvalue="Application.terraingenerator" />
       <item itemvalue="Application.terraingenerator$Map" />
       <item itemvalue="Application.Mainframetest2" />
+      <item itemvalue="Application.GUI_TEST" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GUI_TEST" />
         <item itemvalue="Application.MainFrameTest" />
         <item itemvalue="Application.Mainframetest2" />
         <item itemvalue="Application.terraingenerator$Map" />
         <item itemvalue="Application.terraingenerator" />
-        <item itemvalue="Application.Path_Calculator" />
       </list>
     </recent_temporary>
   </component>
@@ -257,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645099892078</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="merged branches">
+      <created>1645101409282</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1645101409282</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
