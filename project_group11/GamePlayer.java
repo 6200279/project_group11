@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-package project_group11;
-
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;

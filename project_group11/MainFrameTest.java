@@ -1,4 +1,3 @@
-package project_group11;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
@@ -50,7 +49,7 @@ public class MainFrameTest {
         JFrame frame = new JFrame();
         JFrame frame2 = new JFrame();
         frame.setSize(120*scale, 80*scale);
-        final ImageIcon image = new ImageIcon(new ImageIcon("assets/img.jpeg").getImage().getScaledInstance(120*10, 80*10, Image.SCALE_DEFAULT));
+        final ImageIcon image = new ImageIcon(new ImageIcon("/Users/stijnoverwater/Documents/GitHub/project_group11/project_group11/assets/img.jpeg").getImage().getScaledInstance(120*10, 80*10, Image.SCALE_DEFAULT));
         frame.setLayout(new BorderLayout());
 
         // Start Button
