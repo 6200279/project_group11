@@ -59,6 +59,13 @@ public class MainFrameTest {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
+        AgentViewPoints myAgent = new AgentViewPoints();
+        Point myPoint = new Point(25,25);
+        //myAgent.rotate(myPoint, 10);
+        myAgent.ringOfPoints();
+        //myAgent.farthest();
+        //myAgent.viewPoints();
+
 
     }
 

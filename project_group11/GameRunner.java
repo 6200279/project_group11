@@ -22,7 +22,7 @@ public class GameRunner {
     
     public static void main(String[] args){
         // the mapscenario should be passed as a parameter
-        String mapD="/Users/stijnoverwater/read text fiel/testmap.txt";
+        String mapD="testmap.txt";
         GameRunner game = new GameRunner(mapD);
         game.p.setup();
         //game.writeGameFile();
