@@ -5,9 +5,6 @@
  */
 package project_group11;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
-        
 /**
  *
  * @author joel
