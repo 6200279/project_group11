@@ -1,16 +1,20 @@
+package project_group11;
+
 import java.util.Objects;
 
 public class Point {
-    private int x, y;  // might be final
+    private final int x, y;
+    private  boolean isWall;
+    private  boolean isTeleport;
+    private  boolean isDoor;
+    private  boolean isWindow;
+    private Point targetTeleport = null; 
+
 
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
-
-    public void setX(int x){this.x = x;}
-
-    public void setY(int y){this.y = y;}
 
     public int getX() {
         return x;
@@ -19,6 +23,26 @@ public class Point {
     public int getY() {
         return y;
     }
+
+    public void setIsWall(boolean isWall){
+        this.isWall = isWall;
+    }
+
+    
+    public void setIsTeleport(boolean isTeleport, Point targetPoint){
+        this.isTeleport = isTeleport;
+        if(isTeleport){
+            targetTeleport = targetPoint;
+        }
+    }
+
+    public boolean getIsWall(){ return isWall;}
+    public boolean getIsTeleport(){ return isTeleport;}
+    public boolean getIsDoor(){ return isDoor;}
+    public boolean getIsWindow(){ return isWindow;}
+    public Point getTeleportTarget(){ return targetTeleport;}
+    
+
 
     @Override
     public String toString() {
