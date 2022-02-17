@@ -5,29 +5,23 @@ import java.util.List;
 import java.util.Random;
 
 public class MainFrameTest {
-    private static final int DEFAULT_HEIGHT = 80;
 
-    private static final int DEFAULT_WIDTH = 120;
 
-    private Scenario scenario = new Scenario("testmap.txt") ;
+
+    private static Scenario scenario = new Scenario("testmap.txt") ;
 
     public static void main(String[] args) {
-        int height = DEFAULT_HEIGHT;
-        int width = DEFAULT_WIDTH;
+        int height = scenario.mapHeight;
+        int width = scenario.mapWidth;
         int scale = 10; // scale the map size
         //long seed = System.currentTimeMillis();
         long seed =13515420;
-        if (args.length == 3)
-        {
-            height = Integer.parseInt(args[0]);
-            width = Integer.parseInt(args[1]);
-            seed = Long.parseLong(args[2]);
-        }
+
 
         Random rand = new Random(seed);
         double z = rand.nextDouble();
         // BIOME TYPES include, GREEK, SAHARA
-        String biome = "GREEK";
+        String biome = "SAHARA";
         terraingenerator.Map terrain = new terraingenerator.Map(height, width, z,scale, biome);
         List<Point> snow = terraingenerator.Map.Terrain_mapper("SNOW");
         List<Point> forest = terraingenerator.Map.Terrain_mapper("FOREST");
