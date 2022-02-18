@@ -14,6 +14,7 @@ public class GameFrame extends JFrame {
     private ArrayList<Player> players;
     private JPanel panelWest;
     private JButton buttonPlay;
+    private JButton buttonPause ;
     private terraingenerator.Map terrain;
 
 
@@ -39,18 +40,26 @@ public class GameFrame extends JFrame {
     private void createPanelWest() {
         panelWest = new JPanel();
         panelWest.setBackground(new Color(36, 95, 131));
+        panelWest.setLayout(new BoxLayout(panelWest,BoxLayout.PAGE_AXIS));
         buttonPlay = createButtonPlay();
+        buttonPause = createButtonBreak() ;
         panelWest.add(buttonPlay);
+        panelWest.add(buttonPause);
         add(BorderLayout.WEST, panelWest);
     }
 
     private JButton createButtonPlay() {
 
         buttonPlay = new JButton("Play");
-        buttonPlay.addActionListener(e -> {terrain.changePlay();
-        terrain.actionPerformed(e);});
+        buttonPlay.addActionListener(e -> {terrain.changePlayToTrue();});
         return buttonPlay;
 
+    }
+
+    private JButton createButtonBreak(){
+        buttonPause = new JButton("Pause") ;
+        buttonPause.addActionListener(e ->terrain.changePlayToFalse() );
+        return  buttonPause ;
     }
 }
 

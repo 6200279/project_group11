@@ -108,9 +108,14 @@ public final class terraingenerator
             createPlayers();
         }
 
-        public void changePlay(){
+        public void changePlayToTrue(){
             if (!play) play=true ;
-            if (play) play=false ;
+            repaint() ;
+        }
+
+        public void changePlayToFalse(){
+            if(play) play=false ;
+            repaint();
         }
 
         public static  List<Point> Terrain_mapper (String terrainTYPE){
@@ -513,37 +518,44 @@ if (BIOME == "SAHARA"){
                 g.fillOval(xx,yy,radius,radius);
 
             }
+            if(play)
+                tm.start();
 
-            tm.start();
+            if(!play)
+                tm.stop();
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            int randomX ;
-            int randomY ;
 
-            for (int i = 0; i < scenario.numGuards; i++) {
 
-                Point previousPoint = players.get(i).getLocation();
-                int x = previousPoint.getX();
-                int y = previousPoint.getY();
+                int randomX;
+                int randomY;
 
-                 randomX = (int)(Math.random()*1)+1;
-                 randomY = (int)(Math.random()*1)+1;
+                for (int i = 0; i < scenario.numGuards; i++) {
 
-                if(randomX==1) x = x+1 ;
-                if(randomX==2) x = x-1 ;
-                if(randomY==1) y = y+1 ;
-                if(randomY==2) y = y-1 ;
+                    Point previousPoint = players.get(i).getLocation();
+                    int x = previousPoint.getX();
+                    int y = previousPoint.getY();
 
-                Point newPoint = new Point(x, y);
-                players.get(i).moveToPoint(newPoint);
-                this.repaint();
+                    randomX = (int) (Math.random() * 2 + 1);
+                    randomY = (int) (Math.random() * 2 + 1);
 
+                    if (randomX == 1) x = x + 1;
+                    if (randomX == 2) x = x - 1;
+                    if (randomY == 1) y = y + 1;
+                    if (randomY == 2) y = y - 1;
+
+                    System.out.print("x, " + randomX);
+                    System.out.println("y, " + randomY);
+
+                    Point newPoint = new Point(x, y);
+                    players.get(i).moveToPoint(newPoint);
+                    this.repaint();
+
+                }
             }
-        }
-
         }
 
         private static double noise(double x, double y, double z)
