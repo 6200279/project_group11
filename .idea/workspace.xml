@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51e95f2d-6f88-46f2-a123-c7c6258cc3a2" name="Default Changelist" comment="merged branches">
-      <change afterPath="$PROJECT_DIR$/project_group11/sourcecode/GameFrame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_group11/sourcecode/MapFiles.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/project_group11/project_group11/AgentViewPoints.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/MainFrameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,6 +173,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.MainFrameTest" />
       <item itemvalue="Application.GUI_TEST" />
       <item itemvalue="Application.Mainframetest2" />
       <item itemvalue="Application.t" />
@@ -374,7 +370,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

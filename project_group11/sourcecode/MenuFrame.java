@@ -41,25 +41,6 @@ public class MenuFrame extends JFrame {
         long seed = 13515420;
         Random rand = new Random(seed);
 
-        snow = terraingenerator.Map.Terrain_mapper("SNOW");
-        forest = terraingenerator.Map.Terrain_mapper("FOREST");
-        hills = terraingenerator.Map.Terrain_mapper("HILLS");
-        Mountains = terraingenerator.Map.Terrain_mapper("MOUNTAINS");
-        Desert = terraingenerator.Map.Terrain_mapper("DESERT");
-        Lake = terraingenerator.Map.Terrain_mapper("LAKE");
-        plains = terraingenerator.Map.Terrain_mapper("PLAINS");
-
-        String biome = "GREEK";
-
-        System.out.println("BIOME TYPE :" + biome);
-        System.out.println("Amount of snowpoints:" + snow.size());
-        System.out.println("Amount of forest points:" + forest.size());
-        System.out.println("Amount of hills points:" + hills.size());
-        System.out.println("Amount of Mountains points:" + Mountains.size());
-        System.out.println("Amount of Desert points:" + Desert.size());
-        System.out.println("Amount of lake points:" + Lake.size());
-        System.out.println("Amount of plains points:" + plains.size());
-
 
 
         setTitle("Main Menu");
@@ -114,6 +95,23 @@ public class MenuFrame extends JFrame {
                     z = rand.nextDouble();
 
                     terrain1 = new terraingenerator.Map(height, width, z,scale, "GREEK",scenario);
+                    snow = terraingenerator.Map.Terrain_mapper("SNOW");
+                    forest = terraingenerator.Map.Terrain_mapper("FOREST");
+                    hills = terraingenerator.Map.Terrain_mapper("HILLS");
+                    Mountains = terraingenerator.Map.Terrain_mapper("MOUNTAINS");
+                    Desert = terraingenerator.Map.Terrain_mapper("DESERT");
+                    Lake = terraingenerator.Map.Terrain_mapper("LAKE");
+                    plains = terraingenerator.Map.Terrain_mapper("PLAINS");
+
+                   // System.out.println("BIOME TYPE :" + biome);
+                    System.out.println("Amount of snowpoints:" + snow.size());
+                    System.out.println("Amount of forest points:" + forest.size());
+                    System.out.println("Amount of hills points:" + hills.size());
+                    System.out.println("Amount of Mountains points:" + Mountains.size());
+                    System.out.println("Amount of Desert points:" + Desert.size());
+                    System.out.println("Amount of lake points:" + Lake.size());
+                    System.out.println("Amount of plains points:" + plains.size());
+
                     gameFrame = new GameFrame(scenario,terrain1) ;
                     gameFrame.getContentPane().add(terrain1) ;
                     gameFrame.repaint();
@@ -130,6 +128,22 @@ public class MenuFrame extends JFrame {
                     z = rand.nextDouble();
 
                     terrain2 = new terraingenerator.Map(height, width, z,scale,"SAHARA",scenario);
+                    snow = terraingenerator.Map.Terrain_mapper("SNOW");
+                    forest = terraingenerator.Map.Terrain_mapper("FOREST");
+                    hills = terraingenerator.Map.Terrain_mapper("HILLS");
+                    Mountains = terraingenerator.Map.Terrain_mapper("MOUNTAINS");
+                    Desert = terraingenerator.Map.Terrain_mapper("DESERT");
+                    Lake = terraingenerator.Map.Terrain_mapper("LAKE");
+                    plains = terraingenerator.Map.Terrain_mapper("PLAINS");
+
+                    // System.out.println("BIOME TYPE :" + biome);
+                    System.out.println("Amount of snowpoints:" + snow.size());
+                    System.out.println("Amount of forest points:" + forest.size());
+                    System.out.println("Amount of hills points:" + hills.size());
+                    System.out.println("Amount of Mountains points:" + Mountains.size());
+                    System.out.println("Amount of Desert points:" + Desert.size());
+                    System.out.println("Amount of lake points:" + Lake.size());
+                    System.out.println("Amount of plains points:" + plains.size());
 
                     gameFrame = new GameFrame(scenario,terrain2) ;
                     gameFrame.getContentPane().add(terrain2) ;
