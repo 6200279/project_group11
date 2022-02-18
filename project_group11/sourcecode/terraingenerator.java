@@ -61,14 +61,14 @@ public final class terraingenerator
 
 
         private final int scale;
-        Scenario scenario = new Scenario("testmap.txt");
+        private Scenario scenario ;
 
-        ArrayList<Area>walls = scenario.getWalls() ;
-        ArrayList<Area>doors = scenario.getDoors() ;
-        ArrayList<Area>windows = scenario.getWindows() ;
-        ArrayList<TelePortal>telePortals = scenario.teleports ;
-        ArrayList<Area>shaded = scenario.shaded ;
-        HashMap<String, MyCoord> map = new HashMap<String,MyCoord>();
+        private ArrayList<Area>walls ;
+        private ArrayList<Area>doors ;
+        private ArrayList<Area>windows  ;
+        private ArrayList<TelePortal>telePortals ;
+        private ArrayList<Area>shaded ;
+        private HashMap<String, MyCoord> map = new HashMap<String,MyCoord>();
 
 
 
@@ -81,8 +81,16 @@ public final class terraingenerator
 
         private static String BIOME;
 
-        public  Map(int height, int width, double z,int scale, String biome)
+        public  Map(int height, int width, double z,int scale, String biome, Scenario scenario)
         {
+            this.scenario = scenario ;
+
+            walls = scenario.getWalls() ;
+            doors = scenario.getDoors() ;
+            windows = scenario.getWindows() ;
+            telePortals = scenario.getTeleportals() ;
+            shaded = scenario.getShaded() ;
+
             this.height = height;
             this.width = width;
             this.z = z;
@@ -215,6 +223,7 @@ if (BIOME == "SAHARA"){
 
         public static void main(String[] args)
         {
+            Scenario scenario = new Scenario("test.txt") ;
             List<Point> points = new ArrayList<>();
             points.add(new Point (1,2));
             points.toString();
@@ -236,7 +245,7 @@ if (BIOME == "SAHARA"){
 
             // current biomes, GREEK, SAHARA
             String biome= "SAHARA";
-            Map terrain = new Map(height, width, z,scale, biome);
+            Map terrain = new Map(height, width, z,scale, biome,scenario);
             List<Point> snow = Map.Terrain_mapper("SNOW");
             List<Point> forest = Map.Terrain_mapper("FOREST");
             List<Point> hills = Map.Terrain_mapper("HILLS");

@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="51e95f2d-6f88-46f2-a123-c7c6258cc3a2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/project_group11/sourcecode/project_group11.iml" afterDir="false" />
+    <list default="true" id="51e95f2d-6f88-46f2-a123-c7c6258cc3a2" name="Default Changelist" comment="merged branches">
+      <change afterPath="$PROJECT_DIR$/project_group11/sourcecode/GameFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_group11/sourcecode/MapFiles.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/project_group11/project_group11.iml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/project_group11/project_group11.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/AgentViewPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/AgentViewPoints.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/Area.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Area.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/AreaComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/AreaComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/FileWatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/FileWatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/GamePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/GamePlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/GameRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/GameRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/MainFrameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/MainFrameTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/Scenario.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Scenario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/TelePortal.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/TelePortal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/project_group11.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/project_group11.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/terraingenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/project_group11/project_group11/AgentViewPoints.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/MainFrameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +18,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -54,6 +45,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -77,7 +69,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainFrameTest (1)">
+  <component name="RunManager" selected="Application.MainApp">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -109,8 +101,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainFrameTest (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="sourcecode.MainFrameTest" />
+    <configuration name="GameRunner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sourcecode.GameRunner" />
       <module name="project_group11" />
       <extension name="coverage">
         <pattern>
@@ -122,9 +114,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainFrameTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MainFrameTest" />
+    <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sourcecode.MainApp" />
       <module name="project_group11" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sourcecode.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -180,19 +178,18 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.MainFrameTest" />
       <item itemvalue="Application.GUI_TEST" />
       <item itemvalue="Application.Mainframetest2" />
       <item itemvalue="Application.t" />
-      <item itemvalue="Application.MainFrameTest (1)" />
       <item itemvalue="Application.GUI_TEST (1)" />
-      <item itemvalue="Application.MainFrameTest (2)" />
+      <item itemvalue="Application.GameRunner" />
+      <item itemvalue="Application.MainApp" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MainFrameTest (1)" />
-        <item itemvalue="Application.MainFrameTest (2)" />
-        <item itemvalue="Application.MainFrameTest (1)" />
+        <item itemvalue="Application.MainApp" />
+        <item itemvalue="Application.GameRunner" />
+        <item itemvalue="Application.MainApp" />
         <item itemvalue="Application.GUI_TEST (1)" />
         <item itemvalue="Application.t" />
       </list>
@@ -216,6 +213,8 @@
       <workItem from="1645093312089" duration="533000" />
       <workItem from="1645094028394" duration="2646000" />
       <workItem from="1645105101526" duration="6044000" />
+      <workItem from="1645190124262" duration="60000" />
+      <workItem from="1645190215394" duration="6834000" />
     </task>
     <task id="LOCAL-00001" summary="change package">
       <created>1644309170098</created>
@@ -375,6 +374,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
