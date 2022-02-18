@@ -1,30 +1,31 @@
-package project_group11;
-import project_group11.Point;
-import project_group11.Area;
+/**package sourcecode;
+
 public class Player {
- 
-    Point location;
+
+    public int x;
+    public int y;
+    Block location;
     Point pov;
     double speed;
     private final int radius = 20 ;
 
 
-    public Player(Point location, Point pov, double speed){
+    public Player(Block location, Point pov, double speed){
         this.location = location;
         this.pov = pov;
         this.speed = speed;
     }   
 
-    public Point getLocation(){ return location;}
+    public Block getLocation(){ return location;}
     public Point getPov(){ return pov;}
     public double getSpeed(){ return speed;}
     public int getRadius(){ return radius;}
 
-    public void setLocation(Point location){ this.location =  location;}
+    public void setLocation(Block location){ this.location =  location;}
     public void setPov(Point POV){ this.pov = POV;}
     public void setSpeed(double speed){ this.speed = speed;}
     
-    public void moveToPoint(Point target){ 
+    public void moveToPoint(Block target){ 
         if(target.getIsWall() || target.getIsWindow()){
             System.out.println("Ilegal");
             return;
@@ -141,3 +142,4 @@ public class Player {
 // //         guardPositions = scenario.spawnGuards();
 // //         guardStates = new int[scenario.getNumGuards()]; // should be initialized to 0 by default
 // // }
+*/

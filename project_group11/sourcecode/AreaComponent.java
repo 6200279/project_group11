@@ -1,4 +1,4 @@
-package project_group11;
+package sourcecode;
 
 import javax.swing.*;
 import java.awt.*;

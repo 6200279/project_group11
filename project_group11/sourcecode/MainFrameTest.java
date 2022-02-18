@@ -1,8 +1,9 @@
+package sourcecode;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.Random;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.*;
@@ -27,13 +28,13 @@ public class MainFrameTest {
         double z = rand.nextDouble();
         // BIOME TYPES include, GREEK, SAHARA
         String biome = "GREEK";
-        terraingenerator.Map terrain = new terraingenerator.Map(height, width, z,scale, biome);
-        List<Point> snow = terraingenerator.Map.Terrain_mapper("SNOW");
-        List<Point> forest = terraingenerator.Map.Terrain_mapper("FOREST");
-        List<Point> hills = terraingenerator.Map.Terrain_mapper("HILLS");
-        List<Point> Mountains = terraingenerator.Map.Terrain_mapper("MOUNTAINS");
-        List<Point> Desert = terraingenerator.Map.Terrain_mapper("DESERT");
-        List<Point> Lake = terraingenerator.Map.Terrain_mapper("LAKE");
+       // terraingenerator.Map terrain = new terraingenerator.Map(height, width, z,scale, biome);
+        List<sourcecode.Point> snow = terraingenerator.Map.Terrain_mapper("SNOW");
+        List<sourcecode.Point> forest = terraingenerator.Map.Terrain_mapper("FOREST");
+        List<sourcecode.Point> hills = terraingenerator.Map.Terrain_mapper("HILLS");
+        List<sourcecode.Point> Mountains = terraingenerator.Map.Terrain_mapper("MOUNTAINS");
+        List<sourcecode.Point> Desert = terraingenerator.Map.Terrain_mapper("DESERT");
+        List<sourcecode.Point> Lake = terraingenerator.Map.Terrain_mapper("LAKE");
         List<Point> plains = terraingenerator.Map.Terrain_mapper("PLAINS");
 
         System.out.println("BIOME TYPE :"+ biome);
@@ -67,35 +68,36 @@ public class MainFrameTest {
         b.setFont(new Font("Dialog", Font.PLAIN,15));
         b.setLocation(frame.getWidth()/2, frame.getHeight()/2+170);
 
-        //TODO BUTTONSS
-        JRadioButton birdButton = new JRadioButton("GREEK");
-        birdButton.setMnemonic(KeyEvent.VK_B);
-        birdButton.setActionCommand("Greek");
-        birdButton.setSelected(true);
 
-        JRadioButton catButton = new JRadioButton("SAHARA");
-        catButton.setMnemonic(KeyEvent.VK_C);
-        catButton.setActionCommand("SAHARA");
-
-        JRadioButton dogButton = new JRadioButton("something else ");
-        dogButton.setMnemonic(KeyEvent.VK_D);
-        dogButton.setActionCommand("SOMRTHING");
-
-        ButtonGroup group = new ButtonGroup();
-        group.add(birdButton);
-        group.add(catButton);
-        group.add(dogButton);
-
-
+        bg.add(b);
+        JRadioButton r1=new JRadioButton("GREEK");
+        JRadioButton r2=new JRadioButton("SAHARA");
+        r1.setBounds(75,50,100,30);
+        r2.setBounds(75,100,100,30);
+        ButtonGroup buttongroup=new ButtonGroup();
+        buttongroup.add(r1);buttongroup.add(r2);
+        bg.add(r1);bg.add(r2);
 
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-                frame2.setVisible(true);
+                if(r1.isSelected()) {
+                    terraingenerator.Map terrain1 = new terraingenerator.Map(height, width, z,scale, "GREEK");
+
+                    frame2.getContentPane().add(BorderLayout.CENTER,terrain1);
+                    frame.setVisible(false);
+                    frame2.setVisible(true);
+                }
+                if(r2.isSelected()){
+
+                    terraingenerator.Map terrain2 = new terraingenerator.Map(height, width, z,scale,"SAHARA");
+                    frame2.getContentPane().add(BorderLayout.CENTER,terrain2);
+                    frame.setVisible(false);
+                    frame2.setVisible(true);
+                }
             }
         });
-        bg.add(b);
+
 
 
 
@@ -122,7 +124,7 @@ public class MainFrameTest {
         frame2.setSize(120*scale, 80*scale);
         frame2.setTitle("Testing");
         //AreaComponent ac = new AreaComponent() ;
-        frame2.getContentPane().add(BorderLayout.CENTER,terrain);
+     //   frame2.getContentPane().add(BorderLayout.CENTER,terrain);
 
         frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
