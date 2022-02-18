@@ -10,7 +10,7 @@ import java.util.Random;
 public class MenuFrame extends JFrame {
 
     private Scenario scenario ;
-    private int scale = 10 ;
+    private int scale = 10;
     private final ImageIcon image ;
     private final ImageIcon image2 ;
     private JLabel bg ;
@@ -94,7 +94,7 @@ public class MenuFrame extends JFrame {
                     width = scenario.mapWidth ;
                     z = rand.nextDouble();
 
-                    terrain1 = new terraingenerator.Map(height, width, z,scale, "GREEK",scenario);
+                    terrain1 = new terraingenerator.Map(height, width, z,7, "GREEK",scenario);
                     snow = terraingenerator.Map.Terrain_mapper("SNOW");
                     forest = terraingenerator.Map.Terrain_mapper("FOREST");
                     hills = terraingenerator.Map.Terrain_mapper("HILLS");
@@ -127,7 +127,7 @@ public class MenuFrame extends JFrame {
                     width = scenario.mapWidth ;
                     z = rand.nextDouble();
 
-                    terrain2 = new terraingenerator.Map(height, width, z,scale,"SAHARA",scenario);
+                    terrain2 = new terraingenerator.Map(height, width, z,7,"SAHARA",scenario);
                     snow = terraingenerator.Map.Terrain_mapper("SNOW");
                     forest = terraingenerator.Map.Terrain_mapper("FOREST");
                     hills = terraingenerator.Map.Terrain_mapper("HILLS");

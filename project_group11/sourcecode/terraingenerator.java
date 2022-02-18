@@ -1,5 +1,7 @@
 package sourcecode;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -7,8 +9,7 @@ import java.util.Random;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.HashMap;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
 public final class terraingenerator
@@ -56,7 +57,7 @@ public final class terraingenerator
     }
 
 
-    public static class Map extends JPanel
+    public static class Map extends JPanel implements ActionListener
     {
 
 
@@ -69,6 +70,8 @@ public final class terraingenerator
         private ArrayList<TelePortal>telePortals ;
         private ArrayList<Area>shaded ;
         private HashMap<String, MyCoord> map = new HashMap<String,MyCoord>();
+        private ArrayList<Player> players ;
+        private ArrayList<Point> locationspawn ;
 
 
 
@@ -81,22 +84,35 @@ public final class terraingenerator
 
         private static String BIOME;
 
+        private boolean play = false ;
+
+        private Timer tm  ;
+
         public  Map(int height, int width, double z,int scale, String biome, Scenario scenario)
         {
             this.scenario = scenario ;
+            tm = new Timer(5,this) ;
 
             walls = scenario.getWalls() ;
             doors = scenario.getDoors() ;
             windows = scenario.getWindows() ;
             telePortals = scenario.getTeleportals() ;
             shaded = scenario.getShaded() ;
+            players = new ArrayList<Player>() ;
 
             this.height = height;
             this.width = width;
             this.z = z;
             this.BIOME = biome;
             this.scale = scale;
+            createPlayers();
         }
+
+        public void changePlay(){
+            if (!play) play=true ;
+            if (play) play=false ;
+        }
+
         public static  List<Point> Terrain_mapper (String terrainTYPE){
             List<Point> listempty = new ArrayList<>();
             List<Point> FOREST_points = new ArrayList<>();
@@ -220,60 +236,27 @@ if (BIOME == "SAHARA"){
        return listempty; }
 
 
+        public void createPlayers(){
 
-        public static void main(String[] args)
-        {
-            Scenario scenario = new Scenario("test.txt") ;
-            List<Point> points = new ArrayList<>();
-            points.add(new Point (1,2));
-            points.toString();
+            int x1 = scenario.spawnAreaGuards.getX1()*scale ;
+            int x2 = scenario.spawnAreaGuards.getX2()*scale ;
+            int y1 = scenario.spawnAreaGuards.getY1()*scale ;
+            int y2 = scenario.spawnAreaGuards.getY2()*scale ;
 
-            int scale = 10;
-            int height = DEFAULT_HEIGHT;
-            int width = DEFAULT_WIDTH;
-            //long seed = System.currentTimeMillis();
-            long seed =100;
-            if (args.length == 3)
-            {
-                height = Integer.parseInt(args[0]);
-                width = Integer.parseInt(args[1]);
-                seed = Long.parseLong(args[2]);
+
+            for (int i = 0; i < scenario.numGuards; i++) {
+
+                int xx = (int)  (Math.random() * (x2 - x1)) + x1;
+                int yy = (int) (Math.random() * (y2-y1)) + y1 ;
+
+
+                Point locationSpawn = new Point(xx,yy) ;
+                Point pov = new Point(200,200) ;
+                double speed = scenario.baseSpeedGuard ;
+
+                Player player = new Player(locationSpawn,pov,speed) ;
+                players.add(player) ;
             }
-
-            Random rand = new Random(seed);
-            double z = rand.nextDouble();
-
-            // current biomes, GREEK, SAHARA
-            String biome= "SAHARA";
-            Map terrain = new Map(height, width, z,scale, biome,scenario);
-            List<Point> snow = Map.Terrain_mapper("SNOW");
-            List<Point> forest = Map.Terrain_mapper("FOREST");
-            List<Point> hills = Map.Terrain_mapper("HILLS");
-            List<Point> Mountains = Map.Terrain_mapper("MOUNTAINS");
-            List<Point> Desert = Map.Terrain_mapper("DESERT");
-            List<Point> Lake = Map.Terrain_mapper("LAKE");
-            List<Point> plains = Map.Terrain_mapper("PLAINS");
-
-
-
-            System.out.println("BIOME TYPE :"+ biome);
-            System.out.println("Amount of snowpoints:"+snow.size());
-            System.out.println("Amount of forest points:"+forest.size());
-            System.out.println("Amount of hills points:"+hills.size());
-            System.out.println("Amount of Mountains points:"+Mountains.size());
-            System.out.println("Amount of Desert points:"+Desert.size());
-            System.out.println("Amount of lake points:"+Lake.size());
-            System.out.println("Amount of plains points:"+plains.size());
-
-
-
-
-            JFrame window = new JFrame();
-            window.setSize(width * scale, height * scale);
-            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            window.getContentPane().add(terrain);
-            window.setVisible(true);
-            window.setTitle("Seed: " + seed);
         }
 
 
@@ -471,6 +454,7 @@ if (BIOME == "SAHARA"){
 
             }
 
+
             Area targetArea = scenario.targetArea;
             int x1 = targetArea.getX1()*scale ;
             int x2 = targetArea.getX2()*scale ;
@@ -516,6 +500,49 @@ if (BIOME == "SAHARA"){
             g.setColor(Color.green);
             g.drawRect(x,y,width,height);
             g.fillRect(x,y,width,height);
+
+
+            for (int i = 0; i < players.size(); i++) {
+
+                int xx = players.get(i).getLocation().getX() ;
+                int yy = players.get(i).getLocation().getY() ;
+                int radius = players.get(i).getRadius() ;
+
+
+                g.setColor(Color.blue);
+                g.fillOval(xx,yy,radius,radius);
+
+            }
+
+            tm.start();
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            int randomX ;
+            int randomY ;
+
+            for (int i = 0; i < scenario.numGuards; i++) {
+
+                Point previousPoint = players.get(i).getLocation();
+                int x = previousPoint.getX();
+                int y = previousPoint.getY();
+
+                 randomX = (int)(Math.random()*1)+1;
+                 randomY = (int)(Math.random()*1)+1;
+
+                if(randomX==1) x = x+1 ;
+                if(randomX==2) x = x-1 ;
+                if(randomY==1) y = y+1 ;
+                if(randomY==2) y = y-1 ;
+
+                Point newPoint = new Point(x, y);
+                players.get(i).moveToPoint(newPoint);
+                this.repaint();
+
+            }
+        }
 
         }
 
@@ -594,11 +621,6 @@ if (BIOME == "SAHARA"){
             for (int i = 0; i < 256; i++)
                 p[256 + i] = p[i] = permutation[i];
         }
-
-    }
-
-
-
 
 
 

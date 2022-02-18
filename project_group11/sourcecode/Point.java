@@ -3,12 +3,12 @@ package sourcecode;
 import java.util.Objects;
 
 public class Point {
-    private int x, y;
+    private  int x, y;
     private  boolean isWall;
     private  boolean isTeleport;
     private  boolean isDoor;
     private  boolean isWindow;
-  //  private Block targetTeleport = null;
+    private Point targetTeleport = null;
 
 
     public Point(int x, int y) {
@@ -23,15 +23,13 @@ public class Point {
     public int getY() {
         return y;
     }
-    public void setX(int x){this.x = x;}
 
-    public void setY(int y){this.y = y;}
     public void setIsWall(boolean isWall){
         this.isWall = isWall;
     }
 
-   /**
-    public void setIsTeleport(boolean isTeleport, Block targetPoint){
+
+    public void setIsTeleport(boolean isTeleport, Point targetPoint){
         this.isTeleport = isTeleport;
         if(isTeleport){
             targetTeleport = targetPoint;
@@ -42,8 +40,8 @@ public class Point {
     public boolean getIsTeleport(){ return isTeleport;}
     public boolean getIsDoor(){ return isDoor;}
     public boolean getIsWindow(){ return isWindow;}
-   // public Block getTeleportTarget(){ return targetTeleport;}
-    */
+    public Point getTeleportTarget(){ return targetTeleport;}
+
 
 
     @Override
@@ -68,5 +66,11 @@ public class Point {
         return x == other.x && y == other.y;
     }
 
+    public void setX(int xx ){
+        x=xx ;
+    }
 
+    public void setY(int yy){
+        y=yy ;
+    }
 }
