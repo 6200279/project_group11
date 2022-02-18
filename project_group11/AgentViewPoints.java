@@ -1,3 +1,5 @@
+package project_group11;
+
 public class AgentViewPoints {
 
     public double agentdir = 30.0;
