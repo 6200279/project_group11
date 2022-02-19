@@ -258,8 +258,8 @@ if (BIOME == "SAHARA"){
                 Point locationSpawn = new Point(xx,yy) ;
                 Point pov = new Point(200,200) ;
                 double speed = scenario.baseSpeedGuard ;
-                Player player = new Player(locationSpawn,pov,speed) ;
 
+                Player player = new Player(locationSpawn,speed,"U") ;
                 players.add(player) ;
             }
         }
