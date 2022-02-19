@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="51e95f2d-6f88-46f2-a123-c7c6258cc3a2" name="Default Changelist" comment="merged branches">
+    <list default="true" id="23585820-d569-4c37-b909-c63c06b12b61" name="Changes" comment="play pause button">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +195,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="51e95f2d-6f88-46f2-a123-c7c6258cc3a2" name="Default Changelist" comment="" />
+      <changelist id="23585820-d569-4c37-b909-c63c06b12b61" name="Changes" comment="play pause button" />
       <created>1643807295703</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -211,6 +212,9 @@
       <workItem from="1645105101526" duration="6044000" />
       <workItem from="1645190124262" duration="60000" />
       <workItem from="1645190215394" duration="6834000" />
+      <workItem from="1645200404233" duration="10318000" />
+      <workItem from="1645279586955" duration="229000" />
+      <workItem from="1645287244783" duration="2596000" />
     </task>
     <task id="LOCAL-00001" summary="change package">
       <created>1644309170098</created>
@@ -338,7 +342,21 @@
       <option name="project" value="LOCAL" />
       <updated>1645104545739</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="agent move">
+      <created>1645219228804</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1645219228804</updated>
+    </task>
+    <task id="LOCAL-00020" summary="play pause button">
+      <created>1645224099729</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1645224099729</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -370,6 +388,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -379,6 +398,8 @@
     <MESSAGE value="terraintype callable" />
     <MESSAGE value="added biome types, and scallable map size" />
     <MESSAGE value="merged branches" />
-    <option name="LAST_COMMIT_MESSAGE" value="merged branches" />
+    <MESSAGE value="agent move" />
+    <MESSAGE value="play pause button" />
+    <option name="LAST_COMMIT_MESSAGE" value="play pause button" />
   </component>
 </project>

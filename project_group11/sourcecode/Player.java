@@ -34,6 +34,17 @@ package sourcecode ;
  location =target;
  }
 
+ public void moveRandom(){
+
+  int randomX = (int) (Math.random() * 2 + 1);
+  int randomY = (int) (Math.random() * 2 + 1);
+
+  if (randomX == 1) location.setX(location.getX()+1);
+  if (randomX == 2) location.setX(location.getX()-1);
+  if (randomY == 1) location.setY(location.getY()+1);
+  if (randomY == 2) location.setY(location.getY()-1);
+ }
+
  /*public void markSeenArea(Area visionField){ //field of vision
 
  if(!visionField.getIsTriangle()){

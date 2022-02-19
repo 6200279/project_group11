@@ -258,8 +258,8 @@ if (BIOME == "SAHARA"){
                 Point locationSpawn = new Point(xx,yy) ;
                 Point pov = new Point(200,200) ;
                 double speed = scenario.baseSpeedGuard ;
-
                 Player player = new Player(locationSpawn,pov,speed) ;
+
                 players.add(player) ;
             }
         }
@@ -515,7 +515,7 @@ if (BIOME == "SAHARA"){
 
 
                 g.setColor(Color.blue);
-                g.fillOval(xx,yy,radius,radius);
+                g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
 
             }
             if(play)
@@ -528,30 +528,8 @@ if (BIOME == "SAHARA"){
         @Override
         public void actionPerformed(ActionEvent e) {
 
-
-
-                int randomX;
-                int randomY;
-
                 for (int i = 0; i < scenario.numGuards; i++) {
-
-                    Point previousPoint = players.get(i).getLocation();
-                    int x = previousPoint.getX();
-                    int y = previousPoint.getY();
-
-                    randomX = (int) (Math.random() * 2 + 1);
-                    randomY = (int) (Math.random() * 2 + 1);
-
-                    if (randomX == 1) x = x + 1;
-                    if (randomX == 2) x = x - 1;
-                    if (randomY == 1) y = y + 1;
-                    if (randomY == 2) y = y - 1;
-
-                    System.out.print("x, " + randomX);
-                    System.out.println("y, " + randomY);
-
-                    Point newPoint = new Point(x, y);
-                    players.get(i).moveToPoint(newPoint);
+                    players.get(i).moveRandom();
                     this.repaint();
 
                 }
