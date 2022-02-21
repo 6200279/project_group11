@@ -108,8 +108,8 @@ import java.util.ArrayList;
      public void moveRandom(){
         unSee();
         int randomFace = (int) (Math.random() * 4 + 1)+1;
-       
-        if (randomFace == 1) {
+       System.out.println(randomFace);
+        if (randomFace == 5) {
             facing = "U";
             d.see(facing,location);
             moveInDirection(facing);
