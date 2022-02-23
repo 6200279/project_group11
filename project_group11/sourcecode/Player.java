@@ -1,5 +1,6 @@
 package sourcecode ;
 
+import java.time.chrono.ChronoPeriod;
 import java.util.ArrayList;
 
  public class Player {
@@ -9,13 +10,37 @@ import java.util.ArrayList;
     double speed;
     String facing; // either: "U" up, "D" down, "R" right, "L" left
     private final int radius = 25 ;
+    ArrayList<ArrayList<Point>> grid;
+    ArrayList<Point> visited;
 
 
-    public Player(Point location, double speed, String direction){
+    public Player(Point location, double speed, String direction, ArrayList<ArrayList<Point>> grid){
         this.location = location;
         this.speed = speed;
         this.facing = direction;
-        d = new Descrete_ViewPoint(location, facing);
+        this.grid = grid;
+        grid = translateG(grid);
+        d = new Descrete_ViewPoint(location, facing, grid);
+        d.see(facing,location);
+    }
+
+    public Player(Point location, double speed, String direction, int width, int height){
+        this.location = location;
+        this.speed = speed;
+        this.facing = direction;
+        visited = new ArrayList<>();
+        ArrayList<ArrayList<Point>> grid = new ArrayList<>();
+        for(int i=0;i<height;i++){
+            ArrayList<Point> row= new ArrayList<>();
+            for(int j=0; j<width; j++){
+                row.add(new Point(i,j));
+            }
+            grid.add(row);
+        }
+        this.grid = grid;
+        d = new Descrete_ViewPoint(location, facing, grid);
+        d.see(facing,location);
+
     }
 
 
@@ -23,10 +48,11 @@ import java.util.ArrayList;
     public double getSpeed(){ return speed;}
     public int getRadius(){ return radius;}
     public String getDirection(){ return facing;}
+    public ArrayList<Point> getVisited(){ return visited;}
 
     public void setLocation(Point location){ this.location =  location;}
     public void setSpeed(double speed){ this.speed = speed;}
-    public void moveDirection(String new_direction){ this.facing = new_direction;}
+    public void setFacing(String new_direction){ this.facing = new_direction;}
 
     public void moveToPoint(Point target){
         if(target.getIsWall() || target.getIsWindow()){
@@ -41,7 +67,7 @@ import java.util.ArrayList;
         }
     }
 
-    public void moveInDirection(String direction, ArrayList<ArrayList<Point>> grid){
+    public void moveInDirection(String direction){
         int x = location.getX();
         int y = location.getY();
         Point target= null;
@@ -80,15 +106,32 @@ import java.util.ArrayList;
 
 
      public void moveRandom(){
+        unSee();
+        int randomFace = (int) (Math.random() * 4 + 1)+1;
+       System.out.println(randomFace);
+        if (randomFace == 5) {
+            facing = "U";
+            d.see(facing,location);
+            moveInDirection(facing);
+        }
+        if (randomFace == 2) {
+            facing = "D";
+            d.see(facing,location);
+            moveInDirection(facing);
+        }
+        if (randomFace == 3) {
+            facing = "L";
+            d.see(facing,location);
+            moveInDirection(facing);
+        }
+        if (randomFace == 4) {
+            facing = "R";
+            d.see(facing,location);
+            moveInDirection(facing);
+        }
 
-  int randomX = (int) (Math.random() * 2 + 1);
-  int randomY = (int) (Math.random() * 2 + 1);
-
-  if (randomX == 1) location.setX(location.getX()+1);
-  if (randomX == 2) location.setX(location.getX()-1);
-  if (randomY == 1) location.setY(location.getY()+1);
-  if (randomY == 2) location.setY(location.getY()-1);
- }
+        visited.add(new Point(location.getX(),location.getY()));
+    }
  
 
     public double getAngle(Point a, Point b, Point c){
@@ -103,4 +146,35 @@ import java.util.ArrayList;
 
     }
 
+    public ArrayList<ArrayList<Point>> translateG(ArrayList<ArrayList<Point>> columnGrid){
+        ArrayList<ArrayList<Point>> rowGrid = new ArrayList<>(columnGrid.get(0).size());
+        for(int i =0; i < columnGrid.get(0).size(); i++){
+            ArrayList<Point> row = new ArrayList<>();
+            for(int j=0;j<columnGrid.size();j++){
+                row.add(new Point());
+            }
+            rowGrid.add(row);
+        }
+        for(int i=0;i<columnGrid.size();i++){
+            for(int j=0;j<columnGrid.get(0).size();j++){
+                Point cgPoint = columnGrid.get(i).get(j);
+                 
+                if(cgPoint.getX()==i && cgPoint.getY()==j){
+                    rowGrid.get(i).set(j,cgPoint);
+                }
+            }
+        }
+        return rowGrid;
+    }
+
+
+    public void unSee(){
+        for(ArrayList<Point> row : grid){
+            for(Point p: row){
+                if(p.getIsSeen()){
+                    p.setIsSeen(false);
+                }
+            }
+        }
+    }
 }

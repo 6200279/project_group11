@@ -5,22 +5,22 @@ import java.util.ArrayList;
 
 public class Descrete_ViewPoint {
 
-    private final int radius = 4 ;
+    private final int radius = 55 ;
     private String facing;
     private Point location;
-    ArrayList<ArrayList<Point>> grid = new ArrayList<>(10);
+    ArrayList<ArrayList<Point>> grid = new ArrayList<>();
     int counter=0;
 
-    public static void main(String[] args) {
-        Descrete_ViewPoint d = new Descrete_ViewPoint(new Point(0, 0), "U");
-        d.createGrid(10);
-        d.setLocation(d.grid.get(5).get(6));
-        d.grid.get(7).get(6).setIsWall(true);
-        d.grid.get(6).get(6).setIsWall(true);
-        d.setFacing("D");
-        d.see();
-        d.printGrid();
-    }
+    // public static void main(String[] args) {
+    //     Descrete_ViewPoint d = new Descrete_ViewPoint(new Point(0, 0), "U");
+    //     d.createGrid(10);
+    //     d.setLocation(d.grid.get(5).get(3));
+    //     d.grid.get(7).get(6).setIsWall(true);
+    //     d.grid.get(6).get(6).setIsWall(true);
+    //     d.setFacing("R");
+    //     d.see(facing);
+    //     d.printGrid();
+    // }
 
     public Descrete_ViewPoint(Point location, String facing, ArrayList<ArrayList<Point>> grid){
         this.location = location;
@@ -42,7 +42,7 @@ public class Descrete_ViewPoint {
 
 
 
-    public void see(){
+    public void see(String facing, Point location){
         if(facing.equals("R")){
             ArrayList<Point> straightP = getStraightPath(location, "R");
             int i=0;
