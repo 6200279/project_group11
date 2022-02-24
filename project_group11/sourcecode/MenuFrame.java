@@ -77,7 +77,7 @@ public class MenuFrame extends JFrame {
         buttonStart = new JButton("Start the game",image2) ;
         buttonStart.setHorizontalTextPosition(SwingConstants.CENTER);
         buttonStart.setSize(150, 22);
-        buttonStart.setForeground(Color.WHITE);
+        buttonStart.setForeground(Color.BLACK);
         buttonStart.setFont(new Font("Dialog", Font.PLAIN,15));
         buttonStart.setLocation(getWidth()/2,getHeight()/2+170);
 
@@ -112,7 +112,7 @@ public class MenuFrame extends JFrame {
                     System.out.println("Amount of lake points:" + Lake.size());
                     System.out.println("Amount of plains points:" + plains.size());
 
-                    gameFrame = new GameFrame(scenario,terrain1) ;
+                    gameFrame = new GameFrame(scenario,terrain1,MenuFrame.this) ;
                     gameFrame.getContentPane().add(terrain1) ;
                     gameFrame.repaint();
 
@@ -145,7 +145,7 @@ public class MenuFrame extends JFrame {
                     System.out.println("Amount of lake points:" + Lake.size());
                     System.out.println("Amount of plains points:" + plains.size());
 
-                    gameFrame = new GameFrame(scenario,terrain2) ;
+                    gameFrame = new GameFrame(scenario,terrain2,MenuFrame.this) ;
                     gameFrame.getContentPane().add(terrain2) ;
                     gameFrame.repaint();
                     setVisible(false);
@@ -157,7 +157,9 @@ public class MenuFrame extends JFrame {
         r1=new JRadioButton("GREEK");
         r2=new JRadioButton("SAHARA");
         r1.setBounds(75,50,100,30);
+        r1.setLocation(10,45);
         r2.setBounds(75,100,100,30);
+        r2.setLocation(10,70);
 
         buttonGroup=new ButtonGroup();
         buttonGroup.add(r1);
