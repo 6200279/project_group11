@@ -357,13 +357,12 @@ if (BIOME == "SAHARA"){
                     } else if (n >= 0.40 && n < 0.5) {
                         g.setColor(DIRT_ROAD);
 
-                    } else if (n >= 0.5 && n < 0.70) {
-                        g.setColor(DESERT);
-
-                    } else if (n >= 0.70 && n < 0.75) {
-                        g.setColor(DESERT);
-
                     }
+                    else if (n >= 0.50 && n < 0.75) {
+                        g.setColor(DESERT);
+                    }
+
+
                     // Walls (or Mountains)
                     else if (n >= 0.75 && n < 0.85) {
                         g.setColor(Color.GRAY);

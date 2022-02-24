@@ -9,7 +9,7 @@ import java.awt.Rectangle;
     Point location;
     Descrete_ViewPoint d ;
     double speed;
-    String facing = "U"; // either: "U" up, "D" down, "R" right, "L" left
+    String facing = "D"; // either: "U" up, "D" down, "R" right, "L" left
     private final int radius = 25 ;
     ArrayList<ArrayList<Point>> grid;
     ArrayList<Point> visited;
