@@ -155,6 +155,7 @@ public class MenuFrame extends JFrame {
         });
 
         r1=new JRadioButton("GREEK");
+        r1.setSelected(true);
         r2=new JRadioButton("SAHARA");
         r1.setBounds(75,50,100,30);
         r1.setLocation(10,45);

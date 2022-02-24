@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< Updated upstream
 import java.awt.Rectangle;
 import java.util.Random;
+=======
+>>>>>>> Stashed changes
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -131,6 +134,7 @@ public final class terraingenerator
             List<Point> MOUNTAINS_points = new ArrayList<>();
             List<Point> PLAINS_points = new ArrayList<>();
             List<Point> SNOW_points = new ArrayList<>();
+
 if (BIOME == "GREEK") {
     for (int i = 0; i < width; ++i) { // y
         for (int j = 0; j < height; ++j) { // x
@@ -255,17 +259,18 @@ if (BIOME == "SAHARA"){
             int y1 = scenario.spawnAreaGuards.getY1()*scale+25/2;
             int y2 = scenario.spawnAreaGuards.getY2()*scale-25/2 ;
 
-
-            for (int i = 0; i < scenario.numGuards; i++) {
-
+            
+             for (int i = 0; i < scenario.numGuards; i++) {
+            
                 int xx = (int)  (Math.random() * (x2 - x1)) + x1;
                 int yy = (int) (Math.random() * (y2-y1)) + y1 ;
 
 
                 Point locationSpawn = new Point(xx,yy) ;
+                //Point locationSpawn = new Point(234,432);
                 double speed = scenario.baseSpeedGuard ;
 
-                Player player = new Player(locationSpawn,speed,"R",1200,800) ;
+                Player player = new Player(locationSpawn,speed,1200,800) ;
                 players.add(player) ;
             }
         }
@@ -326,6 +331,7 @@ if (BIOME == "SAHARA"){
                 }
             }
         }
+        
         if (BIOME == "SAHARA"){
             for (int i = 0; i < width; ++i) { // y
                 for (int j = 0; j < height; ++j) { // x
@@ -385,7 +391,9 @@ if (BIOME == "SAHARA"){
             int y2 = walls.get(i).getY2()*scale ;
 
             int x = Math.min(x1,x2);
+           // int xB = Math.max(x1,x2);
             int y = Math.min(y1,y2) ;
+            //int yB = Math.max(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
             rectw.add(new Rectangle(x,y,width,height));
@@ -527,7 +535,7 @@ if (BIOME == "SAHARA"){
                 for(int h = 0; h<p.grid.get(0).size(); h++){
                     if(p.grid.get(s).get(h).getIsSeen()){
                         Point p1 = p.grid.get(s).get(h); 
-                        g.setColor(Color.pink);
+                        g.setColor(new Color(181,19,234,48));
                         g.fillOval(p1.getX(),p1.getY(),2,2);
                         
                     }
@@ -542,13 +550,13 @@ if (BIOME == "SAHARA"){
 
         for (int j = 0; j <players.size() ; j++) {
             g.setColor(Color.green);
-            for(int k=0 ; k<players.get(j).getVisited().size() ; k++){
-                Player p = players.get(j);
+            Player player = players.get(j);
+            for(int k=0 ; k<player.getVisited().size() ; k++){
                 g.setColor(Color.green);
-                int xxx = players.get(j).getVisited().get(k).getX()/scale ;
-                int yyy = players.get(j).getVisited().get(k).getY()/scale ;
-                g.fillOval((this.getWidth()-150)-p.getRadius()/scale/2+xxx,(this.getHeight()-150)-p.getRadius()/scale/2+yyy,p.getRadius()/scale,p.getRadius()/scale);
-            }
+                int xxx = player.getVisited().get(k).getX()/scale ;
+                int yyy = player.getVisited().get(k).getY()/scale ;
+                g.fillOval((this.getWidth()-150)-player.getRadius()/scale/2+xxx,(this.getHeight()-150)-player.getRadius()/scale/2+yyy,player.getRadius()/scale,player.getRadius()/scale);
+           }
         }
             
 

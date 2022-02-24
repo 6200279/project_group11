@@ -1,6 +1,6 @@
 package sourcecode ;
 
-import java.time.chrono.ChronoPeriod;
+
 import java.util.ArrayList;
 import java.awt.Rectangle;
 
@@ -9,28 +9,17 @@ import java.awt.Rectangle;
     Point location;
     Descrete_ViewPoint d ;
     double speed;
-    String facing; // either: "U" up, "D" down, "R" right, "L" left
+    String facing = "U"; // either: "U" up, "D" down, "R" right, "L" left
     private final int radius = 25 ;
     ArrayList<ArrayList<Point>> grid;
     ArrayList<Point> visited;
 
-
-    public Player(Point location, double speed, String direction, ArrayList<ArrayList<Point>> grid){
+    public Player(Point location, double speed, int width, int height){
         this.location = location;
         this.speed = speed;
-        this.facing = direction;
-        this.grid = grid;
-        grid = translateG(grid);
-        d = new Descrete_ViewPoint(location, facing, grid);
-        d.see(facing,location);
-    }
-
-    public Player(Point location, double speed, String direction, int width, int height){
-        this.location = location;
-        this.speed = speed;
-        this.facing = direction;
+        //this.facing = direction;
         visited = new ArrayList<>();
-        ArrayList<ArrayList<Point>> grid = new ArrayList<>();
+        grid = new ArrayList<>();
         for(int i=0;i<height;i++){
             ArrayList<Point> row= new ArrayList<>();
             for(int j=0; j<width; j++){
@@ -38,10 +27,8 @@ import java.awt.Rectangle;
             }
             grid.add(row);
         }
-        this.grid = grid;
         d = new Descrete_ViewPoint(location, facing, grid);
         d.see(facing,location);
-
     }
 
 
@@ -57,7 +44,7 @@ import java.awt.Rectangle;
 
     public void moveToPoint(Point target){
         if(target.getIsWall() || target.getIsWindow()){
-        System.out.println("Ilegal");
+            System.out.println("Ilegal");
             return;
         }
         if(target.getIsTeleport()){
@@ -119,20 +106,20 @@ import java.awt.Rectangle;
 
      public void moveRandom(ArrayList<Rectangle> rectw){
         unSee();
+
         int randomFace = (int) (Math.random() * 4 + 1)+1;
-       System.out.println(randomFace);
         if (randomFace == 5) {
-            facing = "U";
+            facing = "R";
             d.see(facing,location);
             moveInDirection(facing,rectw);
         }
         if (randomFace == 2) {
-            facing = "D";
+            facing = "R";
             d.see(facing,location);
             moveInDirection(facing,rectw);
         }
         if (randomFace == 3) {
-            facing = "L";
+            facing = "R";
             d.see(facing,location);
             moveInDirection(facing,rectw);
         }
@@ -141,7 +128,6 @@ import java.awt.Rectangle;
             d.see(facing,location);
             moveInDirection(facing,rectw);
         }
-
         visited.add(new Point(location.getX(),location.getY()));
     }
  

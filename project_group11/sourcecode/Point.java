@@ -10,6 +10,7 @@ public class Point {
     private  boolean isWindow;
     private Point targetTeleport = null;
     private boolean seen = false;
+    private boolean visited = false;
 
 
     public Point(int x, int y) {
@@ -44,6 +45,7 @@ public class Point {
     public boolean getIsDoor(){ return isDoor;}
     public boolean getIsWindow(){ return isWindow;}
     public boolean getIsSeen(){ return seen;}
+    public boolean getIsVisited(){ return visited;}
     public Point getTeleportTarget(){ return targetTeleport;}
 
 
@@ -80,5 +82,9 @@ public class Point {
 
     public void setIsSeen(boolean Isseen){
         seen = Isseen;
+    }
+
+    public void setIsVisited(boolean b) {
+        visited = b;
     }
 }

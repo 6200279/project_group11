@@ -28,11 +28,6 @@ public class Descrete_ViewPoint {
         this.grid = grid;
     }
 
-    public Descrete_ViewPoint(Point location, String facing){
-        this.location = location;
-        this.facing = facing;
-    }
-
     public Point getLocation(){ return location; } 
     public String getFacing(){ return facing; }
     public int getRadius(){ return radius; }
@@ -98,26 +93,26 @@ public class Descrete_ViewPoint {
             int cY = current.getY();
             Point next= null;
             if(direction.equals("R")){
-                if(cY+1>=grid.get(0).size()){ break;}
-                next =  grid.get(cX).get(cY+1);
+                if(cX+1>=grid.size()){ break;}
+                next =  grid.get(cX+1).get(cY);
                 if(next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
             else if(direction.equals("L")){
-                if(cY-1 < 0 ){ break;}
-                next =  grid.get(cX).get(cY-1);
-                if(next.getIsWall()|| next.getIsDoor()){ break;}
-                straightPath.add(next);
-            }
-            else if(direction.equals("U")){
                 if(cX-1 < 0 ){ break;}
                 next =  grid.get(cX-1).get(cY);
                 if(next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
+            else if(direction.equals("U")){
+                if(cY-1 < 0 ){ break;}
+                next =  grid.get(cX).get(cY-1);
+                if(next.getIsWall()|| next.getIsDoor()){ break;}
+                straightPath.add(next);
+            }
             else if(direction.equals("D")){
-                if(cX+1 >= grid.size() ){ break;}
-                next =  grid.get(cX+1).get(cY);
+                if(cY+1 >= grid.get(0).size() ){ break;}
+                next =  grid.get(cX).get(cY+1);
                 if(next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
@@ -149,18 +144,20 @@ public class Descrete_ViewPoint {
             }
             if(direction.equals("UR")){ //Up right on the diagonal
                 
-                if(cX-1 < 0 || cY+1 >= grid.get(0).size()) {break;} // prevent out of bounds
-                current = grid.get(cX-1).get(cY+1); 
-            }else if(direction.equals("DR")){ //Down right on the diagonal
+                if(cX+1 >= grid.size() || cY-1 <0) {break;} // prevent out of bounds
+                current = grid.get(cX+1).get(cY-1); 
+            }
+            else if(direction.equals("DR")){ //Down right on the diagonal
                 if(cX+1 >= grid.size() || cY+1 >= grid.get(0).size()) {break;} // prevent out of bounds
                 current = grid.get(current.getX()+1).get(current.getY()+1); 
-            }else if(direction.equals("UL")){ //Up Left on the diagonal
+            }
+            else if(direction.equals("UL")){ //Up Left on the diagonal
                 if(cX-1 < 0 || cY-1 < 0) {break;}
                 current = grid.get(current.getX()-1).get(current.getY()-1);
-            }else if(direction.equals("DL")){ //Down Left on the diagonal
-                
-                if(cX+1 >= grid.size() || cY-1 < 0) {break;}
-                current = grid.get(current.getX()+1).get(current.getY()-1);
+            }
+            else if(direction.equals("DL")){ //Down Left on the diagonal
+                if(cX-1 <0 || cY+1 >= grid.get(0).size()) {break;}
+                current = grid.get(current.getX()-1).get(current.getY()+1);
             }
             i++;
         }
@@ -169,7 +166,7 @@ public class Descrete_ViewPoint {
 
     public void seeDiagonal(ArrayList<Point> diagPath){
         for(Point p: diagPath){
-            if(p.getIsDoor()||p.getIsWall()){ break;}
+            //if(p.getIsDoor()||p.getIsWall()){ break;}
             p.setIsSeen(true);
         }
     }
