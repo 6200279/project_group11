@@ -38,7 +38,8 @@ public class MenuFrame extends JFrame {
 
     public MenuFrame(){
 
-        long seed = 13515420;
+        //long seed = 13515420;
+        long seed =1284928713;
         Random rand = new Random(seed);
 
 

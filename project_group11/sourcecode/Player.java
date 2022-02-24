@@ -104,7 +104,8 @@ import java.awt.Rectangle;
      }
 
 
-     public void moveRandom(ArrayList<Rectangle> rectw){
+
+     public void moveRndom(ArrayList<Rectangle> rectw){
         unSee();
 
         int randomFace = (int) (Math.random() * 4 + 1)+1;

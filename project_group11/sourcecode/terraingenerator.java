@@ -4,11 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< Updated upstream
+
 import java.awt.Rectangle;
-import java.util.Random;
-=======
->>>>>>> Stashed changes
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -20,6 +17,7 @@ public final class terraingenerator
 {
     public static final Color CITY = new Color(214,217,223);
     public static final Color DESERT = new Color(255,204,102);
+    public static final Color DESERT2 = new Color(255,160,102);
     public static final Color DIRT_ROAD = new Color(153,102,0);
     public static final Color FOREST = new Color(0,102,0);
     public static final Color HILLS = new Color(51,153,0);
@@ -349,32 +347,32 @@ if (BIOME == "SAHARA"){
 
                     } else if (n >= 0.25 && n < 0.30) {
                         g.setColor(DESERT);
-                        map.put("HIlls", new MyCoord(j, i));
+
                     }
                     // Floors (or Planes)
                     else if (n >= 0.30 && n < 0.40) {
-                        g.setColor(DESERT);
-                        map.put("DESERT", new MyCoord(j, i));
+                        g.setColor(DESERT2);
+
 
                     } else if (n >= 0.40 && n < 0.5) {
-                        g.setColor(DESERT);
-                        map.put("LAKE", new MyCoord(j, i));
+                        g.setColor(DIRT_ROAD);
+
                     } else if (n >= 0.5 && n < 0.70) {
                         g.setColor(DESERT);
-                        map.put("PLAINS", new MyCoord(j, i));
+
                     } else if (n >= 0.70 && n < 0.75) {
                         g.setColor(DESERT);
-                        map.put("FOREST", new MyCoord(j, i));
+
                     }
                     // Walls (or Mountains)
                     else if (n >= 0.75 && n < 0.85) {
                         g.setColor(Color.GRAY);
-                        map.put("MOUNTAINS", new MyCoord(j, i));
+
                     }
                     // Ice (or Snow)
                     else {
                         g.setColor(Color.white);
-                        map.put("SNOW", new MyCoord(j, i));
+
                     }
                     g.fillRect(i * 10, j * 10, 10, 10);
                     MyCoord coord = map.get("FOREST");
@@ -572,7 +570,7 @@ if (BIOME == "SAHARA"){
 
                 for (int i = 0; i < scenario.numGuards; i++) {
 
-                    players.get(i).moveRandom(rectw);
+                    players.get(i).moveRndom(rectw);
                     this.repaint();
 
                 }
