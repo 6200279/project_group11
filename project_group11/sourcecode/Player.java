@@ -2,6 +2,7 @@ package sourcecode ;
 
 import java.time.chrono.ChronoPeriod;
 import java.util.ArrayList;
+import java.awt.Rectangle;
 
  public class Player {
 
@@ -67,67 +68,78 @@ import java.util.ArrayList;
         }
     }
 
-    public void moveInDirection(String direction){
-        int x = location.getX();
-        int y = location.getY();
-        Point target= null;
-        if(direction.equals("U")){ 
-            facing = "U";
-            if(x-1 < 0 ){ System.out.println("Cannot move here"); return;}
-            target = grid.get(x-1).get(y); 
-        }
-        else if(direction.equals("D")){
-            facing = "D";
-            if(x+1 >= grid.size() ){ System.out.println("Cannot move here"); return;}
-            target = grid.get(x+1).get(y); 
-        }
-        else if(direction.equals("L")){
-            facing = "L";
-            if(y-1 <  0 ){ System.out.println("Cannot move here"); return;}
-            target = grid.get(x).get(y-1); 
-        }
-        else if(direction.equals("R")){
-            facing = "R";
-            if(y+1 >= grid.get(0).size() ){ System.out.println("Cannot move here"); return;}
-            target = grid.get(x).get(y+1); 
-        }
-
-        if(target.getIsWall() || target.getIsWindow()){
-        System.out.println("Ilegal");
-            return;
-        }
-        if(target.getIsTeleport()){
-            location = target.getTeleportTarget();
-        }
-        else{
-            location = target;
-        }
+    public Rectangle bounds(){
+        return(new Rectangle(location.getX()-radius/2,location.getY()-radius/2,radius,radius));
     }
 
+    public void moveInDirection(String direction,ArrayList<Rectangle> rectw){
+        int x = location.getX();
+        int y = location.getY();
+        Point target = null;
+        if (direction.equals("U")) {
+            facing = "U";
+            target = grid.get(x - 1).get(y);
+        } else if (direction.equals("D")) {
+            facing = "D";
+            target = grid.get(x + 1).get(y);
+        } else if (direction.equals("L")) {
+            facing = "L";
+            target = grid.get(x).get(y - 1);
+        } else if (direction.equals("R")) {
+            facing = "R";
+            target = grid.get(x).get(y + 1);
+        }
 
-     public void moveRandom(){
+        if (collision(rectw, target)) {
+            System.out.println("Illegal");
+            return;
+        }
+        if (target.getIsTeleport()) {
+            location = target.getTeleportTarget();
+        } else {
+            location = target;
+            System.out.println(target.getX()+" "+target.getY()+" ");
+        }
+    }
+     public boolean collision(ArrayList<Rectangle> rectw,Point target) {
+         Rectangle rectangle1 = this.bounds();
+         rectangle1.setLocation(target.getX()-radius/2,target.getY()-radius/2);
+
+
+         for (int i = 0; i < rectw.size(); i++) {
+
+             if (rectangle1.intersects(rectw.get(i))) {
+                 return true;
+
+             }
+         }
+         return false;
+     }
+
+
+     public void moveRandom(ArrayList<Rectangle> rectw){
         unSee();
         int randomFace = (int) (Math.random() * 4 + 1)+1;
        System.out.println(randomFace);
         if (randomFace == 5) {
             facing = "U";
             d.see(facing,location);
-            moveInDirection(facing);
+            moveInDirection(facing,rectw);
         }
         if (randomFace == 2) {
             facing = "D";
             d.see(facing,location);
-            moveInDirection(facing);
+            moveInDirection(facing,rectw);
         }
         if (randomFace == 3) {
             facing = "L";
             d.see(facing,location);
-            moveInDirection(facing);
+            moveInDirection(facing,rectw);
         }
         if (randomFace == 4) {
             facing = "R";
             d.see(facing,location);
-            moveInDirection(facing);
+            moveInDirection(facing,rectw);
         }
 
         visited.add(new Point(location.getX(),location.getY()));

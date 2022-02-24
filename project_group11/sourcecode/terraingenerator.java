@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.Rectangle;
 import java.util.Random;
 
 import java.awt.Color;
@@ -65,6 +66,7 @@ public final class terraingenerator
         private Scenario scenario ;
 
         private ArrayList<Area>walls ;
+        private ArrayList<Rectangle>rectw;
         private ArrayList<Area>doors ;
         private ArrayList<Area>windows  ;
         private ArrayList<TelePortal>telePortals ;
@@ -88,6 +90,7 @@ public final class terraingenerator
 
         private Timer tm  ;
 
+
         public  Map(int height, int width, double z,int scale, String biome, Scenario scenario)
         {
             this.scenario = scenario ;
@@ -99,6 +102,7 @@ public final class terraingenerator
             telePortals = scenario.getTeleportals() ;
             shaded = scenario.getShaded() ;
             players = new ArrayList<Player>() ;
+            rectw = new ArrayList<Rectangle>();
 
             this.height = height;
             this.width = width;
@@ -246,10 +250,10 @@ if (BIOME == "SAHARA"){
 
         public void createPlayers(){
 
-            int x1 = scenario.spawnAreaGuards.getX1()*scale ;
-            int x2 = scenario.spawnAreaGuards.getX2()*scale ;
-            int y1 = scenario.spawnAreaGuards.getY1()*scale ;
-            int y2 = scenario.spawnAreaGuards.getY2()*scale ;
+            int x1 = scenario.spawnAreaGuards.getX1()*scale+25/2;
+            int x2 = scenario.spawnAreaGuards.getX2()*scale-25/2 ;
+            int y1 = scenario.spawnAreaGuards.getY1()*scale+25/2;
+            int y2 = scenario.spawnAreaGuards.getY2()*scale-25/2 ;
 
 
             for (int i = 0; i < scenario.numGuards; i++) {
@@ -384,6 +388,7 @@ if (BIOME == "SAHARA"){
             int y = Math.min(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
+            rectw.add(new Rectangle(x,y,width,height));
 
             g.setColor(Color.black);
             g.drawRect(x,y,width,height);
@@ -412,10 +417,12 @@ if (BIOME == "SAHARA"){
             int y1 = windows.get(i).getY1()*scale ;
             int y2 = windows.get(i).getY2()*scale ;
 
+
             int x = Math.min(x1,x2);
             int y = Math.min(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
+            rectw.add(new Rectangle(x,y,width,height));
 
             g.setColor(Color.blue);
             g.drawRect(x,y,width,height);
@@ -556,7 +563,8 @@ if (BIOME == "SAHARA"){
         public void actionPerformed(ActionEvent e) {
 
                 for (int i = 0; i < scenario.numGuards; i++) {
-                    players.get(i).moveRandom();
+
+                    players.get(i).moveRandom(rectw);
                     this.repaint();
 
                 }
