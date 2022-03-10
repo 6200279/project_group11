@@ -248,20 +248,38 @@ if (BIOME == "SAHARA"){
     else
        return listempty; 
 }
+        public boolean canSpawn(Rectangle spawn,int  x1,int x2,int y1,int y2){
+
+
+
+            return false;
+        }
 
 
         public void createPlayers(){
 
-            int x1 = scenario.spawnAreaGuards.getX1()*scale+25/2;
-            int x2 = scenario.spawnAreaGuards.getX2()*scale-25/2 ;
-            int y1 = scenario.spawnAreaGuards.getY1()*scale+25/2;
-            int y2 = scenario.spawnAreaGuards.getY2()*scale-25/2 ;
+            int x1 = scenario.spawnAreaIntruders.leftBoundary*scale;
+            int x2 = scenario.spawnAreaIntruders.rightBoundary*scale ;
+            int y1 = scenario.spawnAreaIntruders.bottomBoundary*scale;
+            int y2 = scenario.spawnAreaIntruders.topBoundary*scale ;
+            int radiusSc = (25/2)*scale;
 
             
              for (int i = 0; i < scenario.numGuards; i++) {
             
                 int xx = (int)  (Math.random() * (x2 - x1)) + x1;
                 int yy = (int) (Math.random() * (y2-y1)) + y1 ;
+                if(xx<x1+25/2){
+                    xx=x1+25/2;
+                }else if(xx>x2-25/2){
+                    xx=x2-25/2;
+                }
+                 if(yy<y1+25/2){
+                     yy=y1+25/2;
+                 }else if(yy>y2-25/2){
+                    yy=y2-25/2;
+                }
+
 
 
                 Point locationSpawn = new Point(xx,yy) ;
@@ -485,6 +503,7 @@ if (BIOME == "SAHARA"){
         g.drawRect(x,y,width,height);
         g.fillRect(x,y,width,height);
 
+
         Area spawnAreaIntruders = scenario.spawnAreaIntruders ;
         x1 = spawnAreaIntruders.getX1()*scale ;
         x2 = spawnAreaIntruders.getX2()*scale ;
@@ -499,6 +518,7 @@ if (BIOME == "SAHARA"){
         g.setColor(Color.blue);
         g.drawRect(x,y,width,height);
         g.fillRect(x,y,width,height);
+
 
 
         Area spawnAreaGuards = scenario.spawnAreaGuards;
