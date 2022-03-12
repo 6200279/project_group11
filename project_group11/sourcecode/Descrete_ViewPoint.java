@@ -10,6 +10,8 @@ public class Descrete_ViewPoint {
     private Point location;
     ArrayList<ArrayList<Point>> grid = new ArrayList<>();
     int counter=0;
+    ArrayList<Point> lookedAt = new ArrayList<>();
+    ArrayList<ArrayList<Integer>> checkedByAll = new ArrayList<>();
 
     // public static void main(String[] args) {
     //     Descrete_ViewPoint d = new Descrete_ViewPoint(new Point(0, 0), "U");
@@ -37,7 +39,8 @@ public class Descrete_ViewPoint {
 
 
 
-    public void see(String facing, Point location){
+    public void see(String facing, Point location, ArrayList<ArrayList<Integer>> checkedByAll){
+        this.checkedByAll = checkedByAll;
         if(facing.equals("R")){
             ArrayList<Point> straightP = getStraightPath(location, "R");
             int i=0;
@@ -166,8 +169,14 @@ public class Descrete_ViewPoint {
 
     public void seeDiagonal(ArrayList<Point> diagPath){
         for(Point p: diagPath){
-            //if(p.getIsDoor()||p.getIsWall()){ break;}
+            if(p.getIsDoor()||p.getIsWall()){ break;}
             p.setIsSeen(true);
+            p.setIsLookedAt(true);
+            lookedAt.add(p);
+            int currentValue = checkedByAll.get(p.getX()).get(p.getY());
+            checkedByAll.get(p.getX()).set(p.getY(),currentValue+1);
+            //p.checked++;
+
         }
     }
 
@@ -175,6 +184,12 @@ public class Descrete_ViewPoint {
         if(direction.equals("R")){
             while(!endNode.getIsSeen()){
                 startNode.setIsSeen(true);
+                //startNode.setIsLookedAt(true);
+                
+                lookedAt.add(startNode);
+                int currentValue = checkedByAll.get(startNode.getX()).get(startNode.getY());
+                checkedByAll.get(startNode.getX()).set(startNode.getY(),currentValue+1);
+               // startNode.checked++;
                 if(startNode.getIsDoor()|| startNode.getIsWall()){ break;}
                 if(startNode.getY()+1 >= grid.get(0).size()){break;}
                 startNode = grid.get(startNode.getX()).get(startNode.getY()+1);
@@ -184,6 +199,11 @@ public class Descrete_ViewPoint {
         else if(direction.equals("L")){
             while(!endNode.getIsSeen()){
                 startNode.setIsSeen(true);
+                startNode.setIsLookedAt(true);
+                lookedAt.add(startNode);
+                int currentValue = checkedByAll.get(startNode.getX()).get(startNode.getY());
+                checkedByAll.get(startNode.getX()).set(startNode.getY(),currentValue+1);
+                //startNode.checked++;
                 if(startNode.getIsDoor()|| startNode.getIsWall()){ break;}
                 if(startNode.getY()-1 < 0){ break;}
                 startNode = grid.get(startNode.getX()).get(startNode.getY()-1);
@@ -193,6 +213,11 @@ public class Descrete_ViewPoint {
         else if(direction.equals("U")){
             while(!endNode.getIsSeen()){
                 startNode.setIsSeen(true);
+                startNode.setIsLookedAt(true);
+                lookedAt.add(startNode);
+                int currentValue = checkedByAll.get(startNode.getX()).get(startNode.getY());
+                checkedByAll.get(startNode.getX()).set(startNode.getY(),currentValue+1);
+               // startNode.checked++;
                 if(startNode.getIsDoor()|| startNode.getIsWall()){ break;}
                 if(startNode.getX()-1 < 0){break;}
                 startNode = grid.get(startNode.getX()-1).get(startNode.getY());
@@ -202,12 +227,19 @@ public class Descrete_ViewPoint {
         else if(direction.equals("D")){
             while(!endNode.getIsSeen()){
                 startNode.setIsSeen(true);
+                startNode.setIsLookedAt(true);
+                lookedAt.add(startNode);
+                int currentValue = checkedByAll.get(startNode.getX()).get(startNode.getY());
+                checkedByAll.get(startNode.getX()).set(startNode.getY(),currentValue+1);
+                //startNode.checked++;
                 if(startNode.getIsDoor()|| startNode.getIsWall()){ break;}
                 if(startNode.getX()+1 >= grid.size()){break;}
                 startNode = grid.get(startNode.getX()+1).get(startNode.getY());
             }
         }
     }
+
+    public ArrayList<Point> getLookedAtArray() { return lookedAt;}
 
 
 

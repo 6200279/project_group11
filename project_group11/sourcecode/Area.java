@@ -10,6 +10,7 @@ package sourcecode;
  * @author joel
  */
 public class Area {
+    
     protected int leftBoundary;
     protected int rightBoundary;
     protected int topBoundary;
@@ -54,11 +55,16 @@ public class Area {
         return (y>bottomBoundary)&(y<topBoundary)&(x>leftBoundary)&(x<rightBoundary);
     }
 
+    public boolean isHit(int x,int y){
+        return x>=leftBoundary && x<=rightBoundary && y<=topBoundary && y>= bottomBoundary;
+    }
+
     /*
         Check whether something with a radius is in the target area
         STILL TO BE IMPLEMENTED
     */
     public boolean isHit(double x,double y,double radius){
+        (y>bottomBoundary)&(y<topBoundary)&(x>leftBoundary)&(x<rightBoundary);
         return false;
     }
 

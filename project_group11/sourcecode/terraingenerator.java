@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.awt.Rectangle;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.HashMap;
@@ -74,7 +72,9 @@ public final class terraingenerator
         private ArrayList<Area>shaded ;
         private HashMap<String, MyCoord> map = new HashMap<String,MyCoord>();
         private ArrayList<Player> players ;
+        private Point [] sharedArr;
         private ArrayList<Point> locationspawn ;
+        private boolean rectwIsSet = false;
 
 
 
@@ -92,6 +92,8 @@ public final class terraingenerator
         private Timer tm  ;
 
 
+
+
         public  Map(int height, int width, double z,int scale, String biome, Scenario scenario)
         {
             this.scenario = scenario ;
@@ -104,6 +106,9 @@ public final class terraingenerator
             shaded = scenario.getShaded() ;
             players = new ArrayList<Player>() ;
             rectw = new ArrayList<Rectangle>();
+            
+
+
 
             this.height = height;
             this.width = width;
@@ -144,40 +149,44 @@ if (BIOME == "GREEK") {
 
             if (n < 0.25) {
                 // FOREST
-                FOREST_points.add(new Point(j,i));
+                FOREST_points.add(p);
+                //allPoint.add(p);
                 // System.out.println("forestpoints:"+FOREST_points.size());
 
 
             } else if (n >= 0.25 && n < 0.30) {
                 // HILLS
-                HILLs_points.add(new Point(j,i));
-
+                HILLs_points.add(p);
+                //allPoint.add(p);
             }
             // DESERT
             else if (n >= 0.30 && n < 0.40) {
 
-                Desert_points.add(new Point(j,i));
-
+                Desert_points.add(p);
+                //allPoint.add(p);
             } else if (n >= 0.40 && n < 0.5) {
                 //LAKE
-                LAKE_points.add(new Point(j,i));
-
+                LAKE_points.add(p);
+               // allPoint.add(p);
             } else if (n >= 0.5 && n < 0.70) {
                 // PLAINS
-                PLAINS_points.add(new Point(j,i));
-
+                PLAINS_points.add(p);
+                //allPoint.add(p);
             } else if (n >= 0.70 && n < 0.75) {
                 // FOREST
-                FOREST_points.add(new Point(j,i));
+                FOREST_points.add(p);
+                //allPoint.add(p);
             }
             // MOUNTAINS
             else if (n >= 0.75 && n < 0.85) {
 
-                MOUNTAINS_points.add(new Point(j,i));
+                MOUNTAINS_points.add(p);
+                //allPoint.add(p);
             }
             // Ice (or Snow)
             else {
-                SNOW_points.add(new Point(j,i));
+                SNOW_points.add(p);
+                //allPoint.add(p);
                 //System.out.println("Snowpoints:"+SNOW_points.size());
             }
         }
@@ -193,37 +202,45 @@ if (BIOME == "SAHARA"){
 
             if (n < 0.25) {
                 // FOREST
-                Desert_points.add(new Point(j,i));
+                Desert_points.add(p);
+                //allPoint.add(p);
                 // System.out.println("forestpoints:"+FOREST_points.size());
 
 
             } else if (n >= 0.25 && n < 0.30) {
                 // HILLS
-                Desert_points.add(new Point(j,i));
+                Desert_points.add(p);
+                //allPoint.add(p);
             }
             // DESERT
             else if (n >= 0.30 && n < 0.40) {
 
-                Desert_points.add(new Point(j,i));
+                Desert_points.add(p);
+                //allPoint.add(p);
 
             } else if (n >= 0.40 && n < 0.5) {
                 //LAKE
-                Desert_points.add(new Point(j,i));
+                Desert_points.add(p);
+               ////// allPoint.add(p);
             } else if (n >= 0.5 && n < 0.70) {
                 // PLAINS
-                Desert_points.add(new Point(j,i));
+                Desert_points.add(p);
+              ///  allPoint.add(p);
             } else if (n >= 0.70 && n < 0.75) {
                 // FOREST
-                Desert_points.add(new Point(j,i));
+                Desert_points.add(p);
+               // allPoint.add(p);
             }
             // MOUNTAINS
             else if (n >= 0.75 && n < 0.85) {
 
-                MOUNTAINS_points.add(new Point(j,i));
+                MOUNTAINS_points.add(p);
+              //  allPoint.add(p);            
             }
             // Ice (or Snow)
             else {
-                SNOW_points.add(new Point(j,i));
+                SNOW_points.add(p);
+              //  allPoint.add(p);
                 //System.out.println("Snowpoints:"+SNOW_points.size());
             }
         }
@@ -257,20 +274,56 @@ if (BIOME == "SAHARA"){
             int y1 = scenario.spawnAreaGuards.getY1()*scale+25/2;
             int y2 = scenario.spawnAreaGuards.getY2()*scale-25/2 ;
 
-            
-             for (int i = 0; i < scenario.numGuards; i++) {
+            // ArrayList<ArrayList<Integer>> lookedAt = new ArrayList<>();
+            // for(int r=0; r<1200; r++ ){
+            //     ArrayList<Integer> row = new ArrayList<>();
+            //     for(int c=0; c<800; c++){
+            //         row.add(0);
+            //     }
+            //     lookedAt.add(row);
+            // }
+
+            // ArrayList<Point> sharedArray = new ArrayList<>();
+            // for(int i=0; i<800; i++){
+            //     for(int j=0; j<1200;j++){
+            //         sharedArray.add(new Point(i,j));
+            //     }
+            // }
+
+            int maxX = 800;
+            int maxY = 1200;
+            int maxHash = ((maxX+maxY)*(maxX+maxY+1)/2)+maxY; 
+
+            sharedArr = new Point [maxHash+1];
+
+            for(int i=0; i<maxY; i++){
+                for(int j=0; j<maxX; j++){
+                    int hash = ((i+j)*(i+j+1)/2)+j;
+                    sharedArr[hash] = new Point(i,j);
+                }
+            }
+
+            for (int i = 0; i < scenario.numGuards; i++) {
             
                 int xx = (int)  (Math.random() * (x2 - x1)) + x1;
                 int yy = (int) (Math.random() * (y2-y1)) + y1 ;
 
-
-                Point locationSpawn = new Point(xx,yy) ;
-                //Point locationSpawn = new Point(234,432);
+                int hash = ((xx+yy)*(xx+yy+1)/2)+yy;
+                Point locationSpawn = sharedArr[hash];
+                //Point locationSpawn = new Point(xx,yy) ;
+                // for(Point p: sharedArr){
+                //     if(p.getX() == xx && p.getY() == yy) locationSpawn = p;
+                // }
+                
+                
                 double speed = scenario.baseSpeedGuard ;
 
-                Player player = new Player(locationSpawn,speed,1200,800) ;
-                players.add(player) ;
+                Player player = new Player(locationSpawn,speed,1200,800, sharedArr,String.valueOf(i)) ;
+                players.add(player);
+                //player.setWallPoints(wallPoints);
             }
+
+           
         }
 
 
@@ -386,6 +439,7 @@ if (BIOME == "SAHARA"){
             int x2 = walls.get(i).getX2()*scale ;
             int y1 = walls.get(i).getY1()*scale ;
             int y2 = walls.get(i).getY2()*scale ;
+            
 
             int x = Math.min(x1,x2);
            // int xB = Math.max(x1,x2);
@@ -393,6 +447,10 @@ if (BIOME == "SAHARA"){
             //int yB = Math.max(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
+
+            for(Point p: sharedArr){
+
+            }
             rectw.add(new Rectangle(x,y,width,height));
 
             g.setColor(Color.black);
@@ -434,7 +492,13 @@ if (BIOME == "SAHARA"){
             g.fillRect(x,y,width,height);
 
         }
-
+        
+            for(Player pl : players){
+                pl.setRectw(rectw);
+                //if(!rectwIsSet)  pl.setWalls();
+                rectwIsSet = true;
+            }
+       
         for (int i = 0; i < telePortals.size(); i++) {
             int x1 = telePortals.get(i).getX1()*scale ;
             int x2 = telePortals.get(i).getX2()*scale ;
@@ -528,16 +592,18 @@ if (BIOME == "SAHARA"){
             g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
 
             
-            for(int s=0;s < p.grid.size(); s++){
-                for(int h = 0; h<p.grid.get(0).size(); h++){
-                    if(p.grid.get(s).get(h).getIsSeen()){
-                        Point p1 = p.grid.get(s).get(h); 
-                        g.setColor(new Color(181,19,234,48));
-                        g.fillOval(p1.getX(),p1.getY(),2,2);
+            for(Point watchedP: p.getPOV().getCurrentlyWatched()){
+                g.setColor(new Color(181,19,234,48));
+                g.fillOval(watchedP.getX(),watchedP.getY(),2,2);
+            }
+            //         if(p.grid.get(s).get(h).getIsSeen()){
+            //             Point p1 = p.grid.get(s).get(h); 
+            //             g.setColor(new Color(181,19,234,48));
+            //             g.fillOval(p1.getX(),p1.getY(),2,2);
                         
-                    }
-                }
-            }    
+            //         }
+            //     }
+            // }    
         }
 
         g.setColor(Color.red);
@@ -555,7 +621,6 @@ if (BIOME == "SAHARA"){
                 g.fillOval((this.getWidth()-150)-player.getRadius()/scale/2+xxx,(this.getHeight()-150)-player.getRadius()/scale/2+yyy,player.getRadius()/scale,player.getRadius()/scale);
            }
         }
-            
 
             if(play)
                 tm.start();
@@ -569,7 +634,9 @@ if (BIOME == "SAHARA"){
 
                 for (int i = 0; i < scenario.numGuards; i++) {
 
-                    players.get(i).moveRndom(rectw);
+                    //players.get(i).moveRndom();
+                    players.get(i).moveAnt();
+                    //players.get(i).move_MDFS();
                     this.repaint();
 
                 }

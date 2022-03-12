@@ -11,6 +11,12 @@ public class Point {
     private Point targetTeleport = null;
     private boolean seen = false;
     private boolean visited = false;
+    private boolean explored_MDFS = false;
+    private boolean visited_MDFS = false;
+    private boolean seenOnce = false;
+    private String explorer_id = "";
+    private Point parentMDFS;
+    int steppedOn=0;
 
 
     public Point(int x, int y) {
@@ -46,6 +52,12 @@ public class Point {
     public boolean getIsWindow(){ return isWindow;}
     public boolean getIsSeen(){ return seen;}
     public boolean getIsVisited(){ return visited;}
+    public boolean getVisitedMDFS() { return visited_MDFS; }
+    public boolean getExploredMDFS() { return explored_MDFS; }
+    public boolean getSeenOnce(){ return seenOnce;}
+    public String getExplorerID() { return explorer_id; }
+    public Point getParentMDFS(){ return parentMDFS;}
+
     public Point getTeleportTarget(){ return targetTeleport;}
 
 
@@ -72,6 +84,13 @@ public class Point {
         return x == other.x && y == other.y;
     }
 
+    public boolean equalsPoint(Point other){
+        if(x == other.getX() && y == other.getY()){
+            return true;
+        }
+        return false;
+    }
+
     public void setX(int xx ){
         x=xx ;
     }
@@ -81,10 +100,38 @@ public class Point {
     }
 
     public void setIsSeen(boolean Isseen){
+        //if(Isseen){ checked++;}
         seen = Isseen;
     }
+
 
     public void setIsVisited(boolean b) {
         visited = b;
     }
+
+    public void setExploredMdfs(boolean explored_MDFS){ 
+        this.explored_MDFS = explored_MDFS; 
+    }
+    public void setVisitedMdfs(boolean visited_MDFS){ 
+        this.visited_MDFS = visited_MDFS; 
+    }
+    public void setExplorerID(String id){ 
+        explorer_id = id;
+    }
+    public void setParentMDFS(Point p){
+        parentMDFS = p;
+    }
+    public void setSeenOnce(boolean f){
+        seenOnce = f;
+    }
+    
+
+    // d = sqrt[(x-x)^2+(y-y)^2]
+    public double getDistance(Point other){
+
+      double a = Math.pow((other.getX()-x),2);
+      double b = Math.pow((other.getY()-y),2);
+      return Math.sqrt(a+b);
+      
+    } 
 }
