@@ -39,6 +39,11 @@ import java.awt.Rectangle;
     public void setFacing(String new_direction){ this.facing = new_direction;}
     public void setRectw(ArrayList<Rectangle> rectw) { this.rectw = rectw;}
 
+    public Point getSharedData(int x, int y){
+        int hash = ((x+y)*(x+y+1)/2)+y;
+        return sharedArr[hash];
+   }
+
     public void moveToPoint(Point target){
         String facing = getWhereFacing(location, target);
         moveInDirection(facing);
@@ -69,8 +74,6 @@ import java.awt.Rectangle;
             System.out.println("target is a wall");
             return;
         }
-
-        
         pov.see(facing, location);
 
         if (target.getIsTeleport()) {
@@ -79,11 +82,11 @@ import java.awt.Rectangle;
 
         } else {
             location = target;
-            //unSee();;
-          //  System.out.println(target.getX()+" "+target.getY()+" ");
         }
      }
-     public void move_MDFS(){
+
+
+     public void MDFS_Algorithm(){
         if(!location.getExploredMDFS()){  //if this cell is unexplored 
             location.setExploredMdfs(true);
             location.setExplorerID(myId);
@@ -216,7 +219,7 @@ import java.awt.Rectangle;
 
    
 
-   public void moveAnt(){
+    public void Ants_Algorithm(){
             unSee();
             location.steppedOn++;
             ArrayList<Point> neighbours = getNeighbours(location);
@@ -227,19 +230,19 @@ import java.awt.Rectangle;
             //moveToPoint(target);
         }
 
-        public Point getLeastChecked(ArrayList<Point> neighbours){
-                    Point min = neighbours.get(0);
-                    for(Point n: neighbours){
-                        if(n.getY() == min.getY() && n.getX() == min.getX()) continue;
-                        if(n.steppedOn < min.steppedOn)  min = n;
-                        else if(n.steppedOn == min.steppedOn){ // if there is a tie for least walked direction, randomize the decision
-                            int r = ((int)(Math.random() * 2));
-                            if(r==0) min = n;
-                        }
+    public Point getLeastChecked(ArrayList<Point> neighbours){
+                Point min = neighbours.get(0);
+                for(Point n: neighbours){
+                    if(n.getY() == min.getY() && n.getX() == min.getX()) continue;
+                    if(n.steppedOn < min.steppedOn)  min = n;
+                    else if(n.steppedOn == min.steppedOn){ // if there is a tie for least walked direction, randomize the decision
+                        int r = ((int)(Math.random() * 2));
+                        if(r==0) min = n;
                     }
-                    return min;
                 }
-            
+                return min;
+            }
+        
      public void unSee(){
         pov.getCurrentlyWatched().clear(); 
    }
@@ -251,12 +254,6 @@ import java.awt.Rectangle;
        if(d.equals("D")) return "U";
        return "";
    }
-
-   public Point getSharedData(int x, int y){
-        int hash = ((x+y)*(x+y+1)/2)+y;
-        return sharedArr[hash];
-   }
-
 
    public Integer rndIndex(ArrayList<Point> array){
        return  ((int)(Math.random() * array.size()));

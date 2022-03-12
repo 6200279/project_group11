@@ -64,8 +64,8 @@ public class Area {
         STILL TO BE IMPLEMENTED
     */
     public boolean isHit(double x,double y,double radius){
-        (y>bottomBoundary)&(y<topBoundary)&(x>leftBoundary)&(x<rightBoundary);
-        return false;
+        return (y>bottomBoundary)&(y<topBoundary)&(x>leftBoundary)&(x<rightBoundary);
+
     }
 
     public int getX1(){return x1 ; }

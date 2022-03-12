@@ -635,8 +635,8 @@ if (BIOME == "SAHARA"){
                 for (int i = 0; i < scenario.numGuards; i++) {
 
                     //players.get(i).moveRndom();
-                    players.get(i).moveAnt();
-                    //players.get(i).move_MDFS();
+                    players.get(i).Ants_Algorithm();
+                    //players.get(i).MDFS_Algorithm();
                     this.repaint();
 
                 }
