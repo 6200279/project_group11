@@ -7,23 +7,25 @@ import java.awt.Rectangle;
  public class Player {
 
     private final int radius = 25 ;
+    private final int pov_radius = 55;
     private Point location;
     private double speed;
     private String facing = "D"; // either: "U" up, "D" down, "R" right, "L" left
     private POV pov;
-    private ArrayList<Point> visited;
+    private ArrayList<Point> visited_4_GUI;
     private ArrayList<Rectangle> rectw = new ArrayList<>();
     private Point [] sharedArr;
     private final String myId;
+    private Point lastLoc;
 
     public Player(Point location, double speed, int width, int height, Point [] sharedArr, String id){
         this.location = location;
         this.speed = speed;
         myId = id;
-        visited = new ArrayList<>();
+        visited_4_GUI = new ArrayList<>();
         this.sharedArr= sharedArr;
-        pov = new POV(sharedArr);
-        pov.see(facing, location);
+        pov = new POV(sharedArr, pov_radius);
+        lastLoc = getNeighbours(location).get(0);
     }
 
     public Point getLocation(){ return location;}
@@ -31,13 +33,17 @@ import java.awt.Rectangle;
     public int getRadius(){ return radius;}
     public String getDirection(){ return facing;}
     public String getId(){ return myId;}
-    public ArrayList<Point> getVisited(){ return visited;}
     public POV getPOV(){ return pov;}
+    public Point getLastLocation(){ return lastLoc;}
+    public ArrayList<Point> getVisited_4_GUI() {return visited_4_GUI;}
 
     public void setLocation(Point location){ this.location =  location;  }
     public void setSpeed(double speed){ this.speed = speed;}
     public void setFacing(String new_direction){ this.facing = new_direction;}
-    public void setRectw(ArrayList<Rectangle> rectw) { this.rectw = rectw;}
+    public void setRectw(ArrayList<Rectangle> rectw) { 
+        this.rectw = rectw;
+        pov.setRectw(rectw);
+    }
 
     public Point getSharedData(int x, int y){
         int hash = ((x+y)*(x+y+1)/2)+y;
@@ -47,9 +53,11 @@ import java.awt.Rectangle;
     public void moveToPoint(Point target){
         String facing = getWhereFacing(location, target);
         moveInDirection(facing);
+        int f=0;
     }
 
     public void moveInDirection(String direction){
+        pov.see(facing, location);
         int x = location.getX();
         int y = location.getY();
         Point target = null;
@@ -77,58 +85,32 @@ import java.awt.Rectangle;
         pov.see(facing, location);
 
         if (target.getIsTeleport()) {
+            lastLoc = location;
             location = target.getTeleportTarget();
             unSee();
 
         } else {
+            lastLoc = location;
             location = target;
         }
      }
 
+    public void moveInPath(ArrayList<Point> path){
+        for(Point p: path){
+            moveToPoint(p);
+        }
+     }
 
-     public void MDFS_Algorithm(){
-        if(!location.getExploredMDFS()){  //if this cell is unexplored 
-            location.setExploredMdfs(true);
-            location.setExplorerID(myId);
-        }
-        ArrayList<Point> unexplored = UnExploredAround(location);
-        
-        if(unexplored.size()>0) { //check for unexplored points around current pos
-            Point chosenTarget = unexplored.get(rndIndex(unexplored));
-            chosenTarget.setParentMDFS(location);
-            visited.add(new Point(location.getX(),location.getY()));
-            moveToPoint(chosenTarget);
-
-        }
-        else if(unexplored.size()==0){ // else if all neighbour cells around me are explored
-            System.out.println("agent "+myId+ " has Nothing to explore");
-            if(location.getExplorerID().equals(myId)){
-                location.setVisitedMdfs(true);
-                visited.add(new Point(location.getX(),location.getY()));
-                moveToPoint(location.getParentMDFS());
- 
-            }
-            else{ // else if this spot is marked as explored by another ID 
-                ArrayList<Point> neighbours = getNeighbours(location);
-                Point chosenTarget = neighbours.get(rndIndex(neighbours));
-                chosenTarget.setParentMDFS(location);
-                visited.add(new Point(location.getX(),location.getY()));
-                moveToPoint(chosenTarget);
-            }
-        }
-    }
-
-     
-    public ArrayList<Point> UnExploredAround(Point myLocation){
-        ArrayList<Point> unExploredNeighbours = new ArrayList<>(); 
-        ArrayList<Point> AdjacentPoints = getNeighbours(myLocation);
-        for(Point neighbour: AdjacentPoints){
-            if(!neighbour.getExploredMDFS() && !neighbour.getIsWall() && !collision(neighbour)){
-                unExploredNeighbours.add(neighbour);
-            }
-        }
-        return unExploredNeighbours;
-    }
+     public void spinAround(){
+         pov.see("U",location);
+         unSee();
+         pov.see("D", location);
+         unSee();
+         pov.see("L",location);
+         unSee();
+         pov.see("R", location);
+         unSee();
+     }
 
     public ArrayList<Point> getNeighbours(Point current){
  
@@ -214,35 +196,9 @@ import java.awt.Rectangle;
            //d.see(facing,location,checkedByAll);
            moveInDirection(facing);
        }
-       visited.add(new Point(location.getX(),location.getY()));
+       visited_4_GUI.add(new Point(location.getX(),location.getY()));
    }
-
-   
-
-    public void Ants_Algorithm(){
-            unSee();
-            location.steppedOn++;
-            ArrayList<Point> neighbours = getNeighbours(location);
-            Point target = getLeastChecked(neighbours);
-            facing = getWhereFacing(location, target);
-            visited.add(new Point(location.getX(),location.getY()));
-            moveInDirection(facing);
-            //moveToPoint(target);
-        }
-
-    public Point getLeastChecked(ArrayList<Point> neighbours){
-                Point min = neighbours.get(0);
-                for(Point n: neighbours){
-                    if(n.getY() == min.getY() && n.getX() == min.getX()) continue;
-                    if(n.steppedOn < min.steppedOn)  min = n;
-                    else if(n.steppedOn == min.steppedOn){ // if there is a tie for least walked direction, randomize the decision
-                        int r = ((int)(Math.random() * 2));
-                        if(r==0) min = n;
-                    }
-                }
-                return min;
-            }
-        
+    
      public void unSee(){
         pov.getCurrentlyWatched().clear(); 
    }
@@ -253,10 +209,5 @@ import java.awt.Rectangle;
        if(d.equals("R")) return "L";
        if(d.equals("D")) return "U";
        return "";
-   }
-
-   public Integer rndIndex(ArrayList<Point> array){
-       return  ((int)(Math.random() * array.size()));
- 
    }
 }

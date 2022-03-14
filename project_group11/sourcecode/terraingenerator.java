@@ -302,6 +302,11 @@ if (BIOME == "SAHARA"){
                     sharedArr[hash] = new Point(i,j);
                 }
             }
+            int counter=0;
+            for(Point p : sharedArr){
+                if(p!=null){counter++;}
+            }
+            System.out.println("counter is "+counter);
 
             for (int i = 0; i < scenario.numGuards; i++) {
             
@@ -614,10 +619,10 @@ if (BIOME == "SAHARA"){
         for (int j = 0; j <players.size() ; j++) {
             g.setColor(Color.green);
             Player player = players.get(j);
-            for(int k=0 ; k<player.getVisited().size() ; k++){
+            for(int k=0 ; k<player.getVisited_4_GUI().size() ; k++){
                 g.setColor(Color.green);
-                int xxx = player.getVisited().get(k).getX()/scale ;
-                int yyy = player.getVisited().get(k).getY()/scale ;
+                int xxx = player.getVisited_4_GUI().get(k).getX()/scale ;
+                int yyy = player.getVisited_4_GUI().get(k).getY()/scale ;
                 g.fillOval((this.getWidth()-150)-player.getRadius()/scale/2+xxx,(this.getHeight()-150)-player.getRadius()/scale/2+yyy,player.getRadius()/scale,player.getRadius()/scale);
            }
         }
@@ -635,8 +640,9 @@ if (BIOME == "SAHARA"){
                 for (int i = 0; i < scenario.numGuards; i++) {
 
                     //players.get(i).moveRndom();
-                    players.get(i).Ants_Algorithm();
-                    //players.get(i).MDFS_Algorithm();
+                    //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
+                    Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
+                    //B_Algorithm ben = new B_Algorithm(players.get(i));
                     this.repaint();
 
                 }

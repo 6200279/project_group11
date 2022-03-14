@@ -1,26 +1,32 @@
 package sourcecode;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.awt.Rectangle;
 
 
 
 
 public class POV {
 
-    private final int radius = 55 ;
-    Point [] sharedArray;
-    ArrayList<Point> currently_watched;
+    private final int radius;
+    private Point [] sharedArray;
+    private ArrayList<Point> currently_watched;
+    private ArrayList<Rectangle> rectw = new ArrayList<>();
+    private Point location; 
 
-    public POV( Point [] sharedArray){
+    public POV(Point [] sharedArray, int radius){
         this.sharedArray = sharedArray;
         currently_watched = new ArrayList<>();
+        this.radius = radius;
     }
 
     public ArrayList<Point> getCurrentlyWatched(){ return currently_watched;}
+    public void setRectw(ArrayList<Rectangle> r){ rectw = r;}
 
     public void see(String facing, Point location){
+        this.location = location;
         if(facing.equals("R")){
-            ArrayList<Point> straightP = getStraightPath(location, "R");
+            ArrayList<Point> straightP = getStraightPath(location, "R",radius);
             int i=0;
             for(Point p: straightP){
                 ArrayList<Point> UR_DiagPath = getDiagonalPath(p, "UR",radius-i);
@@ -31,7 +37,7 @@ public class POV {
             }
         }
         if(facing.equals("L")){
-            ArrayList<Point> straightP = getStraightPath(location, "L");
+            ArrayList<Point> straightP = getStraightPath(location, "L",radius);
             int i=0;
             for(Point p: straightP){
                 ArrayList<Point> UL_DiagPath = getDiagonalPath(p, "UL",radius-i);
@@ -42,7 +48,7 @@ public class POV {
             }
         }
         if(facing.equals("U")){
-            ArrayList<Point> straightP = getStraightPath(location, "U");
+            ArrayList<Point> straightP = getStraightPath(location, "U",radius);
             int i=0;
             for(Point p: straightP){
                 ArrayList<Point> UL_DiagPath = getDiagonalPath(p, "UL",radius-i);
@@ -53,7 +59,7 @@ public class POV {
             }
         }
         if(facing.equals("D")){
-            ArrayList<Point> straightP = getStraightPath(location, "D");
+            ArrayList<Point> straightP = getStraightPath(location, "D",radius);
             int i=0;
             for(Point p: straightP){
                 ArrayList<Point> UL_DiagPath = getDiagonalPath(p, "DL",radius-i);
@@ -65,32 +71,33 @@ public class POV {
         }
     }
     
-    public ArrayList<Point> getStraightPath(Point current, String direction){
+    public ArrayList<Point> getStraightPath(Point current, String direction,int amount){
         ArrayList<Point> straightPath = new ArrayList<>();
         int i=0;
         straightPath.add(current);
-        while(i<=radius){
+        while(i<=amount){
             int x = current.getX();
             int y = current.getY();
             Point next= null;
             if(direction.equals("R")){
                 next =  getSharedData(x+1, y);
-                if(next.getIsWall()|| next.getIsDoor()){ break;}
+                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
             else if(direction.equals("L")){
                 next =  getSharedData(x-1,y);
-                if(next.getIsWall()|| next.getIsDoor()){ break;}
+                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
             else if(direction.equals("U")){
                 next =  getSharedData(x,y-1);
-                if(next.getIsWall()|| next.getIsDoor()){ break;}
+                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
             else if(direction.equals("D")){
                 next =  getSharedData(x, y+1);
-                if(next.getIsWall()|| next.getIsDoor()){ break;}
+                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
+                    break;}
                 straightPath.add(next);
             }
             current = next;
@@ -108,7 +115,7 @@ public class POV {
             int x = current.getX();
             int y = current.getY();
 
-            if(current.getIsWall() || current.getIsDoor()){ 
+            if(collision(current) || current.getIsWall() || current.getIsDoor()){ 
                 break;
             }
             if(direction.equals("UR")){ //Up right on the diagonal
@@ -135,9 +142,10 @@ public class POV {
 
     public void seeDiagonal(ArrayList<Point> diagPath){
         for(Point p: diagPath){
-            if(p.getIsDoor()||p.getIsWall()){ break;}
+            if(collision(p) || p.getIsDoor()||p.getIsWall()){ break;}
             currently_watched.add(p);
             p.setSeenOnce(true);
+            
             //p.setIsSeen(true);
             //p.setExploredMdfs(true);
         }
@@ -148,5 +156,20 @@ public class POV {
         int hash = ((x+y)*(x+y+1)/2)+y;
         return sharedArray[hash];
    }
+
+   public boolean collision(Point target) {
+
+    Rectangle rectangle1 = new Rectangle(location.getX()-radius/2, location.getY()-radius/2,radius,radius);
+    rectangle1.setLocation(target.getX()-radius/2,target.getY()-radius/2);
+
+    for (int i = 0; i < rectw.size(); i++) {
+
+        if (rectangle1.intersects(rectw.get(i))) {
+            target.setIsWall(true);
+            return true;
+        }
+    }
+    return false;
+}
 
 }
