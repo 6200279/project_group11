@@ -26,7 +26,6 @@ public class B_Algorithm {
         String least = getLeastExploredDirection();
         Point target = getDesiredLocation(least);
         player.setLocation(target);
-
     }
 
 
@@ -42,15 +41,16 @@ public class B_Algorithm {
         player.unSee();
         pov.see("D",location);
         down_seen = pov.getCurrentlyWatched();
-        //player.unSee();      
+        player.unSee();      
     }
 
     public String getLeastExploredDirection(){
-        int ex_right = howManyExplored(right_seen)/right_seen.size();
-        int ex_left = howManyExplored(left_seen)/left_seen.size();
-        int ex_up = howManyExplored(up_seen)/up_seen.size();
-        int ex_down = howManyExplored(down_seen)/down_seen.size();
+        int ex_right = howManyExplored(right_seen);
+        int ex_left = howManyExplored(left_seen);
+        int ex_up = howManyExplored(up_seen);
+        int ex_down = howManyExplored(down_seen);
         
+        if(ex_right == ex_left && ex_right == ex_up && ex_right == ex_down) return getRndDirection();
         if(ex_right <= ex_left && ex_right <= ex_up && ex_right <= ex_down) return "R";
         if(ex_left <= ex_right && ex_left <= ex_up && ex_left <= ex_down) return "L";
         if(ex_up <= ex_left && ex_up <= ex_right && ex_up <= ex_down) return "U";
@@ -63,6 +63,7 @@ public class B_Algorithm {
         int counter = 0;
         for(Point p: View_field){
             if(p.getExploredMDFS()) counter++;
+            if(p.getIsWall()) return 1000;
         }    
         return counter;
     }
@@ -72,23 +73,33 @@ public class B_Algorithm {
         if(direction.equals("R")){
             int new_X = location.getX()+2*radius;
             int y = location.getY();
-            if(player.getSharedData(new_X, y)!=null) return player.getSharedData(new_X,y);
+            if(player.getPoint(new_X, y)!=null) return player.getPoint(new_X,y);
         }
         else if(direction.equals("L")){
             int new_X = location.getX()-2*radius;
             int y = location.getY();
-            if(player.getSharedData(new_X, y)!=null) return player.getSharedData(new_X,y);
+            if(player.getPoint(new_X, y)!=null) return player.getPoint(new_X,y);
         }
         else if(direction.equals("U")){
             int x = location.getX();
             int new_Y = location.getY()-2*radius;
-            if(player.getSharedData(x, new_Y)!=null) return player.getSharedData(x, new_Y);
+            if(player.getPoint(x, new_Y)!=null) return player.getPoint(x, new_Y);
         }
         else if(direction.equals("D")){
             int x = location.getX();
             int new_Y = location.getY()+2*radius;
-            if(player.getSharedData(x, new_Y)!=null) return player.getSharedData(x, new_Y);
+            if(player.getPoint(x, new_Y)!=null) return player.getPoint(x, new_Y);
         }
         return new Point(-18989,-190389);
     }
- }
+
+    public String getRndDirection(){
+        int randomFace = (int) (Math.random() * 4 + 1)+1;
+        if (randomFace == 5) return "D";
+        else if (randomFace == 2) return "U";
+        else if (randomFace == 3) return "L";
+        else  return "R";
+    }
+
+    
+}

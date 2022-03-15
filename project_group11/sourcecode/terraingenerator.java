@@ -302,6 +302,7 @@ if (BIOME == "SAHARA"){
                     sharedArr[hash] = new Point(i,j);
                 }
             }
+
             int counter=0;
             for(Point p : sharedArr){
                 if(p!=null){counter++;}
@@ -323,8 +324,9 @@ if (BIOME == "SAHARA"){
                 
                 double speed = scenario.baseSpeedGuard ;
 
-                Player player = new Player(locationSpawn,speed,1200,800, sharedArr,String.valueOf(i)) ;
-                players.add(player);
+                //Player player = new Player(locationSpawn,speed,1200,800, sharedArr,String.valueOf(i)) ;
+                Player Player = new Player(locationSpawn,speed,1200,800,String.valueOf(i),scale) ;
+                players.add(Player);
                 //player.setWallPoints(wallPoints);
             }
 

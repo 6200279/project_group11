@@ -38,7 +38,6 @@ public class Point {
         this.isWall = isWall;
     }
 
-
     public void setIsTeleport(boolean isTeleport, Point targetPoint){
         this.isTeleport = isTeleport;
         if(isTeleport){
@@ -104,7 +103,6 @@ public class Point {
         seen = Isseen;
     }
 
-
     public void setIsVisited(boolean b) {
         visited = b;
     }
@@ -124,8 +122,6 @@ public class Point {
     public void setSeenOnce(boolean f){
         seenOnce = f;
     }
-    
-
     // d = sqrt[(x-x)^2+(y-y)^2]
     public double getDistance(Point other){
 

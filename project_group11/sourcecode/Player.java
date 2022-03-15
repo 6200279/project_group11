@@ -7,7 +7,7 @@ import java.awt.Rectangle;
  public class Player {
 
     private final int radius = 25 ;
-    private final int pov_radius = 55;
+    private final int pov_radius = 55; 
     private Point location;
     private double speed;
     private String facing = "D"; // either: "U" up, "D" down, "R" right, "L" left
@@ -17,14 +17,18 @@ import java.awt.Rectangle;
     private Point [] sharedArr;
     private final String myId;
     private Point lastLoc;
+    private ArrayList<Point> myMap;
 
-    public Player(Point location, double speed, int width, int height, Point [] sharedArr, String id){
+    public Player(Point location, double speed, int width, int height,String id, int scale){
         this.location = location;
         this.speed = speed;
         myId = id;
         visited_4_GUI = new ArrayList<>();
-        this.sharedArr= sharedArr;
-        pov = new POV(sharedArr, pov_radius);
+        myMap = new ArrayList<>(width*scale*height*scale);
+        for(int i=0; i<width*height*scale*scale-1; i++){
+            myMap.add(null);
+        }
+        pov = new POV(myMap, pov_radius);
         lastLoc = getNeighbours(location).get(0);
     }
 
@@ -45,11 +49,6 @@ import java.awt.Rectangle;
         pov.setRectw(rectw);
     }
 
-    public Point getSharedData(int x, int y){
-        int hash = ((x+y)*(x+y+1)/2)+y;
-        return sharedArr[hash];
-   }
-
     public void moveToPoint(Point target){
         String facing = getWhereFacing(location, target);
         moveInDirection(facing);
@@ -63,20 +62,19 @@ import java.awt.Rectangle;
         Point target = null;
         if (direction.equals("U")) {
             facing = "U";
-            //if(y-1< 0){ System.out.println("Ilegal move"); return;}
-            target = getSharedData(x, y-1);
+            target = getPoint(x, y-1);
         } else if (direction.equals("D")) {
             facing = "D";
             //if(y+1 >= grid.get(0).size()){ System.out.println("Ilegal move"); return;}
-            target = getSharedData(x, y+1);
+            target = getPoint(x, y+1);
         } else if (direction.equals("L")) {
             facing = "L";
             //if(x-1< 0){ System.out.println("Ilegal move"); return;}
-            target = getSharedData(x-1, y);
+            target = getPoint(x-1, y);
         } else if (direction.equals("R")) {
             facing = "R";
             //if(x+1 >= grid.size()){ System.out.println("Ilegal move"); return;}
-            target  = getSharedData(x+1, y);
+            target  = getPoint(x+1, y);
         }
         if (collision(target) || target.getIsWall()) {
             System.out.println("target is a wall");
@@ -94,13 +92,12 @@ import java.awt.Rectangle;
             location = target;
         }
      }
-
+     
     public void moveInPath(ArrayList<Point> path){
         for(Point p: path){
             moveToPoint(p);
         }
      }
-
      public void spinAround(){
          pov.see("U",location);
          unSee();
@@ -117,29 +114,23 @@ import java.awt.Rectangle;
         ArrayList<Point> neighbours = new ArrayList<>();
         int x = current.getX();
         int y = current.getY();
-        Point left = getSharedData(x-1, y);
-        Point right = getSharedData(x+1, y);
-        Point up = getSharedData(x, y-1);
-        Point down = getSharedData(x,y+1);
+        Point left,right,up,down; 
+        if(getPoint(x-1,y)== null) addPoint2Map(x-1, y);
+        if(getPoint(x+1,y)== null) addPoint2Map(x+1, y);
+        if(getPoint(x,y-1)== null) addPoint2Map(x, y-1);
+        if(getPoint(x,y+1)== null) addPoint2Map(x, y+1);
+        left = getPoint(x-1, y);
+        right = getPoint(x+1, y);
+        up = getPoint(x, y-1);
+        down = getPoint(x, y+1);
+        
         if( !collision(left) && !left.getIsWall())      neighbours.add(left); //Point to the left
         if( !collision(right) && !right.getIsWall())     neighbours.add(right);
         if( !collision(up) && !up.getIsWall())        neighbours.add(up); //Point above
         if( !collision(down) && !down.getIsWall())      neighbours.add(down);
 
         return neighbours;
-
     }
-    public void setWalls() {
-            for(Point target : sharedArr){
-                Rectangle rectangle1 = new Rectangle(target.getX()-radius/2,target.getY()-radius/2,radius,radius);
-                rectangle1.setLocation(target.getX()-radius/2,target.getY()-radius/2);
-                for (int i = 0; i < rectw.size(); i++) {
-                    if (rectangle1.intersects(rectw.get(i))) {
-                        target.setIsWall(true);
-                    }
-                }
-            }
-        }
 
     //based on your current location and the next point, get where the agent is facing
     public String getWhereFacing(Point current, Point target){
@@ -209,5 +200,15 @@ import java.awt.Rectangle;
        if(d.equals("R")) return "L";
        if(d.equals("D")) return "U";
        return "";
+   }
+
+   public void addPoint2Map(int x, int y){
+        int hash = ((x+y)*(x+y+1)/2)+y;
+        myMap.set(hash, new Point(x,y));
+   }
+
+   public Point getPoint(int x, int y){
+        int hash = ((x+y)*(x+y+1)/2)+y;
+        return myMap.get(hash); 
    }
 }

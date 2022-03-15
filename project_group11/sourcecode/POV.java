@@ -1,21 +1,18 @@
 package sourcecode;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.awt.Rectangle;
-
-
 
 
 public class POV {
 
     private final int radius;
-    private Point [] sharedArray;
+    private ArrayList<Point> myMap;
     private ArrayList<Point> currently_watched;
     private ArrayList<Rectangle> rectw = new ArrayList<>();
     private Point location; 
 
-    public POV(Point [] sharedArray, int radius){
-        this.sharedArray = sharedArray;
+    public POV(ArrayList<Point> myMap, int radius){
+        this.myMap = myMap;
         currently_watched = new ArrayList<>();
         this.radius = radius;
     }
@@ -78,26 +75,57 @@ public class POV {
         while(i<=amount){
             int x = current.getX();
             int y = current.getY();
-            Point next= null;
+            Point next = null;
             if(direction.equals("R")){
-                next =  getSharedData(x+1, y);
+                next = getPoint(x+1, y);
+                if(next == null){
+                    addPoint2Map(x+1, y);
+                    next = getPoint(x+1, y);
+
+                }
+                if(next==null){ 
+                    System.out.println("mill");}
                 if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
             else if(direction.equals("L")){
-                next =  getSharedData(x-1,y);
+                next = getPoint(x-1, y);
+                if(next == null){
+                    addPoint2Map(x-1, y);
+                    next = getPoint(x-1, y);
+
+                }
+                if(next==null){ 
+                    System.out.println("mill");}
+                
                 if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
             else if(direction.equals("U")){
-                next =  getSharedData(x,y-1);
+                next = getPoint(x, y-1);
+                if(next == null){
+                    addPoint2Map(x, y-1);
+                    next = getPoint(x, y-1);
+
+                }
+                if(next==null){ 
+                    System.out.println("mill");}
+                
                 if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
             else if(direction.equals("D")){
-                next =  getSharedData(x, y+1);
-                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
-                    break;}
+                next = getPoint(x, y+1);
+                int loca = ((x+y)*(x+y+1)/2)+y;
+                if(next == null){
+                    addPoint2Map(x, y+1);
+                    next = getPoint(x, y+1);
+                    System.out.println(next);
+                }
+                if(next==null){ 
+                    System.out.println("mill");}
+                
+                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
             current = next;
@@ -119,21 +147,36 @@ public class POV {
                 break;
             }
             if(direction.equals("UR")){ //Up right on the diagonal
-                
-                //if(cX+1 >= grid.size() || cY-1 <0) {break;} // prevent out of bounds
-                current = getSharedData(x+1, y-1);
+                current = getPoint(x+1, y-1);
+                if(current == null){
+                    addPoint2Map(x+1, y-1);
+                    current = getPoint(x+1, y-1);
+
+                }
             }
             else if(direction.equals("DR")){ //Down right on the diagonal
-                //if(cX+1 >= grid.size() || cY+1 >= grid.get(0).size()) {break;} // prevent out of bounds
-                current = getSharedData(x+1, y+1); 
+                current = getPoint(x+1, y+1);
+                if(current == null){
+                    addPoint2Map(x+1, y+1);
+                    current = getPoint(x+1, y+1);
+
+                } 
             }
             else if(direction.equals("UL")){ //Up Left on the diagonal
-               // if(cX-1 < 0 || cY-1 < 0) {break;}
-                current = getSharedData(x-1, y-1);
+                current = getPoint(x-1, y-1);
+                if(current == null){
+                    addPoint2Map(x-1, y-1);
+                    current = getPoint(x-1, y-1);
+
+                }
             }
             else if(direction.equals("DL")){ //Down Left on the diagonal
-              //  if(cX-1 <0 || cY+1 >= grid.get(0).size()) {break;}
-                current = getSharedData(x-1, y+1);
+                current = getPoint(x-1, y+1);
+                if(current == null){
+                    addPoint2Map(x-1, y+1);
+                    current = getPoint(x-1, y+1);
+
+                }
             }
             i++;
         }
@@ -145,20 +188,11 @@ public class POV {
             if(collision(p) || p.getIsDoor()||p.getIsWall()){ break;}
             currently_watched.add(p);
             p.setSeenOnce(true);
-            
-            //p.setIsSeen(true);
-            //p.setExploredMdfs(true);
         }
     }
 
-
-    public Point getSharedData(int x, int y){
-        int hash = ((x+y)*(x+y+1)/2)+y;
-        return sharedArray[hash];
-   }
-
    public boolean collision(Point target) {
-
+    
     Rectangle rectangle1 = new Rectangle(location.getX()-radius/2, location.getY()-radius/2,radius,radius);
     rectangle1.setLocation(target.getX()-radius/2,target.getY()-radius/2);
 
@@ -170,6 +204,18 @@ public class POV {
         }
     }
     return false;
+}
+
+
+public void addPoint2Map(int x, int y){
+    int hash = ((x+y)*(x+y+1)/2)+y;
+    if(myMap.get(hash)==null) myMap.set(hash, new Point(x,y));
+    else System.out.println("the point:" + myMap.get(hash)+ " already exists in the map");
+}
+
+public Point getPoint(int x, int y){
+    int hash = ((x+y)*(x+y+1)/2)+y;
+    return myMap.get(hash); 
 }
 
 }
