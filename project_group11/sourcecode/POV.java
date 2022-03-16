@@ -14,53 +14,60 @@ public class POV {
     private ArrayList<List<Integer>> obstacle = new ArrayList<>();
     private Point location; 
     private String facing="D";
+    private Player player ;
     private boolean firstViewSet;
 
-    public POV(ArrayList<Point> myMap, int radius){
+    public POV(ArrayList<Point> myMap, int radius,Player player){
         this.myMap = myMap;
         currently_watched = new ArrayList<>();
         next_currently_watched = new ArrayList<>();
         this.radius = radius;
+        this.player=player ;
+        location = player.getLocation() ;
+        setFirstView();
     }
+    public ArrayList<Point> getNextCurrentlyWatched(){ return next_currently_watched;}
 
     public ArrayList<Point> getCurrentlyWatched(){ return currently_watched;}
     public void setObstacle(ArrayList<List<Integer>> r){ obstacle = r;}
 
-    public void see(String nextfacing, Point location){
-        this.location = location;
-       if(!firstViewSet){
-            setFirstView();
-            //facing = nextfacing;
-            firstViewSet= true;
-        }
-        else{
-            seeNextView(nextfacing);
-        }
-    }
 
-    public void seeNextView(String nextfacing) {
+    public void seeNextView( String nextfacing) {
+
         int distanceX = 0;
         int distanceY = 0;
         int yNew = 0;
         int xNew = 0;
-        int x = location.getX();
-        int y = location.getY();
+       // int x = location.getX() ;
+        int x = player.getLocation().getX() ;
+        int y = player.getLocation().getY() ;
 
 
-        if (this.facing == "D") {
+
+
+        if (facing == "D") {
+
+            if (nextfacing == "D"){
+                for (int i = 0; i < currently_watched.size(); i++) {
+                    Point p = getPoint(currently_watched.get(i).getX(), currently_watched.get(i).getY());
+                    next_currently_watched.add(p);
+                }
+            }
             if (nextfacing == "U") {
                 for (int i = 0; i < currently_watched.size(); i++) {
                     distanceY = currently_watched.get(i).getY() - y;
-                    yNew = y + ((-1) * distanceY);
+                    yNew = y - distanceY;
 
                     Point p = getPoint(currently_watched.get(i).getX(), yNew);
                     if (p == null) {
                         addPoint2Map(currently_watched.get(i).getX(), yNew);
+                        p = getPoint(currently_watched.get(i).getX(), yNew) ;
                     }
                     next_currently_watched.add(p);
                 }
 
             }
+
 
             if (nextfacing == "R") {
                 for (int i = 0; i < currently_watched.size(); i++) {
@@ -70,11 +77,13 @@ public class POV {
                     xNew = x + distanceY;
                     yNew = y - distanceX;
 
-                    Point p = getPoint(x, yNew);
+                    Point p = getPoint(xNew, yNew);
                     if (p == null) {
-                        addPoint2Map(x, yNew);
+                        addPoint2Map(xNew, yNew);
+                        p = getPoint(xNew,yNew) ;
                     }
                     next_currently_watched.add(p);
+
 
 
                 }
@@ -90,9 +99,10 @@ public class POV {
                     xNew = x - distanceY;
                     yNew = y + distanceX;
 
-                    Point p = getPoint(x, yNew);
+                    Point p = getPoint(xNew, yNew);
                     if (p == null) {
-                        addPoint2Map(x, yNew);
+                        addPoint2Map(xNew, yNew);
+                        p = getPoint(xNew,yNew) ;
                     }
                     next_currently_watched.add(p);
 
@@ -102,7 +112,15 @@ public class POV {
 
         }
 
-        else if (this.facing == "U") {
+        else if (facing == "U") {
+
+            if (nextfacing == "U"){
+                for (int i = 0; i < currently_watched.size(); i++) {
+                    Point p = getPoint(currently_watched.get(i).getX(), currently_watched.get(i).getY());
+                    next_currently_watched.add(p);
+                }
+            }
+
             if (nextfacing == "D") {
 
                 for (int i = 0; i < currently_watched.size(); i++) {
@@ -114,6 +132,7 @@ public class POV {
                     Point p = getPoint(currently_watched.get(i).getX(), yNew);
                     if (p == null) {
                         addPoint2Map(currently_watched.get(i).getX(), yNew);
+                        p = getPoint(currently_watched.get(i).getX(),yNew) ;
                     }
                     next_currently_watched.add(p);
 
@@ -125,12 +144,13 @@ public class POV {
                     distanceY = currently_watched.get(i).getY() - y;
                     distanceX = currently_watched.get(i).getX() - x;
 
-                    xNew = x + distanceY;
-                    yNew = y - distanceX;
+                    xNew = x - distanceY;
+                    yNew = y + distanceX;
 
                     Point p = getPoint(xNew, yNew);
                     if (p == null) {
                         addPoint2Map(xNew, yNew);
+                        p = getPoint(xNew,yNew) ;
                     }
                     next_currently_watched.add(p);
 
@@ -142,29 +162,39 @@ public class POV {
                     distanceY = currently_watched.get(i).getY() - y;
                     distanceX = currently_watched.get(i).getX() - x;
 
-                    xNew = x - distanceY;
-                    yNew = y + distanceX;
+                    xNew = x + distanceY;
+                    yNew = y - distanceX;
 
                     Point p = getPoint(xNew, yNew);
                     if (p == null) {
                         addPoint2Map(xNew, yNew);
+                        p = getPoint(xNew,yNew) ;
                     }
                     next_currently_watched.add(p);
                 }
             }
         }
 
-        else if(this.facing=="R"){
+        else if(facing=="R"){
+
+            if (nextfacing == "R"){
+                for (int i = 0; i < currently_watched.size(); i++) {
+                    Point p = getPoint(currently_watched.get(i).getX(), currently_watched.get(i).getY());
+                    next_currently_watched.add(p);
+                }
+            }
+
             if(nextfacing=="L"){
 
                 for (int i = 0; i < currently_watched.size(); i++) {
-                    distanceY = currently_watched.get(i).getY() - y;
+                    distanceX = currently_watched.get(i).getX() - x;
 
-                    xNew = x - distanceY;
+                    xNew = x - distanceX;
 
                     Point p = getPoint(xNew, currently_watched.get(i).getY());
                     if (p == null) {
                         addPoint2Map(xNew, currently_watched.get(i).getY());
+                        p = getPoint(xNew,currently_watched.get(i).getY()) ;
                     }
                     next_currently_watched.add(p);
                 }
@@ -177,12 +207,13 @@ public class POV {
                     distanceY = currently_watched.get(i).getY() - y;
                     distanceX = currently_watched.get(i).getX() - x;
 
-                    xNew = x - distanceY;
-                    yNew = y + distanceX;
+                    xNew = x + distanceY;
+                    yNew = y - distanceX;
 
                     Point p = getPoint(xNew, yNew);
                     if (p == null) {
                         addPoint2Map(xNew, yNew);
+                        p = getPoint(xNew, yNew) ;
                     }
                     next_currently_watched.add(p);
                 }
@@ -194,26 +225,36 @@ public class POV {
                     distanceY = currently_watched.get(i).getY() - y;
                     distanceX = currently_watched.get(i).getX() - x;
 
-                    xNew = x + distanceY;
-                    yNew = y - distanceX;
+                    xNew = x - distanceY;
+                    yNew = y + distanceX;
 
                     Point p = getPoint(xNew, yNew);
                     if (p == null) {
                         addPoint2Map(xNew, yNew);
+                        p = getPoint(xNew,yNew) ;
                     }
                     next_currently_watched.add(p);
                 }
             }
         }
 
-        else if(this.facing=="L"){
+        else if(facing=="L"){
+
+            if (nextfacing == "L"){
+                for (int i = 0; i < currently_watched.size(); i++) {
+                    Point p = getPoint(currently_watched.get(i).getX(), currently_watched.get(i).getY());
+                    next_currently_watched.add(p);
+                }
+            }
+
             if(nextfacing=="R"){
                 for (int i = 0; i < currently_watched.size(); i++) {
-                    distanceY = currently_watched.get(i).getY() - y;
-                    xNew = x - distanceY;
+                    distanceX = currently_watched.get(i).getX() - x;
+                    xNew = x - distanceX;
                     Point p = getPoint(xNew, currently_watched.get(i).getY());
                     if (p == null) {
                         addPoint2Map(xNew, currently_watched.get(i).getY());
+                        p = getPoint(xNew,currently_watched.get(i).getY()) ;
                     }
                     next_currently_watched.add(p);
                 }
@@ -230,6 +271,7 @@ public class POV {
                     Point p = getPoint(xNew, yNew);
                     if (p == null) {
                         addPoint2Map(xNew, yNew);
+                        p = getPoint(xNew,yNew) ;
                     }
                     next_currently_watched.add(p);
                 }
@@ -246,17 +288,26 @@ public class POV {
                     Point p = getPoint(xNew, yNew);
                     if (p == null) {
                         addPoint2Map(xNew, yNew);
+                        p = getPoint(xNew,yNew) ;
                     }
                     next_currently_watched.add(p);
                 }
             }
 
         }
-        currently_watched = next_currently_watched ;
-        next_currently_watched.clear();
-        this.facing = nextfacing;
-}
 
+        // parseArray(next_currently_watched,currently_watched);
+        currently_watched.clear();
+        for (int i = 0; i < next_currently_watched.size(); i++) {
+            currently_watched.add(next_currently_watched.get(i));
+            // System.out.print(next_currently_watched.get(i));
+        }
+        //  System.out.println(" ");
+        // if( currently_watched.isEmpty())
+        // System.out.print("bingo");
+        next_currently_watched.clear();
+        facing = nextfacing;
+    }
 
     public void setFirstView(){
         if(facing.equals("R")){

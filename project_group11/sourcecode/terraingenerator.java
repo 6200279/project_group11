@@ -599,7 +599,7 @@ if (BIOME == "SAHARA"){
             
             for(Point watchedP: p.getPOV().getCurrentlyWatched()){
                 g.setColor(new Color(181,19,234,48));
-                g.fillOval(watchedP.getX(),watchedP.getY(),2,2);
+                g.fillRect(watchedP.getX(),watchedP.getY(),1,1);
             }    
         }
 
@@ -636,7 +636,7 @@ if (BIOME == "SAHARA"){
 
                 for (int i = 0; i < scenario.numGuards; i++) {
 
-                    //players.get(i).moveRndom();
+                   // players.get(i).moveRndom();
 
                     //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
                     //Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
