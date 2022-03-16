@@ -13,7 +13,7 @@ public class MDFS_Algorithm {
 
     public void execute(){
         Point location = player.getLocation(); 
-        player.unSee();
+        //player.unSee();
         if(!location.getExploredMDFS()){  //if this cell is unexplored 
             location.setExploredMdfs(true);
             location.setExplorerID(player.getId());
@@ -38,6 +38,7 @@ public class MDFS_Algorithm {
                 //chosenTarget.setParentMDFS(location);
                 player.getVisited_4_GUI().add(new Point(location.getX(),location.getY()));
                 player.moveToPoint(chosenTarget);
+
             }
         }
     }

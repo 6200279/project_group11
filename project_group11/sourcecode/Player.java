@@ -36,7 +36,7 @@ public class Player {
         }
         addPoint2Map(location.getX(), location.getY());
         visited_4_GUI = new ArrayList<>();
-        pov = new POV(myMap, pov_radius);
+        pov = new POV(myMap, pov_radius,this);
         lastLoc = getNeighbours(location).get(0);
     }
 
@@ -72,46 +72,122 @@ public class Player {
     }
 
     public void moveInDirection(String direction){
-        pov.see(facing, location);
+       // pov.see(facing, location);
         int x = location.getX();
         int y = location.getY();
-        Point target = null;
+        pov.seeNextView(direction);
         if (direction.equals("U")) {
-            facing = "U";
-            target = getPoint(x, y-1);
+           // target = getPoint(x, y-1);
+            location.setX(location.getX());
+            location.setY(location.getY()-1);
+
+            for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
+                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 1);
+                if (p == null) {
+                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 1);
+                    p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 1);
+                }
+                pov.getNextCurrentlyWatched().add(p);
+            }
+                pov.getCurrentlyWatched().clear();
+                for (int i = 0; i < pov.getNextCurrentlyWatched().size(); i++) {
+                    pov.getCurrentlyWatched().add(pov.getNextCurrentlyWatched().get(i));
+                }
+                pov.getNextCurrentlyWatched().clear();
+
+            //if (target == null) {
+             //   addPoint2Map(x, y-1);
+              //  target = getPoint(x,y-1) ;
+           // }
+
         } else if (direction.equals("D")) {
-            facing = "D";
             //if(y+1 >= grid.get(0).size()){ System.out.println("Ilegal move"); return;}
-            target = getPoint(x, y+1);
+
+            location.setX(location.getX());
+            location.setY(location.getY()+1);
+
+            for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
+                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 1);
+                if (p == null) {
+                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 1);
+                    p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 1);
+                }
+                pov.getNextCurrentlyWatched().add(p);
+            }
+            pov.getCurrentlyWatched().clear();
+            for (int i = 0; i < pov.getNextCurrentlyWatched().size(); i++) {
+                pov.getCurrentlyWatched().add(pov.getNextCurrentlyWatched().get(i));
+            }
+            pov.getNextCurrentlyWatched().clear();
+           /* if (target == null) {
+                addPoint2Map(x, y+1);
+                target = getPoint(x,y+1) ;
+            }*/
         } else if (direction.equals("L")) {
-            facing = "L";
             //if(x-1< 0){ System.out.println("Ilegal move"); return;}
-            target = getPoint(x-1, y);
+
+            location.setX(location.getX()-1);
+            location.setY(location.getY());
+
+            for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
+                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX()-1, pov.getCurrentlyWatched().get(i).getY());
+                if (p == null) {
+                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX()-1, pov.getCurrentlyWatched().get(i).getY());
+                    p = getPoint(pov.getCurrentlyWatched().get(i).getX()-1, pov.getCurrentlyWatched().get(i).getY());
+                }
+                pov.getNextCurrentlyWatched().add(p);
+            }
+            pov.getCurrentlyWatched().clear();
+            for (int i = 0; i < pov.getNextCurrentlyWatched().size(); i++) {
+                pov.getCurrentlyWatched().add(pov.getNextCurrentlyWatched().get(i));
+            }
+            pov.getNextCurrentlyWatched().clear();
+           /* if (target == null) {
+                addPoint2Map(x-1, y);
+                target = getPoint(x-1,y) ;
+            }*/
         } else if (direction.equals("R")) {
-            facing = "R";
             //if(x+1 >= grid.size()){ System.out.println("Ilegal move"); return;}
-            target  = getPoint(x+1, y);
+            location.setX(location.getX()+1);
+            location.setY(location.getY());
+
+            for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
+                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX()+1, pov.getCurrentlyWatched().get(i).getY());
+                if (p == null) {
+                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX()+1, pov.getCurrentlyWatched().get(i).getY());
+                    p = getPoint(pov.getCurrentlyWatched().get(i).getX()+1, pov.getCurrentlyWatched().get(i).getY());
+                }
+                pov.getNextCurrentlyWatched().add(p);
+            }
+            pov.getCurrentlyWatched().clear();
+            for (int i = 0; i < pov.getNextCurrentlyWatched().size(); i++) {
+                pov.getCurrentlyWatched().add(pov.getNextCurrentlyWatched().get(i));
+            }
+            pov.getNextCurrentlyWatched().clear();
+           /* if (target == null) {
+                addPoint2Map(x+1, y);
+                target = getPoint(x+1,y) ;
+            }*/
         }
         
-        if (collision(target) || target.getIsWall() || target.getIsWindow()) {
+     /*   if (collision(target) || target.getIsWall() || target.getIsWindow()) {
             System.out.println("target is a wall or a window");
             return;
-        }
+        }*/
 
-        pov.see(facing, location);
+      //  pov.see(facing, location);
 
 
-        if (teleport(target)) {
-            System.out.println("teleporting");
+      //  if (teleport(target)) {
+         //   System.out.println("teleporting");
+         //   lastLoc = location;
+         //   location = targetTeleport;
+         //   unSee();
+
+       // } else {
             lastLoc = location;
-            location = targetTeleport;
-            unSee();
-
-        } else {
-            lastLoc = location;
-            location = target;
         }
-     }
+     //}
 
     public void moveInPath(ArrayList<Point> path){
         for(Point p: path){
@@ -119,14 +195,14 @@ public class Player {
         }
      }
      public void spinAround(){
-         pov.see("U",location);
-         unSee();
-         pov.see("D", location);
-         unSee();
-         pov.see("L",location);
-         unSee();
-         pov.see("R", location);
-         unSee();
+        // pov.see("U",location);
+        // unSee();
+         //pov.see("D", location);
+         //unSee();
+        // pov.see("L",location);
+        // unSee();
+        // pov.see("R", location);
+        // unSee();
      }
 
     public ArrayList<Point> getNeighbours(Point current){
@@ -209,29 +285,33 @@ public class Player {
         return false;
      }
     public void moveRndom(){
-        
-       unSee();
-
        int randomFace = (int) (Math.random() * 4 + 1)+1;
        if (randomFace == 5) {
            facing = "D";
-           //d.see(facing,location,checkedByAll);
            moveInDirection(facing);
        }
        if (randomFace == 2) {
-           facing = "D";
+           facing = "L";
+
            //d.see(facing,location,checkedByAll);
+
            moveInDirection(facing);
+
+
        }
        if (randomFace == 3) {
-           facing = "D";
+           facing = "R";
+
            //d.see(facing,location,checkedByAll);
+
            moveInDirection(facing);
+
+
        }
        if (randomFace == 4) {
-           facing = "D";
-           //d.see(facing,location,checkedByAll);
+
            moveInDirection(facing);
+
        }
        visited_4_GUI.add(new Point(location.getX(),location.getY()));
    }

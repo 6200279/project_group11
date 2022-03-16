@@ -31,16 +31,16 @@ public class B_Algorithm {
 
 
     public void look360(){
-        pov.see("R",location);
+       // pov.see("R",location);
         right_seen = pov.getCurrentlyWatched();
         player.unSee();
-        pov.see("L",location);
+        //pov.see("L",location);
         left_seen = pov.getCurrentlyWatched();
         player.unSee();
-        pov.see("U",location);
+     //   pov.see("U",location);
         up_seen = pov.getCurrentlyWatched();
         player.unSee();
-        pov.see("D",location);
+      //  pov.see("D",location);
         down_seen = pov.getCurrentlyWatched();
         player.unSee();      
     }
