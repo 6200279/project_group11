@@ -1,5 +1,6 @@
 package sourcecode;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class B_Algorithm {
@@ -25,8 +26,11 @@ public class B_Algorithm {
         look360();
         String least = getLeastExploredDirection();
         Point target = getDesiredLocation(least);
+
+        ArrayList<Point> path = player.BFS(location,target.getX(),target.getY());
+        if(path==null){ return;}
         
-        player.moveInPath(player.BFS(location,target.getX(),target.getY()));
+        player.moveInPath(path);
     }
 
 

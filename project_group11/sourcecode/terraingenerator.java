@@ -638,9 +638,9 @@ if (BIOME == "SAHARA"){
 
                     //players.get(i).moveRndom();
 
-                    MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
+                    //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
                     //Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
-                    //B_Algorithm ben = new B_Algorithm(players.get(i));
+                    B_Algorithm ben = new B_Algorithm(players.get(i));
                     this.repaint();
 
                 }
