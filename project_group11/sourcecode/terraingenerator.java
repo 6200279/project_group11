@@ -303,12 +303,6 @@ if (BIOME == "SAHARA"){
                 }
             }
 
-            int counter=0;
-            for(Point p : sharedArr){
-                if(p!=null){counter++;}
-            }
-            System.out.println("counter is "+counter);
-
             for (int i = 0; i < scenario.numGuards; i++) {
             
                 int xx = (int)  (Math.random() * (x2 - x1)) + x1;
@@ -602,15 +596,7 @@ if (BIOME == "SAHARA"){
             for(Point watchedP: p.getPOV().getCurrentlyWatched()){
                 g.setColor(new Color(181,19,234,48));
                 g.fillOval(watchedP.getX(),watchedP.getY(),2,2);
-            }
-            //         if(p.grid.get(s).get(h).getIsSeen()){
-            //             Point p1 = p.grid.get(s).get(h); 
-            //             g.setColor(new Color(181,19,234,48));
-            //             g.fillOval(p1.getX(),p1.getY(),2,2);
-                        
-            //         }
-            //     }
-            // }    
+            }    
         }
 
         g.setColor(Color.red);

@@ -10,6 +10,8 @@ public class POV {
     private ArrayList<Point> currently_watched;
     private ArrayList<Rectangle> rectw = new ArrayList<>();
     private Point location; 
+    private String facing;
+    private boolean firstViewSet;
 
     public POV(ArrayList<Point> myMap, int radius){
         this.myMap = myMap;
@@ -21,7 +23,22 @@ public class POV {
     public void setRectw(ArrayList<Rectangle> r){ rectw = r;}
 
     public void see(String facing, Point location){
+        this.facing = facing;
         this.location = location;
+        if(!firstViewSet){
+            setFirstView();
+            firstViewSet= true;
+        }
+        else{
+            seeNextView();
+        }
+    }
+
+    public void seeNextView(){
+
+    }
+
+    public void setFirstView(){
         if(facing.equals("R")){
             ArrayList<Point> straightP = getStraightPath(location, "R",radius);
             int i=0;
@@ -33,7 +50,7 @@ public class POV {
                 i++;
             }
         }
-        if(facing.equals("L")){
+        else if(facing.equals("L")){
             ArrayList<Point> straightP = getStraightPath(location, "L",radius);
             int i=0;
             for(Point p: straightP){
@@ -44,7 +61,7 @@ public class POV {
                 i++;
             }
         }
-        if(facing.equals("U")){
+        else if(facing.equals("U")){
             ArrayList<Point> straightP = getStraightPath(location, "U",radius);
             int i=0;
             for(Point p: straightP){
@@ -55,7 +72,7 @@ public class POV {
                 i++;
             }
         }
-        if(facing.equals("D")){
+        else if(facing.equals("D")){
             ArrayList<Point> straightP = getStraightPath(location, "D",radius);
             int i=0;
             for(Point p: straightP){
@@ -81,10 +98,7 @@ public class POV {
                 if(next == null){
                     addPoint2Map(x+1, y);
                     next = getPoint(x+1, y);
-
                 }
-                if(next==null){ 
-                    System.out.println("mill");}
                 if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
@@ -93,11 +107,7 @@ public class POV {
                 if(next == null){
                     addPoint2Map(x-1, y);
                     next = getPoint(x-1, y);
-
                 }
-                if(next==null){ 
-                    System.out.println("mill");}
-                
                 if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
@@ -106,25 +116,16 @@ public class POV {
                 if(next == null){
                     addPoint2Map(x, y-1);
                     next = getPoint(x, y-1);
-
                 }
-                if(next==null){ 
-                    System.out.println("mill");}
-                
                 if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
             else if(direction.equals("D")){
                 next = getPoint(x, y+1);
-                int loca = ((x+y)*(x+y+1)/2)+y;
                 if(next == null){
                     addPoint2Map(x, y+1);
                     next = getPoint(x, y+1);
-                    System.out.println(next);
                 }
-                if(next==null){ 
-                    System.out.println("mill");}
-                
                 if(collision(next) || next.getIsWall()|| next.getIsDoor()){ break;}
                 straightPath.add(next);
             }
@@ -187,7 +188,6 @@ public class POV {
         for(Point p: diagPath){
             if(collision(p) || p.getIsDoor()||p.getIsWall()){ break;}
             currently_watched.add(p);
-            p.setSeenOnce(true);
         }
     }
 
