@@ -37,6 +37,12 @@ public class Point {
     public void setIsWall(boolean isWall){
         this.isWall = isWall;
     }
+    public void setIsDoor(boolean isDoor){
+        this.isDoor = isDoor;
+    }
+    public void setIsWindow(boolean isWindow){
+        this.isWindow = isWindow;
+    }
 
     public void setIsTeleport(boolean isTeleport, Point targetPoint){
         this.isTeleport = isTeleport;

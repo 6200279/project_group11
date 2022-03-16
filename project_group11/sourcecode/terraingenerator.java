@@ -67,7 +67,7 @@ public final class terraingenerator
         private Scenario scenario ;
 
         private ArrayList<Area>walls ;
-        private ArrayList<Rectangle>rectw;
+        private ArrayList<List<Integer>>obstacle;
         private ArrayList<List<Integer>>tp;
         private ArrayList<Area>doors ;
         private ArrayList<Area>windows  ;
@@ -78,8 +78,8 @@ public final class terraingenerator
         private ArrayList<Player> players ;
         private ArrayList<Point> seenByAll;
         private ArrayList<Point> locationspawn ;
-        private boolean rectwIsSet = false;
         private boolean tpIsSet = false;
+        private boolean obstacleIsSet = false;
 
 
 
@@ -112,8 +112,8 @@ public final class terraingenerator
             telePortals = scenario.getTeleportals() ;
             shaded = scenario.getShaded() ;
             players = new ArrayList<Player>() ;
-            rectw = new ArrayList<Rectangle>();
             tp = new ArrayList<List<Integer>>();
+            obstacle = new ArrayList<List<Integer>>();
 
 
 
@@ -451,7 +451,8 @@ if (BIOME == "SAHARA"){
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
 
-            rectw.add(new Rectangle(x,y,width,height));
+            List<Integer> tmp= Arrays.asList(x,y,width,height,1);
+            obstacle.add(tmp);
 
             g.setColor(Color.black);
             g.drawRect(x,y,width,height);
@@ -469,6 +470,9 @@ if (BIOME == "SAHARA"){
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
 
+            List<Integer> tmp= Arrays.asList(x,y,width,height,2);
+            obstacle.add(tmp);
+
             g.setColor(Color.yellow);
             g.drawRect(x,y,width,height);
             g.fillRect(x,y,width,height);
@@ -485,7 +489,8 @@ if (BIOME == "SAHARA"){
             int y = Math.min(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
-            rectw.add(new Rectangle(x,y,width,height));
+            List<Integer> tmp= Arrays.asList(x,y,width,height,3);
+            obstacle.add(tmp);
 
             g.setColor(Color.blue);
             g.drawRect(x,y,width,height);
@@ -494,9 +499,8 @@ if (BIOME == "SAHARA"){
         }
         
             for(Player pl : players){
-                pl.setRectw(rectw);
-                //if(!rectwIsSet)  pl.setWalls();
-                rectwIsSet = true;
+                pl.setObstacle(obstacle);
+                obstacleIsSet=true;
                 pl.setTp(tp);
                 tpIsSet = true;
             }

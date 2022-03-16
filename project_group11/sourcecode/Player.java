@@ -14,8 +14,8 @@ public class Player {
     private String facing = "D"; // either: "U" up, "D" down, "R" right, "L" left
     private POV pov;
     private ArrayList<Point> visited_4_GUI;
-    private ArrayList<Rectangle> rectw = new ArrayList<>();
-     private ArrayList<List<Integer>> tp = new ArrayList<>();
+    private ArrayList<List<Integer>> tp = new ArrayList<>();
+    private ArrayList<List<Integer>> obstacle = new ArrayList<>();
     private Point [] sharedArr;
     private ArrayList<Point> seenByAll;
     private final String myId;
@@ -49,13 +49,13 @@ public class Player {
     public void setLocation(Point location){ this.location =  location;  }
     public void setSpeed(double speed){ this.speed = speed;}
     public void setFacing(String new_direction){ this.facing = new_direction;}
-    public void setRectw(ArrayList<Rectangle> rectw) { 
-        this.rectw = rectw;
-        pov.setRectw(rectw);
-    }
      public void setTp(ArrayList<List<Integer>> tp) {
          this.tp = tp;
      }
+    public void setObstacle(ArrayList<List<Integer>> obstacle) {
+        this.obstacle = obstacle;
+        pov.setObstacle(obstacle);
+    }
 
     public Point getSharedData(int x, int y){
         int hash = ((x+y)*(x+y+1)/2)+y;
@@ -88,8 +88,8 @@ public class Player {
             //if(x+1 >= grid.size()){ System.out.println("Ilegal move"); return;}
             target  = getPoint(x+1, y);
         }
-        if (collision(target) || target.getIsWall()) {
-            System.out.println("target is a wall");
+        if (collision(target) || target.getIsWall() || target.getIsWindow()) {
+            System.out.println("target is a wall or a window");
             return;
         }
         pov.see(facing, location);
@@ -138,10 +138,10 @@ public class Player {
         up = getPoint(x, y-1);
         down = getPoint(x, y+1);
 
-        if( !collision(left) && !left.getIsWall())      neighbours.add(left); //Point to the left
-        if( !collision(right) && !right.getIsWall())     neighbours.add(right);
-        if( !collision(up) && !up.getIsWall())        neighbours.add(up); //Point above
-        if( !collision(down) && !down.getIsWall())      neighbours.add(down);
+        if( !collision(left) && !left.getIsWall() && !left.getIsWindow())      neighbours.add(left); //Point to the left
+        if( !collision(right) && !right.getIsWall() && !right.getIsWindow())     neighbours.add(right);
+        if( !collision(up) && !up.getIsWall() && !up.getIsWindow())        neighbours.add(up); //Point above
+        if( !collision(down) && !down.getIsWall() && !down.getIsWindow())      neighbours.add(down);
 
         return neighbours;
     }
@@ -165,10 +165,22 @@ public class Player {
         Rectangle rectangle1 = new Rectangle(location.getX()-radius/2, location.getY()-radius/2,radius,radius);
         rectangle1.setLocation(target.getX()-radius/2,target.getY()-radius/2);
 
-        for (int i = 0; i < rectw.size(); i++) {
+        for (int i = 0;i<obstacle.size();i++){
 
-            if (rectangle1.intersects(rectw.get(i))) {
+            Rectangle obsRect= new Rectangle(obstacle.get(i).get(0),obstacle.get(i).get(1),obstacle.get(i).get(2),obstacle.get(i).get(3));
+            if (rectangle1.intersects(obsRect)&&obstacle.get(i).get(4)==1) {
                 target.setIsWall(true);
+                //System.out.println("in a wall");
+                return true;
+            }
+            if (rectangle1.intersects(obsRect)&&obstacle.get(i).get(4)==2) {
+                target.setIsDoor(true);
+                //System.out.println("in a door");
+                return false;
+            }
+            if (rectangle1.intersects(obsRect)&&obstacle.get(i).get(4)==3) {
+                target.setIsWindow(true);
+                //System.out.println("in a window");
                 return true;
             }
         }

@@ -2,6 +2,7 @@ package sourcecode;
 import java.util.ArrayList;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 
 public class POV {
@@ -10,7 +11,7 @@ public class POV {
     private ArrayList<Point> myMap;
     private ArrayList<Point> currently_watched;
     private ArrayList<Point> next_currently_watched;
-    private ArrayList<Rectangle> rectw = new ArrayList<>();
+    private ArrayList<List<Integer>> obstacle = new ArrayList<>();
     private Point location; 
     private String facing="D";
     private boolean firstViewSet;
@@ -23,18 +24,19 @@ public class POV {
     }
 
     public ArrayList<Point> getCurrentlyWatched(){ return currently_watched;}
-    public void setRectw(ArrayList<Rectangle> r){ rectw = r;}
-
+    public void setObstacle(ArrayList<List<Integer>> r){ obstacle = r;}
     public void see(String nextfacing, Point location){
         this.location = location;
-       if(!firstViewSet){
+       //if(!firstViewSet){
             setFirstView();
             //facing = nextfacing;
-            firstViewSet= true;
+            /*firstViewSet= true;
         }
         else{
             seeNextView(nextfacing);
         }
+
+             */
     }
 
     public void seeNextView(String nextfacing) {
@@ -411,15 +413,24 @@ public class POV {
     }
 
    public boolean collision(Point target) {
-    
-    Rectangle rectangle1 = new Rectangle(location.getX()-radius/2, location.getY()-radius/2,radius,radius);
-    rectangle1.setLocation(target.getX()-radius/2,target.getY()-radius/2);
 
-    for (int i = 0; i < rectw.size(); i++) {
+    for (int i = 0;i<obstacle.size();i++){
 
-        if (rectangle1.intersects(rectw.get(i))) {
+        Rectangle obsRect= new Rectangle(obstacle.get(i).get(0),obstacle.get(i).get(1),obstacle.get(i).get(2),obstacle.get(i).get(3));
+        if (obsRect.contains(target.getX(),target.getY())&&obstacle.get(i).get(4)==1) {
             target.setIsWall(true);
+            //System.out.println("is a wall");
             return true;
+        }
+        if (obsRect.contains(target.getX(),target.getY())&&obstacle.get(i).get(4)==2) {
+            target.setIsDoor(true);
+            //System.out.println("is a door");
+            return true;
+        }
+        if (obsRect.contains(target.getX(),target.getY())&&obstacle.get(i).get(4)==3) {
+            target.setIsWindow(true);
+            //System.out.println("is a window");
+            return false;
         }
     }
     return false;
