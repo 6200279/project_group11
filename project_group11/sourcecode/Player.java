@@ -14,20 +14,21 @@ import java.awt.Rectangle;
     private POV pov;
     private ArrayList<Point> visited_4_GUI;
     private ArrayList<Rectangle> rectw = new ArrayList<>();
-    private Point [] sharedArr;
+    private ArrayList<Point> seenByAll;
     private final String myId;
     private Point lastLoc;
     private ArrayList<Point> myMap;
 
-    public Player(Point location, double speed, int width, int height,String id, int scale){
+    public Player(Point location, double speed, int width, int height,String myId, int scale){
         this.location = location;
         this.speed = speed;
-        myId = id;
-        visited_4_GUI = new ArrayList<>();
+        this.myId = myId;
         myMap = new ArrayList<>(width*scale*height*scale);
         for(int i=0; i<width*height*scale*scale-1; i++){
             myMap.add(null);
         }
+        addPoint2Map(location.getX(), location.getY());
+        visited_4_GUI = new ArrayList<>();
         pov = new POV(myMap, pov_radius);
         lastLoc = getNeighbours(location).get(0);
     }
@@ -52,7 +53,6 @@ import java.awt.Rectangle;
     public void moveToPoint(Point target){
         String facing = getWhereFacing(location, target);
         moveInDirection(facing);
-        int f=0;
     }
 
     public void moveInDirection(String direction){
@@ -204,7 +204,7 @@ import java.awt.Rectangle;
 
    public void addPoint2Map(int x, int y){
         int hash = ((x+y)*(x+y+1)/2)+y;
-        myMap.set(hash, new Point(x,y));
+        if(getPoint(x,y)==null) myMap.set(hash, new Point(x,y));
    }
 
    public Point getPoint(int x, int y){

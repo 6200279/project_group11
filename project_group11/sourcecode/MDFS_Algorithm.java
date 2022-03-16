@@ -26,7 +26,7 @@ public class MDFS_Algorithm {
             player.moveToPoint(chosenTarget);
         }
         else if(unexplored.size()==0){ // else if all neighbour cells around me are explored
-            System.out.println("agent "+player.getId()+ " has Nothing to explore");
+            //System.out.println("agent "+player.getId()+ " has Nothing to explore");
             if(location.getExplorerID().equals(player.getId())){
                 location.setVisitedMdfs(true);
                 player.getVisited_4_GUI().add(new Point(location.getX(),location.getY()));

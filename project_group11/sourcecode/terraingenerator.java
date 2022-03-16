@@ -72,7 +72,7 @@ public final class terraingenerator
         private ArrayList<Area>shaded ;
         private HashMap<String, MyCoord> map = new HashMap<String,MyCoord>();
         private ArrayList<Player> players ;
-        private Point [] sharedArr;
+        private ArrayList<Point> seenByAll;
         private ArrayList<Point> locationspawn ;
         private boolean rectwIsSet = false;
 
@@ -106,10 +106,6 @@ public final class terraingenerator
             shaded = scenario.getShaded() ;
             players = new ArrayList<Player>() ;
             rectw = new ArrayList<Rectangle>();
-            
-
-
-
             this.height = height;
             this.width = width;
             this.z = z;
@@ -274,54 +270,18 @@ if (BIOME == "SAHARA"){
             int y1 = scenario.spawnAreaGuards.getY1()*scale+25/2;
             int y2 = scenario.spawnAreaGuards.getY2()*scale-25/2 ;
 
-            // ArrayList<ArrayList<Integer>> lookedAt = new ArrayList<>();
-            // for(int r=0; r<1200; r++ ){
-            //     ArrayList<Integer> row = new ArrayList<>();
-            //     for(int c=0; c<800; c++){
-            //         row.add(0);
-            //     }
-            //     lookedAt.add(row);
-            // }
-
-            // ArrayList<Point> sharedArray = new ArrayList<>();
-            // for(int i=0; i<800; i++){
-            //     for(int j=0; j<1200;j++){
-            //         sharedArray.add(new Point(i,j));
-            //     }
-            // }
-
-            int maxX = 800;
-            int maxY = 1200;
-            int maxHash = ((maxX+maxY)*(maxX+maxY+1)/2)+maxY; 
-
-            sharedArr = new Point [maxHash+1];
-
-            for(int i=0; i<maxY; i++){
-                for(int j=0; j<maxX; j++){
-                    int hash = ((i+j)*(i+j+1)/2)+j;
-                    sharedArr[hash] = new Point(i,j);
-                }
-            }
-
             for (int i = 0; i < scenario.numGuards; i++) {
             
                 int xx = (int)  (Math.random() * (x2 - x1)) + x1;
                 int yy = (int) (Math.random() * (y2-y1)) + y1 ;
 
-                int hash = ((xx+yy)*(xx+yy+1)/2)+yy;
-                Point locationSpawn = sharedArr[hash];
-                //Point locationSpawn = new Point(xx,yy) ;
-                // for(Point p: sharedArr){
-                //     if(p.getX() == xx && p.getY() == yy) locationSpawn = p;
-                // }
-                
+                Point location = new Point(xx,yy);
                 
                 double speed = scenario.baseSpeedGuard ;
-
-                //Player player = new Player(locationSpawn,speed,1200,800, sharedArr,String.valueOf(i)) ;
-                Player Player = new Player(locationSpawn,speed,1200,800,String.valueOf(i),scale) ;
-                players.add(Player);
-                //player.setWallPoints(wallPoints);
+        
+                seenByAll = new ArrayList<>();
+                Player player = new Player(location,speed,1200,800,String.valueOf(i),scale) ;
+                players.add(player);
             }
 
            
@@ -449,9 +409,6 @@ if (BIOME == "SAHARA"){
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
 
-            for(Point p: sharedArr){
-
-            }
             rectw.add(new Rectangle(x,y,width,height));
 
             g.setColor(Color.black);
@@ -581,17 +538,14 @@ if (BIOME == "SAHARA"){
         g.drawRect(x,y,width,height);
         g.fillRect(x,y,width,height);
 
-
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
             int xx = p.getLocation().getX() ;
             int yy = p.getLocation().getY() ;
             int radius = p.getRadius() ;
 
-
             g.setColor(Color.blue);
             g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
-
             
             for(Point watchedP: p.getPOV().getCurrentlyWatched()){
                 g.setColor(new Color(181,19,234,48));
@@ -605,7 +559,6 @@ if (BIOME == "SAHARA"){
         g.drawRect(this.getWidth()-150,this.getHeight()-150,scenario.mapWidth,scenario.mapHeight);
 
         for (int j = 0; j <players.size() ; j++) {
-            g.setColor(Color.green);
             Player player = players.get(j);
             for(int k=0 ; k<player.getVisited_4_GUI().size() ; k++){
                 g.setColor(Color.green);
@@ -614,7 +567,13 @@ if (BIOME == "SAHARA"){
                 g.fillOval((this.getWidth()-150)-player.getRadius()/scale/2+xxx,(this.getHeight()-150)-player.getRadius()/scale/2+yyy,player.getRadius()/scale,player.getRadius()/scale);
            }
         }
-
+        //   Player player = players.get(0);
+        // for (Point p: seenByAll) {
+        //         g.setColor(Color.green);
+        //         int xxx = p.getX()/scale ;
+        //         int yyy = p.getY()/scale ;
+        //         g.fillOval((this.getWidth()-150)-player.getRadius()/scale/2+xxx,(this.getHeight()-150)-player.getRadius()/scale/2+yyy,player.getRadius()/scale,player.getRadius()/scale);
+        //    }
             if(play)
                 tm.start();
 
@@ -628,8 +587,9 @@ if (BIOME == "SAHARA"){
                 for (int i = 0; i < scenario.numGuards; i++) {
 
                     //players.get(i).moveRndom();
-                    //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
-                    Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
+                    
+                    MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
+                    //Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
                     //B_Algorithm ben = new B_Algorithm(players.get(i));
                     this.repaint();
 
