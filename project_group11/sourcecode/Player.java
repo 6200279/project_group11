@@ -2,8 +2,10 @@ package sourcecode ;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.awt.Rectangle;
 import java.util.List;
+import java.util.Queue;
 
 public class Player {
 
@@ -22,6 +24,7 @@ public class Player {
     private Point lastLoc;
     private Point targetTeleport;
     private ArrayList<Point> myMap;
+    private ArrayList<Point> visitedBFS = new ArrayList<>();
 
     public Player(Point location, double speed, int width, int height,String myId, int scale){
         this.location = location;
@@ -49,13 +52,14 @@ public class Player {
     public void setLocation(Point location){ this.location =  location;  }
     public void setSpeed(double speed){ this.speed = speed;}
     public void setFacing(String new_direction){ this.facing = new_direction;}
-     public void setTp(ArrayList<List<Integer>> tp) {
-         this.tp = tp;
-     }
+    
     public void setObstacle(ArrayList<List<Integer>> obstacle) {
         this.obstacle = obstacle;
         pov.setObstacle(obstacle);
     }
+     public void setTp(ArrayList<List<Integer>> tp) {
+         this.tp = tp;
+     }
 
     public Point getSharedData(int x, int y){
         int hash = ((x+y)*(x+y+1)/2)+y;
@@ -88,10 +92,12 @@ public class Player {
             //if(x+1 >= grid.size()){ System.out.println("Ilegal move"); return;}
             target  = getPoint(x+1, y);
         }
+        
         if (collision(target) || target.getIsWall() || target.getIsWindow()) {
             System.out.println("target is a wall or a window");
             return;
         }
+
         pov.see(facing, location);
 
 
@@ -138,8 +144,8 @@ public class Player {
         up = getPoint(x, y-1);
         down = getPoint(x, y+1);
 
-        if( !collision(left) && !left.getIsWall() && !left.getIsWindow())      neighbours.add(left); //Point to the left
-        if( !collision(right) && !right.getIsWall() && !right.getIsWindow())     neighbours.add(right);
+        if( !collision(left) && !left.getIsWall() &&  !left.getIsWindow())      neighbours.add(left); //Point to the left
+        if( !collision(right) && !right.getIsWall()&& !right.getIsWindow())     neighbours.add(right);
         if( !collision(up) && !up.getIsWall() && !up.getIsWindow())        neighbours.add(up); //Point above
         if( !collision(down) && !down.getIsWall() && !down.getIsWindow())      neighbours.add(down);
 
@@ -165,7 +171,7 @@ public class Player {
         Rectangle rectangle1 = new Rectangle(location.getX()-radius/2, location.getY()-radius/2,radius,radius);
         rectangle1.setLocation(target.getX()-radius/2,target.getY()-radius/2);
 
-        for (int i = 0;i<obstacle.size();i++){
+        for (int i = 0; i < obstacle.size(); i++) {
 
             Rectangle obsRect= new Rectangle(obstacle.get(i).get(0),obstacle.get(i).get(1),obstacle.get(i).get(2),obstacle.get(i).get(3));
             if (rectangle1.intersects(obsRect)&&obstacle.get(i).get(4)==1) {
@@ -202,8 +208,6 @@ public class Player {
          }
         return false;
      }
-
-    
     public void moveRndom(){
         
        unSee();
@@ -244,6 +248,45 @@ public class Player {
        return "";
    }
 
+   public ArrayList<Point> getBFSNeighbours(Point p){
+
+    ArrayList<Point> nArray = getNeighbours(p);
+    for(Point a : nArray) {
+         if(!a.getIsBfsVisited()) visitedBFS.add(a);
+        }
+    return visitedBFS;
+    }
+
+    public ArrayList<Point> BFS(Point s, int xt, int yt){
+    ArrayList<Point> shortestPath = new ArrayList<>();
+    Queue<Point> Q = new LinkedList<>();
+    Q.add(s);
+    s.setBfsVisited(true);
+    Point target = new Point(xt,yt);
+    while(!Q.isEmpty()) {
+        Point v = Q.poll();
+        if((v.getX() == xt)&&(v.getY() == yt)){
+            target = v;
+            break;
+        }
+        for(Point neighbour : getBFSNeighbours(v)) {
+            if (!neighbour.getIsBfsVisited()) {
+                Q.add(neighbour);
+                neighbour.setParentBfs(v);
+                neighbour.setBfsVisited(true);
+            }
+        }
+    }
+    Point n = target;
+    while(!(n.getX() == s.getX() && n.getY() == s.getY())){
+        shortestPath.add(n);
+        n = n.getParentBfs();
+    }
+    shortestPath.add(s);
+    return shortestPath;
+
+    }
+
    public void addPoint2Map(int x, int y){
         int hash = ((x+y)*(x+y+1)/2)+y;
         if(getPoint(x,y)==null) myMap.set(hash, new Point(x,y));
@@ -252,5 +295,7 @@ public class Player {
    public Point getPoint(int x, int y){
         int hash = ((x+y)*(x+y+1)/2)+y;
         return myMap.get(hash);
-   }
+   
+    }
+
 }

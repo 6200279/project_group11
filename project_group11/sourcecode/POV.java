@@ -25,18 +25,17 @@ public class POV {
 
     public ArrayList<Point> getCurrentlyWatched(){ return currently_watched;}
     public void setObstacle(ArrayList<List<Integer>> r){ obstacle = r;}
+
     public void see(String nextfacing, Point location){
         this.location = location;
-       //if(!firstViewSet){
+       if(!firstViewSet){
             setFirstView();
             //facing = nextfacing;
-            /*firstViewSet= true;
+            firstViewSet= true;
         }
         else{
             seeNextView(nextfacing);
         }
-
-             */
     }
 
     public void seeNextView(String nextfacing) {
@@ -413,6 +412,9 @@ public class POV {
     }
 
    public boolean collision(Point target) {
+    
+    Rectangle rectangle1 = new Rectangle(location.getX()-radius/2, location.getY()-radius/2,radius,radius);
+    rectangle1.setLocation(target.getX()-radius/2,target.getY()-radius/2);
 
     for (int i = 0;i<obstacle.size();i++){
 
@@ -433,8 +435,9 @@ public class POV {
             return false;
         }
     }
-    return false;
-}
+        return false;
+  }
+
 
 
     public void addPoint2Map(int x, int y){

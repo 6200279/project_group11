@@ -16,6 +16,9 @@ public class Point {
     private boolean seenOnce = false;
     private String explorer_id = "";
     private Point parentMDFS;
+    private boolean BFSVisited = false;
+    private Point parentBfs;
+
     int steppedOn=0;
 
 
@@ -50,6 +53,11 @@ public class Point {
             targetTeleport = targetPoint;
         }
     }
+
+    public void setBfsVisited(boolean b){ BFSVisited = b;}
+    public boolean getIsBfsVisited() {return BFSVisited;}
+    public void setParentBfs(Point p){parentBfs = p;}
+    public Point getParentBfs(){return parentBfs;}
 
     public boolean getIsWall(){ return isWall;}
     public boolean getIsTeleport(){ return isTeleport;}

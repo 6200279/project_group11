@@ -25,7 +25,8 @@ public class B_Algorithm {
         look360();
         String least = getLeastExploredDirection();
         Point target = getDesiredLocation(least);
-        player.setLocation(target);
+        
+        player.moveInPath(player.BFS(location,target.getX(),target.getY()));
     }
 
 
