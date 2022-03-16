@@ -3,6 +3,7 @@ package sourcecode;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.Rectangle;
 import java.awt.Color;
@@ -28,9 +29,10 @@ public final class terraingenerator
     private static final int DEFAULT_HEIGHT = 80;
 
     private static final int DEFAULT_WIDTH = 120;
+    public static int sc;
 
 
-// TODO hashmap is useless ill keep it in for now, use arraylist<point>
+    // TODO hashmap is useless ill keep it in for now, use arraylist<point>
     static class MyCoord{
         private int X;
         private int Y;
@@ -61,20 +63,25 @@ public final class terraingenerator
     {
 
 
-        private final int scale;
+        public final int scale;
         private Scenario scenario ;
 
         private ArrayList<Area>walls ;
         private ArrayList<Rectangle>rectw;
+        private ArrayList<List<Integer>>tp;
         private ArrayList<Area>doors ;
         private ArrayList<Area>windows  ;
         private ArrayList<TelePortal>telePortals ;
         private ArrayList<Area>shaded ;
+        private Point [] sharedArr;
         private HashMap<String, MyCoord> map = new HashMap<String,MyCoord>();
         private ArrayList<Player> players ;
         private ArrayList<Point> seenByAll;
         private ArrayList<Point> locationspawn ;
         private boolean rectwIsSet = false;
+        private boolean tpIsSet = false;
+
+
 
 
 
@@ -106,11 +113,17 @@ public final class terraingenerator
             shaded = scenario.getShaded() ;
             players = new ArrayList<Player>() ;
             rectw = new ArrayList<Rectangle>();
+            tp = new ArrayList<List<Integer>>();
+
+
+
+
             this.height = height;
             this.width = width;
             this.z = z;
             this.BIOME = biome;
             this.scale = scale;
+            sc=scale;
             createPlayers();
         }
 
@@ -270,6 +283,35 @@ if (BIOME == "SAHARA"){
             int y1 = scenario.spawnAreaGuards.getY1()*scale+25/2;
             int y2 = scenario.spawnAreaGuards.getY2()*scale-25/2 ;
 
+            // ArrayList<ArrayList<Integer>> lookedAt = new ArrayList<>();
+            // for(int r=0; r<1200; r++ ){
+            //     ArrayList<Integer> row = new ArrayList<>();
+            //     for(int c=0; c<800; c++){
+            //         row.add(0);
+            //     }
+            //     lookedAt.add(row);
+            // }
+
+            // ArrayList<Point> sharedArray = new ArrayList<>();
+            // for(int i=0; i<800; i++){
+            //     for(int j=0; j<1200;j++){
+            //         sharedArray.add(new Point(i,j));
+            //     }
+            // }
+
+            int maxX = 800;
+            int maxY = 1200;
+            int maxHash = ((maxX+maxY)*(maxX+maxY+1)/2)+maxY; 
+
+            sharedArr = new Point [maxHash+1];
+
+            for(int i=0; i<maxY; i++){
+                for(int j=0; j<maxX; j++){
+                    int hash = ((i+j)*(i+j+1)/2)+j;
+                    sharedArr[hash] = new Point(i,j);
+                }
+            }
+
             for (int i = 0; i < scenario.numGuards; i++) {
             
                 int xx = (int)  (Math.random() * (x2 - x1)) + x1;
@@ -278,7 +320,7 @@ if (BIOME == "SAHARA"){
                 Point location = new Point(xx,yy);
                 
                 double speed = scenario.baseSpeedGuard ;
-        
+
                 seenByAll = new ArrayList<>();
                 Player player = new Player(location,speed,1200,800,String.valueOf(i),scale) ;
                 players.add(player);
@@ -455,6 +497,8 @@ if (BIOME == "SAHARA"){
                 pl.setRectw(rectw);
                 //if(!rectwIsSet)  pl.setWalls();
                 rectwIsSet = true;
+                pl.setTp(tp);
+                tpIsSet = true;
             }
        
         for (int i = 0; i < telePortals.size(); i++) {
@@ -468,6 +512,8 @@ if (BIOME == "SAHARA"){
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
 
+            List<Integer> teleport = Arrays.asList(x,y,width,height,telePortals.get(i).xTarget*scale,telePortals.get(i).yTarget*scale,(int)telePortals.get(i).getNewOrientation()*scale);
+            tp.add(teleport);
             g.setColor(Color.cyan);
             g.drawRect(x,y,width,height);
             g.fillRect(x,y,width,height);
@@ -587,7 +633,7 @@ if (BIOME == "SAHARA"){
                 for (int i = 0; i < scenario.numGuards; i++) {
 
                     //players.get(i).moveRndom();
-                    
+
                     MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
                     //Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
                     //B_Algorithm ben = new B_Algorithm(players.get(i));

@@ -3,20 +3,24 @@ package sourcecode ;
 
 import java.util.ArrayList;
 import java.awt.Rectangle;
+import java.util.List;
 
- public class Player {
+public class Player {
 
     private final int radius = 25 ;
-    private final int pov_radius = 55; 
+    private final int pov_radius = 55;
     private Point location;
     private double speed;
     private String facing = "D"; // either: "U" up, "D" down, "R" right, "L" left
     private POV pov;
     private ArrayList<Point> visited_4_GUI;
     private ArrayList<Rectangle> rectw = new ArrayList<>();
+     private ArrayList<List<Integer>> tp = new ArrayList<>();
+    private Point [] sharedArr;
     private ArrayList<Point> seenByAll;
     private final String myId;
     private Point lastLoc;
+    private Point targetTeleport;
     private ArrayList<Point> myMap;
 
     public Player(Point location, double speed, int width, int height,String myId, int scale){
@@ -49,6 +53,14 @@ import java.awt.Rectangle;
         this.rectw = rectw;
         pov.setRectw(rectw);
     }
+     public void setTp(ArrayList<List<Integer>> tp) {
+         this.tp = tp;
+     }
+
+    public Point getSharedData(int x, int y){
+        int hash = ((x+y)*(x+y+1)/2)+y;
+        return sharedArr[hash];
+   }
 
     public void moveToPoint(Point target){
         String facing = getWhereFacing(location, target);
@@ -82,9 +94,11 @@ import java.awt.Rectangle;
         }
         pov.see(facing, location);
 
-        if (target.getIsTeleport()) {
+
+        if (teleport(target)) {
+            System.out.println("teleporting");
             lastLoc = location;
-            location = target.getTeleportTarget();
+            location = targetTeleport;
             unSee();
 
         } else {
@@ -92,7 +106,7 @@ import java.awt.Rectangle;
             location = target;
         }
      }
-     
+
     public void moveInPath(ArrayList<Point> path){
         for(Point p: path){
             moveToPoint(p);
@@ -114,7 +128,7 @@ import java.awt.Rectangle;
         ArrayList<Point> neighbours = new ArrayList<>();
         int x = current.getX();
         int y = current.getY();
-        Point left,right,up,down; 
+        Point left,right,up,down;
         if(getPoint(x-1,y)== null) addPoint2Map(x-1, y);
         if(getPoint(x+1,y)== null) addPoint2Map(x+1, y);
         if(getPoint(x,y-1)== null) addPoint2Map(x, y-1);
@@ -123,7 +137,7 @@ import java.awt.Rectangle;
         right = getPoint(x+1, y);
         up = getPoint(x, y-1);
         down = getPoint(x, y+1);
-        
+
         if( !collision(left) && !left.getIsWall())      neighbours.add(left); //Point to the left
         if( !collision(right) && !right.getIsWall())     neighbours.add(right);
         if( !collision(up) && !up.getIsWall())        neighbours.add(up); //Point above
@@ -160,6 +174,22 @@ import java.awt.Rectangle;
         }
         return false;
     }
+    public boolean teleport(Point target) {
+
+        Rectangle rectangle1 = new Rectangle(location.getX()-radius/2, location.getY()-radius/2,radius,radius);
+        rectangle1.setLocation(target.getX()-radius/2,target.getY()-radius/2);
+
+         for (int i = 0; i < tp.size(); i++) {
+
+
+             Rectangle tpRect= new Rectangle(tp.get(i).get(0),tp.get(i).get(1),tp.get(i).get(2),tp.get(i).get(3));
+             if (rectangle1.intersects(tpRect)){
+                 targetTeleport = new Point(tp.get(i).get(4),tp.get(i).get(5));
+                 return true;
+             }
+         }
+        return false;
+     }
 
     
     public void moveRndom(){
@@ -209,6 +239,6 @@ import java.awt.Rectangle;
 
    public Point getPoint(int x, int y){
         int hash = ((x+y)*(x+y+1)/2)+y;
-        return myMap.get(hash); 
+        return myMap.get(hash);
    }
 }
