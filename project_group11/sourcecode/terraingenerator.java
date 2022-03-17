@@ -396,10 +396,7 @@ if (BIOME == "SAHARA"){
                     // Watter (or a Lakes)
 
                     if (n < 0.25) {
-                        g.setColor(DESERT);
-
-
-
+                        g.setColor(DESERT); 
 
                     } else if (n >= 0.25 && n < 0.30) {
                         g.setColor(DESERT);
@@ -641,7 +638,7 @@ if (BIOME == "SAHARA"){
                     //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
                     //
                     Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
-                    ///B_Algorithm ben = new B_Algorithm(players.get(i));
+                    //B_Algorithm ben = new B_Algorithm(players.get(i));
                     this.repaint();
 
                 }
