@@ -13,7 +13,7 @@ public class Ants_Algorithm {
 
 public void execute(){
     Point location = player.getLocation();
-    player.unSee();
+    //player.unSee();
     location.steppedOn++;
     ArrayList<Point> neighbours = player.getNeighbours(location);
     Point target = getLeastChecked(neighbours);

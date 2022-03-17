@@ -6,7 +6,7 @@ public class MapFiles {
     String [] maps ;
 
     public MapFiles(){
-        maps = new String[]{"testmap.txt","Tiny.txt"};
+        maps = new String[]{"testmap.txt","Tiny.txt","tt"};
 
     }
     public String[] getFiles(){

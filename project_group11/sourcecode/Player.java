@@ -76,11 +76,16 @@ public class Player {
         int x = location.getX();
         int y = location.getY();
         pov.seeNextView(direction);
+        getVisited_4_GUI().add(new Point(location.getX(),location.getY()));
         if (direction.equals("U")) {
-           // target = getPoint(x, y-1);
-            location.setX(location.getX());
-            location.setY(location.getY()-1);
-
+            
+            Point t = getPoint(location.getX(),location.getY()-1);
+            if(t==null) {
+                addPoint2Map(location.getX(), location.getY()-1);
+                t = getPoint(location.getX(), location.getY()-1);
+            }
+            location =t;
+            
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
                 Point p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 1);
                 if (p == null) {
@@ -102,9 +107,15 @@ public class Player {
 
         } else if (direction.equals("D")) {
             //if(y+1 >= grid.get(0).size()){ System.out.println("Ilegal move"); return;}
-
-            location.setX(location.getX());
-            location.setY(location.getY()+1);
+            Point t = getPoint(location.getX(),location.getY()+1);
+            if(t==null) {
+                addPoint2Map(location.getX(), location.getY()+1);
+                t = getPoint(location.getX(), location.getY()+1);
+            }
+                location = t;
+                //  location.setX(location.getX());
+                //  location.setY(location.getY()+1);
+             
 
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
                 Point p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 1);
@@ -124,10 +135,16 @@ public class Player {
                 target = getPoint(x,y+1) ;
             }*/
         } else if (direction.equals("L")) {
-            //if(x-1< 0){ System.out.println("Ilegal move"); return;}
 
-            location.setX(location.getX()-1);
-            location.setY(location.getY());
+            Point t = getPoint(location.getX()-1,location.getY());
+            if(t==null) {
+                addPoint2Map(location.getX()-1, location.getY());
+                t = getPoint(location.getX()-1, location.getY());
+            }
+            location =t;
+            //      location.setX(location.getX()-1);
+            //      location.setY(location.getY());
+             
 
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
                 Point p = getPoint(pov.getCurrentlyWatched().get(i).getX()-1, pov.getCurrentlyWatched().get(i).getY());
@@ -147,9 +164,12 @@ public class Player {
                 target = getPoint(x-1,y) ;
             }*/
         } else if (direction.equals("R")) {
-            //if(x+1 >= grid.size()){ System.out.println("Ilegal move"); return;}
-            location.setX(location.getX()+1);
-            location.setY(location.getY());
+            Point t = getPoint(location.getX()+1,location.getY());
+            if(t==null) {
+                addPoint2Map(location.getX()+1, location.getY());
+                t = getPoint(location.getX()+1, location.getY());
+            }
+            location =t;
 
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
                 Point p = getPoint(pov.getCurrentlyWatched().get(i).getX()+1, pov.getCurrentlyWatched().get(i).getY());
@@ -343,24 +363,35 @@ public class Player {
         Stack<Point> stack= new Stack<>();
         stack.push(s);
         s.setBfsVisited(true);
-        Point target = new Point(xt,yt);
+        Point target = getPoint(xt,yt);
         while(!stack.isEmpty()) {
             Point v = stack.pop();
+
             if((v.getX() == xt)&&(v.getY() == yt)){
-                if(v==null){ return null;}
                 target = v;
                 break;
             }
             for(Point neighbour : getBFSNeighbours(v)) {
                     stack.push(neighbour);
+                    if(neighbour.getX()==xt && neighbour.getY()==yt){
+                    }
                     neighbour.setParentBfs(v);
                     neighbour.setBfsVisited(true);
             }
         }
+        
         Point n = target;
-        while(!(n.getX() == s.getX() && n.getY() == s.getY())){
+    
+        while(true){
+            
+            if(n==null ||(n.getX()==s.getX() && n.getY() == s.getY())){
+                break;
+            }
+
             shortestPath.add(n);
-            n = n.getParentBfs();
+            
+            Point parent = n.getParentBfs(); 
+            n = parent;
         }
         shortestPath.add(s);
         Collections.reverse(shortestPath);
