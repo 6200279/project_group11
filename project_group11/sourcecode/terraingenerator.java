@@ -104,7 +104,7 @@ public final class terraingenerator
         public  Map(int height, int width, double z,int scale, String biome, Scenario scenario)
         {
             this.scenario = scenario ;
-            tm = new Timer(5,this) ;
+            tm = new Timer(1,this) ;
 
             walls = scenario.getWalls() ;
             doors = scenario.getDoors() ;
@@ -434,17 +434,18 @@ if (BIOME == "SAHARA"){
                 }   
             }
         }
+        int x1,x2,y1,y2,x,y;
         for (int i = 0; i < walls.size(); i++) {
-            int x1 = walls.get(i).getX1()*scale ;
-            int x2 = walls.get(i).getX2()*scale ;
-            int y1 = walls.get(i).getY1()*scale ;
-            int y2 = walls.get(i).getY2()*scale ;
+            x1 = walls.get(i).getX1()*scale ;
+            x2 = walls.get(i).getX2()*scale ;
+            y1 = walls.get(i).getY1()*scale ;
+            y2 = walls.get(i).getY2()*scale ;
             
 
-            int x = Math.min(x1,x2);
+            x = Math.min(x1,x2);
            // int xB = Math.max(x1,x2);
-            int y = Math.min(y1,y2) ;
-            //int yB = Math.max(y1,y2) ;
+            y = Math.min(y1,y2) ;
+            //yB = Math.max(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
 
@@ -457,13 +458,13 @@ if (BIOME == "SAHARA"){
 
         }
         for (int i = 0; i < doors.size(); i++) {
-            int x1 = doors.get(i).getX1()*scale ;
-            int x2 = doors.get(i).getX2()*scale ;
-            int y1 = doors.get(i).getY1()*scale ;
-            int y2 = doors.get(i).getY2()*scale ;
+            x1 = doors.get(i).getX1()*scale ;
+            x2 = doors.get(i).getX2()*scale ;
+            y1 = doors.get(i).getY1()*scale ;
+            y2 = doors.get(i).getY2()*scale ;
 
-            int x = Math.min(x1,x2);
-            int y = Math.min(y1,y2) ;
+            x = Math.min(x1,x2);
+            y = Math.min(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
 
@@ -476,14 +477,14 @@ if (BIOME == "SAHARA"){
 
         }
         for (int i = 0; i < windows.size(); i++) {
-            int x1 = windows.get(i).getX1()*scale ;
-            int x2 = windows.get(i).getX2()*scale ;
-            int y1 = windows.get(i).getY1()*scale ;
-            int y2 = windows.get(i).getY2()*scale ;
+            x1 = windows.get(i).getX1()*scale ;
+            x2 = windows.get(i).getX2()*scale ;
+            y1 = windows.get(i).getY1()*scale ;
+            y2 = windows.get(i).getY2()*scale ;
 
 
-            int x = Math.min(x1,x2);
-            int y = Math.min(y1,y2) ;
+            x = Math.min(x1,x2);
+            y = Math.min(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
             List<Integer> tmp= Arrays.asList(x,y,width,height,3);
@@ -503,13 +504,13 @@ if (BIOME == "SAHARA"){
             }
        
         for (int i = 0; i < telePortals.size(); i++) {
-            int x1 = telePortals.get(i).getX1()*scale ;
-            int x2 = telePortals.get(i).getX2()*scale ;
-            int y1 = telePortals.get(i).getY1()*scale ;
-            int y2 = telePortals.get(i).getY2()*scale ;
+            x1 = telePortals.get(i).getX1()*scale ;
+            x2 = telePortals.get(i).getX2()*scale ;
+            y1 = telePortals.get(i).getY1()*scale ;
+            y2 = telePortals.get(i).getY2()*scale ;
 
-            int x = Math.min(x1,x2);
-            int y = Math.min(y1,y2) ;
+            x = Math.min(x1,x2);
+            y = Math.min(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
 
@@ -522,13 +523,13 @@ if (BIOME == "SAHARA"){
         }
 
         for (int i = 0; i < shaded.size(); i++) {
-            int x1 = shaded.get(i).getX1()*scale ;
-            int x2 = shaded.get(i).getX2()*scale ;
-            int y1 = shaded.get(i).getY1()*scale ;
-            int y2 = shaded.get(i).getY2()*scale ;
+            x1 = shaded.get(i).getX1()*scale ;
+            x2 = shaded.get(i).getX2()*scale ;
+            y1 = shaded.get(i).getY1()*scale ;
+            y2 = shaded.get(i).getY2()*scale ;
 
-            int x = Math.min(x1,x2);
-            int y = Math.min(y1,y2) ;
+            x = Math.min(x1,x2);
+            y = Math.min(y1,y2) ;
             int width = Math.abs(x1-x2) ;
             int height = Math.abs(y1-y2) ;
 
@@ -538,53 +539,56 @@ if (BIOME == "SAHARA"){
 
         }
 
+        if(scenario.targetArea!=null){
+            Area targetArea = scenario.targetArea;
+            x1 = targetArea.getX1()*scale ;
+            x2 = targetArea.getX2()*scale ;
+            y1 = targetArea.getY1()*scale ;
+            y2 = targetArea.getY2()*scale ;
 
-        Area targetArea = scenario.targetArea;
-        int x1 = targetArea.getX1()*scale ;
-        int x2 = targetArea.getX2()*scale ;
-        int y1 = targetArea.getY1()*scale ;
-        int y2 = targetArea.getY2()*scale ;
+            x = Math.min(x1,x2);
+            y = Math.min(y1,y2) ;
+            int width = Math.abs(x1-x2) ;
+            int height = Math.abs(y1-y2) ;
 
-        int x = Math.min(x1,x2);
-        int y = Math.min(y1,y2) ;
-        int width = Math.abs(x1-x2) ;
-        int height = Math.abs(y1-y2) ;
+            g.setColor(Color.red);
+            g.drawRect(x,y,width,height);
+            g.fillRect(x,y,width,height);
+        }
 
-        g.setColor(Color.red);
-        g.drawRect(x,y,width,height);
-        g.fillRect(x,y,width,height);
+        if(scenario.spawnAreaIntruders!=null){
+            Area spawnAreaIntruders = scenario.spawnAreaIntruders;
+            x1 = spawnAreaIntruders.getX1()*scale ;
+            x2 = spawnAreaIntruders.getX2()*scale ;
+            y1 = spawnAreaIntruders.getY1()*scale ;
+            y2 = spawnAreaIntruders.getY2()*scale ;
 
-        Area spawnAreaIntruders = scenario.spawnAreaIntruders ;
-        x1 = spawnAreaIntruders.getX1()*scale ;
-        x2 = spawnAreaIntruders.getX2()*scale ;
-        y1 = spawnAreaIntruders.getY1()*scale ;
-        y2 = spawnAreaIntruders.getY2()*scale ;
+            x = Math.min(x1,x2);
+            y = Math.min(y1,y2) ;
+            width = Math.abs(x1-x2) ;
+            height = Math.abs(y1-y2) ;
 
-        x = Math.min(x1,x2);
-        y = Math.min(y1,y2) ;
-        width = Math.abs(x1-x2) ;
-        height = Math.abs(y1-y2) ;
+            g.setColor(Color.blue);
+            g.drawRect(x,y,width,height);
+            g.fillRect(x,y,width,height);
 
-        g.setColor(Color.blue);
-        g.drawRect(x,y,width,height);
-        g.fillRect(x,y,width,height);
+        }
+        if(scenario.spawnAreaGuards!=null){
+            Area spawnAreaGuards = scenario.spawnAreaGuards;
+            x1 = spawnAreaGuards.getX1()*scale ;
+            x2 = spawnAreaGuards.getX2()*scale ;
+            y1 = spawnAreaGuards.getY1()*scale ;
+            y2 = spawnAreaGuards.getY2()*scale ;
 
+            x = Math.min(x1,x2);
+            y = Math.min(y1,y2) ;
+            width = Math.abs(x1-x2) ;
+            height = Math.abs(y1-y2) ;
 
-        Area spawnAreaGuards = scenario.spawnAreaGuards;
-        x1 = spawnAreaGuards.getX1()*scale ;
-        x2 = spawnAreaGuards.getX2()*scale ;
-        y1 = spawnAreaGuards.getY1()*scale ;
-        y2 = spawnAreaGuards.getY2()*scale ;
-
-        x = Math.min(x1,x2);
-        y = Math.min(y1,y2) ;
-        width = Math.abs(x1-x2) ;
-        height = Math.abs(y1-y2) ;
-
-        g.setColor(Color.green);
-        g.drawRect(x,y,width,height);
-        g.fillRect(x,y,width,height);
-
+            g.setColor(Color.green);
+            g.drawRect(x,y,width,height);
+            g.fillRect(x,y,width,height);
+        }
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
             int xx = p.getLocation().getX() ;
@@ -628,15 +632,12 @@ if (BIOME == "SAHARA"){
                 tm.stop();
         }
 
-        @Override
         public void actionPerformed(ActionEvent e) {
-
+            int u=0;
                 for (int i = 0; i < scenario.numGuards; i++) {
 
-                   // players.get(i).moveRndom();
-
+                   //players.get(i).moveRndom();
                     //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
-                    //
                     Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
                     //B_Algorithm ben = new B_Algorithm(players.get(i));
                     this.repaint();

@@ -18,6 +18,11 @@ public class Point {
     private Point parentMDFS;
     private boolean BFSVisited = false;
     private Point parentBfs;
+    private boolean explored_MMDFS = false;
+    private boolean visited_MMDFS = false;
+    private boolean checked_MMDFS = false;
+    private Point parentMMDFS;
+
 
     int steppedOn=0;
 
@@ -53,25 +58,41 @@ public class Point {
             targetTeleport = targetPoint;
         }
     }
-
+    //Breadth first search
     public void setBfsVisited(boolean b){ BFSVisited = b;}
     public boolean getIsBfsVisited() {return BFSVisited;}
     public void setParentBfs(Point p){parentBfs = p;}
     public Point getParentBfs(){return parentBfs;}
-
+    
+    
+    
+    public boolean getSeenOnce(){ return seenOnce;}
+    
     public boolean getIsWall(){ return isWall;}
     public boolean getIsTeleport(){ return isTeleport;}
+    public Point getTeleportTarget(){ return targetTeleport;}
     public boolean getIsDoor(){ return isDoor;}
     public boolean getIsWindow(){ return isWindow;}
     public boolean getIsSeen(){ return seen;}
     public boolean getIsVisited(){ return visited;}
+    
+    //MDFS
     public boolean getVisitedMDFS() { return visited_MDFS; }
     public boolean getExploredMDFS() { return explored_MDFS; }
-    public boolean getSeenOnce(){ return seenOnce;}
-    public String getExplorerID() { return explorer_id; }
     public Point getParentMDFS(){ return parentMDFS;}
+    public String getExplorerID() { return explorer_id; }
+    
+    //MMDFS
+    public boolean getVisitedMMDFS() { return visited_MMDFS; }
+    public boolean getExploredMMDFS() { return explored_MMDFS; }
+    public boolean getCheckedMMDFS() { return checked_MMDFS; }
+    public Point getParentMMDFS(){ return parentMMDFS; }
 
-    public Point getTeleportTarget(){ return targetTeleport;}
+    //
+    
+    
+
+    
 
 
 
@@ -136,6 +157,18 @@ public class Point {
     public void setSeenOnce(boolean f){
         seenOnce = f;
     }
+
+    public void setVisitedMMdfs(boolean visited_MMDFS){
+        this.visited_MMDFS = visited_MMDFS;
+    }
+    public void setExploredMMdfs(boolean explored_MMDFS){
+        this.explored_MMDFS = explored_MMDFS;
+    }
+    public void setCheckedMMdfs(boolean checked_MMDFS) { this.checked_MMDFS = checked_MMDFS; }
+    public void setParentMMDFS(Point p){
+        parentMMDFS = p;
+    } 
+
     // d = sqrt[(x-x)^2+(y-y)^2]
     public double getDistance(Point other){
 
