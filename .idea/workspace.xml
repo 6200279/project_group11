@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="23585820-d569-4c37-b909-c63c06b12b61" name="Changes" comment="play pause button">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_02_2022,_12_13_[Default_Changelist]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_02_2022__12_13__Default_Changelist_.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_group11/sourcecode/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/B_Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/B_Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/MDFS_Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/MDFS_Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/POV.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/POV.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/GameFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testmap.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testmap.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,12 +153,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Mainframetest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="project_group11.Mainframetest2" />
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sourcecode.Test" />
       <module name="project_group11" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="project_group11.*" />
+          <option name="PATTERN" value="sourcecode.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -183,19 +178,19 @@
     <list>
       <item itemvalue="Application.MainFrameTest" />
       <item itemvalue="Application.GUI_TEST" />
-      <item itemvalue="Application.Mainframetest2" />
       <item itemvalue="Application.t" />
       <item itemvalue="Application.GUI_TEST (1)" />
       <item itemvalue="Application.GameRunner" />
       <item itemvalue="Application.MainApp" />
+      <item itemvalue="Application.Test" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.MainApp" />
+        <item itemvalue="Application.Test" />
         <item itemvalue="Application.GameRunner" />
         <item itemvalue="Application.MainApp" />
         <item itemvalue="Application.GUI_TEST (1)" />
-        <item itemvalue="Application.t" />
       </list>
     </recent_temporary>
   </component>
@@ -223,6 +218,7 @@
       <workItem from="1645279586955" duration="229000" />
       <workItem from="1645287244783" duration="2596000" />
       <workItem from="1647465309250" duration="4379000" />
+      <workItem from="1647862566836" duration="5466000" />
     </task>
     <task id="LOCAL-00001" summary="change package">
       <created>1644309170098</created>
@@ -364,7 +360,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645224099729</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="speed added">
+      <created>1647865658517</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1647865658517</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -396,7 +399,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -408,6 +410,7 @@
     <MESSAGE value="merged branches" />
     <MESSAGE value="agent move" />
     <MESSAGE value="play pause button" />
-    <option name="LAST_COMMIT_MESSAGE" value="play pause button" />
+    <MESSAGE value="speed added" />
+    <option name="LAST_COMMIT_MESSAGE" value="speed added" />
   </component>
 </project>

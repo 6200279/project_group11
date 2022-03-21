@@ -13,7 +13,9 @@ import javax.swing.*;
 
 
 public final class terraingenerator
-{   public static final int TIME_PER_MOVE= 50; // in milli seconds (now 20 moves per second)
+{   public static final int TIME_PER_MOVE= 50; //in milli seconds (now 20 moves per second)
+    public static long starttimer;
+    public static long endtimer;
 
     public static final Color CITY = new Color(214,217,223);
     public static final Color DESERT = new Color(255,204,102);
@@ -102,10 +104,11 @@ public final class terraingenerator
 
 
 
+
         public  Map(int height, int width, double z,int scale, String biome, Scenario scenario)
         {
             this.scenario = scenario ;
-            tm = new Timer(1,this) ;
+            tm = new Timer(20,this) ;
 
             walls = scenario.getWalls() ;
             doors = scenario.getDoors() ;
@@ -130,11 +133,14 @@ public final class terraingenerator
 
         public void changePlayToTrue(){
             if (!play) play=true ;
+            starttimer =  System.currentTimeMillis();
             repaint() ;
         }
 
         public void changePlayToFalse(){
             if(play) play=false ;
+            endtimer= System.currentTimeMillis();
+            float elapsed_seconds = (endtimer - starttimer) / 1000F; System.out.println("Time elapsed (seconds): "+ elapsed_seconds + " seconds");
             repaint();
         }
 
@@ -633,15 +639,18 @@ if (BIOME == "SAHARA"){
             try {
                 Thread.sleep(TIME_PER_MOVE);
                 long end = System.currentTimeMillis();
-                float sec = (end - start) / 1000F; System.out.println(" time per move"+ sec + " seconds");
+               //float sec = (end - start) / 1000F; System.out.println(" time per move"+ sec + " seconds");
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
 
-        if(!play)
+        if(!play) {
             tm.stop();
+
+
+        }
 
     }
 
