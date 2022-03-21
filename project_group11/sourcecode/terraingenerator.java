@@ -604,7 +604,6 @@ if (BIOME == "SAHARA"){
         }
 
         public void actionPerformed(ActionEvent e) {
-            //All possible algorithms
             
             for (int i = 0; i < scenario.numGuards; i++) {
                 Player player = players.get(i);//.moveRndom();

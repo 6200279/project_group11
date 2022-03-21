@@ -29,6 +29,16 @@ public class Big_Squares_Algorithm implements Algorithm {
         if(onTheMove){
                 if(player.getLocation().getX() == chosenTarget.getX() && player.getLocation().getY() == chosenTarget.getY() ) {
                     onTheMove = false;
+                    counter=0;
+                    location.setParentMDFS(startPoint);
+                    return;
+                }
+                if(bestPath.size()==2){
+                    int oo=0;
+                }
+                if(bestPath.poll()==null){
+                    onTheMove = false;
+                    counter =0;
                     location.setParentMDFS(startPoint);
                     return;
                 }
@@ -106,7 +116,7 @@ public class Big_Squares_Algorithm implements Algorithm {
         ArrayList<Point> big_neighbours = new ArrayList<>();
         int x = location.getX();
         int y = location.getY();
-        int distance = 2*radius;
+        int distance = radius;
         
         Point left,right,up,down;
         if(player.getPoint(x-distance,y)== null) player.addPoint2Map(x-distance, y);
@@ -135,6 +145,7 @@ public class Big_Squares_Algorithm implements Algorithm {
         for(Point p : pathArray){
             bestPath.add(p);
         }
+        int d= 0;
     }
 
     public int getDistance(Point a, Point b ){

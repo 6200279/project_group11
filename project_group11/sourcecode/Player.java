@@ -283,6 +283,7 @@ public class Player {
 
     //based on your current location and the next point, get where the agent is facing
     public String getWhereFacing(Point current, Point target){
+        if(target==null) return "NO";
         int xa = current.getX(); //current x
         int ya = current.getY(); //current y
         int xb = target.getX(); //new x

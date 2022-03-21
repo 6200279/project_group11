@@ -91,6 +91,7 @@ public class POV {
                         p = getPoint(xNew,yNew) ;
                      //   player.isCollisionRightView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
 
 
@@ -115,6 +116,7 @@ public class POV {
                         p = getPoint(xNew,yNew) ;
                      //   player.isCollisionLeftView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
 
                 }
@@ -132,6 +134,7 @@ public class POV {
                     }
                     Point p = getPoint(currently_watched.get(i).getX(), currently_watched.get(i).getY());
                   //  player.isCollisionUpView(p);
+                  if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
             }
@@ -151,6 +154,7 @@ public class POV {
                         p = getPoint(currently_watched.get(i).getX(),yNew) ;
                      //   player.isCollisionDownView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
 
                 }
@@ -171,6 +175,7 @@ public class POV {
                         p = getPoint(xNew,yNew) ;
                     //    player.isCollisionRightView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
 
                 }
@@ -191,6 +196,7 @@ public class POV {
                         p = getPoint(xNew,yNew) ;
                        // player.isCollisionLeftView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
             }
@@ -202,6 +208,7 @@ public class POV {
                 for (int i = 0; i < currently_watched.size(); i++) {
                     Point p = getPoint(currently_watched.get(i).getX(), currently_watched.get(i).getY()) ;
                   //  player.isCollisionRightView(p);
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
             }
@@ -220,6 +227,7 @@ public class POV {
                         p = getPoint(xNew,currently_watched.get(i).getY()) ;
                        // player.isCollisionLeftView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
 
@@ -240,6 +248,7 @@ public class POV {
                         p = getPoint(xNew, yNew) ;
                      //   player.isCollisionUpView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
 
@@ -260,6 +269,7 @@ public class POV {
                         p = getPoint(xNew,yNew) ;
                      //   player.isCollisionDownView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
             }
@@ -271,6 +281,7 @@ public class POV {
                 for (int i = 0; i < currently_watched.size(); i++) {
                     Point p = getPoint(currently_watched.get(i).getX(), currently_watched.get(i).getY());
                   //  player.isCollisionLeftView(p);
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
             }
@@ -286,6 +297,7 @@ public class POV {
                         p = getPoint(xNew,currently_watched.get(i).getY()) ;
                     //    player.isCollisionRightView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
 
@@ -304,6 +316,7 @@ public class POV {
                         p = getPoint(xNew,yNew) ;
                      //   player.isCollisionUpView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
             }
@@ -323,6 +336,7 @@ public class POV {
                         p = getPoint(xNew,yNew) ;
                      //   player.isCollisionDownView(p);
                     }
+                    if(player.collision(p)) p.setIsWall(true);
                     next_currently_watched.add(p);
                 }
             }
