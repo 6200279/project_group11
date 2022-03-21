@@ -141,7 +141,7 @@ public class Big_Squares_Algorithm implements Algorithm {
     public void getLineWalk(Point location, Point target){
         
         String facing = getFacingDirection(location,target);
-        ArrayList<Point> pathArray = pov.getStraightPath(location, facing, 2*radius);
+        ArrayList<Point> pathArray = pov.getStraightPath(location, facing, radius);
         for(Point p : pathArray){
             bestPath.add(p);
         }
