@@ -49,9 +49,12 @@ public class GameFrame extends JFrame {
         buttonPlay = createButtonPlay();
         buttonPause = createButtonBreak() ;
         buttonExit=createButtonExit();
+        JLabel label1 = new JLabel();
+        label1.setText("speed :" +1000/ terraingenerator.TIME_PER_MOVE +" moves per second");
         panelWest.add(buttonPlay);
         panelWest.add(buttonPause);
         panelWest.add(buttonExit);
+        panelWest.add(label1);
         add(BorderLayout.WEST, panelWest);
     }
 
@@ -59,6 +62,8 @@ public class GameFrame extends JFrame {
 
         buttonPlay = new JButton("Play");
         buttonPlay.addActionListener(e -> {terrain.changePlayToTrue();});
+        long starttime = System.currentTimeMillis();
+
         return buttonPlay;
 
     }

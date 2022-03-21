@@ -13,7 +13,8 @@ import javax.swing.*;
 
 
 public final class terraingenerator
-{
+{   public static final int TIME_PER_MOVE= 50; // in milli seconds (now 20 moves per second)
+
     public static final Color CITY = new Color(214,217,223);
     public static final Color DESERT = new Color(255,204,102);
     public static final Color DESERT2 = new Color(255,160,102);
@@ -379,13 +380,13 @@ if (BIOME == "SAHARA"){
                     }
                     g.fillRect(i * 10, j * 10, 10, 10);
                     MyCoord coord = map.get("FOREST");
-                
-                    
+
+
                     // System.out.println(coord.getX() +" : "+coord.getY());
                 }
             }
         }
-        
+
         if (BIOME == "SAHARA"){
             for (int i = 0; i < width; ++i) { // y
                 for (int j = 0; j < height; ++j) { // x
@@ -396,7 +397,7 @@ if (BIOME == "SAHARA"){
                     // Watter (or a Lakes)
 
                     if (n < 0.25) {
-                        g.setColor(DESERT); 
+                        g.setColor(DESERT);
 
                     } else if (n >= 0.25 && n < 0.30) {
                         g.setColor(DESERT);
@@ -431,7 +432,7 @@ if (BIOME == "SAHARA"){
 
                     // System.out.println(coord.getX() +" : "+coord.getY());
 
-                }   
+                }
             }
         }
         int x1,x2,y1,y2,x,y;
@@ -440,7 +441,7 @@ if (BIOME == "SAHARA"){
             x2 = walls.get(i).getX2()*scale ;
             y1 = walls.get(i).getY1()*scale ;
             y2 = walls.get(i).getY2()*scale ;
-            
+
 
             x = Math.min(x1,x2);
            // int xB = Math.max(x1,x2);
@@ -495,14 +496,14 @@ if (BIOME == "SAHARA"){
             g.fillRect(x,y,width,height);
 
         }
-        
+
             for(Player pl : players){
                 pl.setObstacle(obstacle);
                 obstacleIsSet=true;
                 pl.setTp(tp);
                 tpIsSet = true;
             }
-       
+
         for (int i = 0; i < telePortals.size(); i++) {
             x1 = telePortals.get(i).getX1()*scale ;
             x2 = telePortals.get(i).getX2()*scale ;
@@ -597,11 +598,11 @@ if (BIOME == "SAHARA"){
 
             g.setColor(Color.blue);
             g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
-            
+
             for(Point watchedP: p.getPOV().getCurrentlyWatched()){
                 g.setColor(new Color(181,19,234,48));
                 g.fillRect(watchedP.getX(),watchedP.getY(),1,1);
-            }    
+            }
         }
 
         g.setColor(Color.red);
@@ -625,12 +626,24 @@ if (BIOME == "SAHARA"){
         //         int yyy = p.getY()/scale ;
         //         g.fillOval((this.getWidth()-150)-player.getRadius()/scale/2+xxx,(this.getHeight()-150)-player.getRadius()/scale/2+yyy,player.getRadius()/scale,player.getRadius()/scale);
         //    }
-            if(play)
-                tm.start();
+        if(play)
+            tm.start();
+        long start = System.currentTimeMillis();
 
-            if(!play)
-                tm.stop();
-        }
+            try {
+                Thread.sleep(TIME_PER_MOVE);
+                long end = System.currentTimeMillis();
+                float sec = (end - start) / 1000F; System.out.println(" time per move"+ sec + " seconds");
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+        if(!play)
+            tm.stop();
+
+    }
 
         public void actionPerformed(ActionEvent e) {
             int u=0;
