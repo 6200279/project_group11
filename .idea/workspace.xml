@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="23585820-d569-4c37-b909-c63c06b12b61" name="Changes" comment="play pause button">
-      <change afterPath="$PROJECT_DIR$/project_group11/sourcecode/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+    <list default="true" id="23585820-d569-4c37-b909-c63c06b12b61" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/GameFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +58,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -218,7 +222,12 @@
       <workItem from="1645279586955" duration="229000" />
       <workItem from="1645287244783" duration="2596000" />
       <workItem from="1647465309250" duration="4379000" />
-      <workItem from="1647862566836" duration="5466000" />
+      <workItem from="1647862566836" duration="11918000" />
+      <workItem from="1647874714835" duration="742000" />
+      <workItem from="1647875673604" duration="695000" />
+      <workItem from="1647876425635" duration="496000" />
+      <workItem from="1647876983627" duration="314000" />
+      <workItem from="1647877358285" duration="7373000" />
     </task>
     <task id="LOCAL-00001" summary="change package">
       <created>1644309170098</created>
@@ -367,7 +376,21 @@
       <option name="project" value="LOCAL" />
       <updated>1647865658517</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="elapsed time">
+      <created>1647868261853</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1647868261854</updated>
+    </task>
+    <task id="LOCAL-00023" summary=" time per move">
+      <created>1647868399415</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1647868399415</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -411,6 +434,8 @@
     <MESSAGE value="agent move" />
     <MESSAGE value="play pause button" />
     <MESSAGE value="speed added" />
-    <option name="LAST_COMMIT_MESSAGE" value="speed added" />
+    <MESSAGE value="elapsed time" />
+    <MESSAGE value=" time per move" />
+    <option name="LAST_COMMIT_MESSAGE" value=" time per move" />
   </component>
 </project>

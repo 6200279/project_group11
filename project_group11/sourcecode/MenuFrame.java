@@ -23,9 +23,11 @@ public class MenuFrame extends JFrame {
     private double z ;
     private int height ;
     private int width ;
-    private terraingenerator.Map terrain1 ;
-    private terraingenerator.Map terrain2 ;
+    public terraingenerator.Map terrain1 ;
+    public terraingenerator.Map terrain2 ;
+    public terraingenerator.Map terrainnull ;
     private JComboBox<String>comboBox ;
+
 
     java.util.List<Point> snow ;
     java.util.List<Point> forest ;
@@ -38,8 +40,8 @@ public class MenuFrame extends JFrame {
 
     public MenuFrame(){
 
-        //long seed = 13515420;
-        long seed =1284928713;
+        long seed = 13515420;
+       // long seed =1111111;
         Random rand = new Random(seed);
 
 
@@ -92,10 +94,12 @@ public class MenuFrame extends JFrame {
 
                     scenario = new Scenario((String) comboBox.getSelectedItem()) ;
                     height = scenario.mapHeight ;
+                    System.out.println(height);
                     width = scenario.mapWidth ;
                     z = rand.nextDouble();
 
-                    terrain1 = new terraingenerator.Map(height, width, z,7, "GREEK",scenario);
+                    //terrainnull =new terraingenerator.Map(height, width, z,scale, "NULL",scenario);
+                    terrain1 = new terraingenerator.Map(height, width, z,scale, "GREEK",scenario);
                     snow = terraingenerator.Map.Terrain_mapper("SNOW");
                     forest = terraingenerator.Map.Terrain_mapper("FOREST");
                     hills = terraingenerator.Map.Terrain_mapper("HILLS");
@@ -115,6 +119,7 @@ public class MenuFrame extends JFrame {
 
                     gameFrame = new GameFrame(scenario,terrain1,MenuFrame.this) ;
                     gameFrame.getContentPane().add(terrain1) ;
+                   //
                     gameFrame.repaint();
 
                     setVisible(false);
@@ -128,7 +133,7 @@ public class MenuFrame extends JFrame {
                     width = scenario.mapWidth ;
                     z = rand.nextDouble();
 
-                    terrain2 = new terraingenerator.Map(height, width, z,7,"SAHARA",scenario);
+                    terrain2 = new terraingenerator.Map(height, width, z,scale,"SAHARA",scenario);
                     snow = terraingenerator.Map.Terrain_mapper("SNOW");
                     forest = terraingenerator.Map.Terrain_mapper("FOREST");
                     hills = terraingenerator.Map.Terrain_mapper("HILLS");

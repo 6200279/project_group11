@@ -2,16 +2,8 @@ package sourcecode;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.*;
-import java.awt.event.*;
-import java.text.*;
-import java.util.Date;
-import javax.swing.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameFrame extends JFrame {
 
@@ -25,7 +17,8 @@ public class GameFrame extends JFrame {
     private JButton buttonPause;
     private JButton buttonExit;
     private MenuFrame menuFrame;
-    private terraingenerator.Map terrain;
+    public terraingenerator.Map terrain;
+
 
 
     public GameFrame(Scenario scenario, terraingenerator.Map terrain, MenuFrame menuFrame) {
@@ -34,12 +27,34 @@ public class GameFrame extends JFrame {
         players = new ArrayList<Player>();
         this.terrain = terrain;
         this.menuFrame = menuFrame;
-
         setSize(120 * scale, 80 * scale);
         setLayout(new BorderLayout());
 
         createPanelWest();
        // createPanelEAST();
+
+        getContentPane().add(BorderLayout.CENTER, this.terrain);
+        setTitle("Testing");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setVisible(false);
+
+
+
+    }
+
+   /* public GameFrame(Scenario scenario , MenuFrame menuFrame, int height, int width, double z, int scale) {
+        terrain = new terraingenerator.Map(height, width, z,scale, "GREEK",scenario);
+
+        this.scenario = scenario;
+        players = new ArrayList<Player>();
+        this.terrain = terrain;
+        this.menuFrame = menuFrame;
+        setSize(120 * scale, 80 * scale);
+        setLayout(new BorderLayout());
+
+        createPanelWest();
+        // createPanelEAST();
 
         getContentPane().add(BorderLayout.CENTER, terrain);
         setTitle("Testing");
@@ -49,14 +64,20 @@ public class GameFrame extends JFrame {
 
 
 
-    }
-/**private void createPanelEAST(){
+    }*/
+private void createPanelEAST(){
         panelEast = new JPanel();
-        JFrame frame = new Test();
-        frame.pack();
         panelEast.setBackground(new Color(36, 95, 131));
-        panelEast.add(frame);
-    } **/
+        panelEast.setLayout(new BoxLayout(panelEast, BoxLayout.PAGE_AXIS));
+        JLabel label2 = new JLabel();
+        label2.setText("starting time : " +terraingenerator.starttimer);
+        JLabel label3 = new JLabel();
+        label3.setText("ending time : "+ terraingenerator.endtimer);
+        panelEast.add(label2);
+        panelEast.add(label3);
+        add(BorderLayout.EAST, panelEast);
+
+    }
 
 
     private void createPanelWest() {
@@ -79,7 +100,7 @@ public class GameFrame extends JFrame {
 
         buttonPlay = new JButton("Play");
         buttonPlay.addActionListener(e -> {
-            terrain.changePlayToTrue();
+            this.terrain.changePlayToTrue();
         });
         long starttime = System.currentTimeMillis();
 
@@ -90,7 +111,7 @@ public class GameFrame extends JFrame {
     private JButton createButtonBreak() {
         buttonPause = new JButton("Pause");
         buttonPause.setSize(150, 18);
-        buttonPause.addActionListener(e -> terrain.changePlayToFalse());
+        buttonPause.addActionListener(e -> this.terrain.changePlayToFalse());
         return buttonPause;
     }
 

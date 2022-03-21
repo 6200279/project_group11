@@ -30,7 +30,7 @@ public class Player {
         this.location = location;
         this.speed = speed;
         this.myId = myId;
-        myMap = new ArrayList<>(width*scale*height*scale);
+        myMap = new ArrayList<>(width*7*height*7);
         for(int i=0; i<width*height*scale*scale-1; i++){
             myMap.add(null);
         }
