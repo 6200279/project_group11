@@ -648,6 +648,8 @@ if (BIOME == "SAHARA"){
 
         if(!play) {
             tm.stop();
+            long end = System.currentTimeMillis();
+            float sec = (end - start) / 1000F; System.out.println(" time per move"+ sec + " seconds");
 
 
         }
