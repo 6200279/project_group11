@@ -1,9 +1,10 @@
 package sourcecode;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Stack;
 
-public class B_Algorithm {
+public class B_Algorithm implements Algorithm {
 
     Player player;
     POV pov;
@@ -13,16 +14,11 @@ public class B_Algorithm {
     ArrayList<Point> down_seen;
     ArrayList<Point> up_seen;
     
-    public B_Algorithm(Player p){
+    public void execute(Player p){
         player = p;
         location = player.getLocation();
         pov = player.getPOV();
-        execute();
-    }
-
-    public void execute(){
         location = player.getLocation();
-       // player.unSee();
         look360();
         ArrayList<String> usedDirections = new ArrayList<>();
         String least = getLeastExploredDirection();
@@ -34,7 +30,7 @@ public class B_Algorithm {
                 usedDirections.add(least);
                 if(usedDirections.size()==4) {   //if all targets are unreacable break from while loop
                     player.getVisited_4_GUI().add(new Point(location.getX(),location.getY()));
-                    player.moveRndom();
+                    rndMove();
                     System.err.println("I moved randomly because all options to move to were shit");
                     return;
                 }    
@@ -47,10 +43,10 @@ public class B_Algorithm {
             }
             else break;
         }
-        ArrayList<Point> BFSpath = player.BFS(location,target.getX(),target.getY());
+        ArrayList<Point> BFSpath = BFS(location,target.getX(),target.getY());
         if(BFSpath==null){ 
             player.getVisited_4_GUI().add(new Point(location.getX(),location.getY()));
-            player.moveRndom();
+            rndMove();;
             System.err.println("I moved randomly because bfs gave a null path");
             return;
         }
@@ -59,18 +55,14 @@ public class B_Algorithm {
 
 
     public void look360(){
-       // pov.see("R",location);
+        pov.seeNextView("R");
         right_seen = pov.getCurrentlyWatched();
-        player.unSee();
-        //pov.see("L",location);
+        pov.seeNextView("L");
         left_seen = pov.getCurrentlyWatched();
-        player.unSee();
-     //   pov.see("U",location);
+       pov.seeNextView("U");
         up_seen = pov.getCurrentlyWatched();
-        player.unSee();
-      //  pov.see("D",location);
+       pov.seeNextView("D");
         down_seen = pov.getCurrentlyWatched();
-        player.unSee();      
     }
 
     public String getLeastExploredDirection(){
@@ -130,5 +122,78 @@ public class B_Algorithm {
         else  return "R";
     }
 
+
+
+
+    public ArrayList<Point> getBFSNeighbours(Point p){
+        ArrayList<Point> BfsNeighbours = new ArrayList<Point>();
+        ArrayList<Point> nArray = player.getNeighbours(p);
+        for(Point a : nArray) {
+             if(!a.getIsBfsVisited()) BfsNeighbours.add(a);
+            }
+        return BfsNeighbours;
+        }
     
+        
+    
+    public ArrayList<Point> BFS(Point s, int xt, int yt){
+        ArrayList<Point> shortestPath = new ArrayList<>();
+        Stack<Point> stack= new Stack<>();
+        stack.push(s);
+        s.setBfsVisited(true);
+        Point target = player.getPoint(xt,yt);
+        while(!stack.isEmpty()) {
+            Point v = stack.pop();
+
+            if((v.getX() == xt)&&(v.getY() == yt)){
+                target = v;
+                break;
+            }
+            for(Point neighbour : getBFSNeighbours(v)) {
+                    stack.push(neighbour);
+                    if(neighbour.getX()==xt && neighbour.getY()==yt){
+                    }
+                    neighbour.setParentBfs(v);
+                    neighbour.setBfsVisited(true);
+            }
+        }
+        
+        Point n = target;
+    
+        while(true){
+            
+            if(n==null ||(n.getX()==s.getX() && n.getY() == s.getY())){
+                break;
+            }
+
+            shortestPath.add(n);
+            
+            Point parent = n.getParentBfs(); 
+            n = parent;
+        }
+        shortestPath.add(s);
+        Collections.reverse(shortestPath);
+        return shortestPath;
+    }
+
+
+    public void rndMove(){
+        int randomFace = (int) (Math.random() * 4 + 1)+1;
+       if (randomFace == 5) {
+           player.setFacing("D");
+           player.moveInDirection("D");
+       }
+       if (randomFace == 2) {
+            player.setFacing("U");
+            player.moveInDirection("U");
+       }
+       if (randomFace == 3) {
+            player.setFacing("R");
+            player.moveInDirection("R");
+        }
+       if (randomFace == 4) {
+            player.setFacing("L");
+            player.moveInDirection("L");
+       }
+    }   
 }

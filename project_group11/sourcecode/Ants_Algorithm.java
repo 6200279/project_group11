@@ -2,18 +2,13 @@ package sourcecode;
 
 import java.util.ArrayList;
 
-public class Ants_Algorithm {
+public class Ants_Algorithm implements Algorithm {
     Player player;
-
-    public Ants_Algorithm(Player p){
-        player = p;
-        execute();
-    }
     
 
-public void execute(){
+public void execute(Player p){
+    player = p ; 
     Point location = player.getLocation();
-    //player.unSee();
     location.steppedOn++;
     ArrayList<Point> neighbours = player.getNeighbours(location);
     Point target = getLeastChecked(neighbours);

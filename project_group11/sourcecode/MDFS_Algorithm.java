@@ -2,16 +2,13 @@ package sourcecode;
 
 import java.util.ArrayList;
 
-public class MDFS_Algorithm {
+public class MDFS_Algorithm implements Algorithm{
 
     Player player;
 
-    public MDFS_Algorithm(Player p){
-        player = p;
-        execute();
-    }
 
-    public void execute(){
+    public void execute(Player p){
+        player = p;
         Point location = player.getLocation(); 
         //player.unSee();
         if(!location.getExploredMDFS()){  //if this cell is unexplored 
@@ -30,7 +27,12 @@ public class MDFS_Algorithm {
             if(location.getExplorerID().equals(player.getId())){
                 location.setVisitedMdfs(true);
                 player.getVisited_4_GUI().add(new Point(location.getX(),location.getY()));
-                player.moveToPoint(location.getParentMDFS());
+                if(location.getParentMDFS().getX()!= location.getX() || location.getParentMDFS().getX()!= location.getX()) {
+                    player.moveToPoint(location.getParentMDFS());
+                }
+                else{
+                    player.moveToPoint(player.getNeighbours(location).get(rndIndex(player.getNeighbours(location))));
+                }
             }
             else{ // else if this spot is marked as explored by another ID 
                 ArrayList<Point> neighbours = player.getNeighbours(location);

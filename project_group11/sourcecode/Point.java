@@ -22,6 +22,7 @@ public class Point {
     private boolean visited_MMDFS = false;
     private boolean checked_MMDFS = false;
     private Point parentMMDFS;
+    boolean legalview ;
 
 
     int steppedOn=0;
@@ -30,9 +31,12 @@ public class Point {
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
+        legalview=true ;
     }
 
-    public Point(){}
+    public Point(){legalview=true;}
+
+    public void setLegalView(boolean a){}
 
     public int getX() {
         return x;

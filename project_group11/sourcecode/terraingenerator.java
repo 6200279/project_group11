@@ -101,7 +101,7 @@ public final class terraingenerator
 
 
 
-        public  Map(int height, int width, double z,int scale, String biome, Scenario scenario)
+        public Map(int height, int width, double z,int scale, String biome, Scenario scenario)
         {
             this.scenario = scenario ;
             tm = new Timer(1,this) ;
@@ -283,34 +283,11 @@ if (BIOME == "SAHARA"){
             int y1 = scenario.spawnAreaGuards.getY1()*scale+25/2;
             int y2 = scenario.spawnAreaGuards.getY2()*scale-25/2 ;
 
-            // ArrayList<ArrayList<Integer>> lookedAt = new ArrayList<>();
-            // for(int r=0; r<1200; r++ ){
-            //     ArrayList<Integer> row = new ArrayList<>();
-            //     for(int c=0; c<800; c++){
-            //         row.add(0);
-            //     }
-            //     lookedAt.add(row);
-            // }
-
-            // ArrayList<Point> sharedArray = new ArrayList<>();
-            // for(int i=0; i<800; i++){
-            //     for(int j=0; j<1200;j++){
-            //         sharedArray.add(new Point(i,j));
-            //     }
-            // }
-
-            int maxX = 800;
-            int maxY = 1200;
-            int maxHash = ((maxX+maxY)*(maxX+maxY+1)/2)+maxY; 
-
-            sharedArr = new Point [maxHash+1];
-
-            for(int i=0; i<maxY; i++){
-                for(int j=0; j<maxX; j++){
-                    int hash = ((i+j)*(i+j+1)/2)+j;
-                    sharedArr[hash] = new Point(i,j);
-                }
-            }
+            Algorithm ants = new Ants_Algorithm();
+            Algorithm b = new B_Algorithm();
+            Algorithm mdfs = new MDFS_Algorithm();
+            Algorithm bigSqaures = new Big_Squares_Algorithm();
+            Algorithm moveRandom = new Move_Random_Algorithm();
 
             for (int i = 0; i < scenario.numGuards; i++) {
             
@@ -321,16 +298,15 @@ if (BIOME == "SAHARA"){
                 
                 double speed = scenario.baseSpeedGuard ;
 
+                Point locationTest = new Point(140,140);
+
                 seenByAll = new ArrayList<>();
-                Player player = new Player(location,speed,1200,800,String.valueOf(i),scale) ;
+                Player player = new Player(locationTest,speed,scenario.mapWidth*scale, scenario.mapHeight*scale,String.valueOf(i),scale,this, bigSqaures);
                 players.add(player);
             }
 
            
         }
-
-
-
 
     public void paint(Graphics g){
         if (BIOME =="GREEK") {
@@ -595,12 +571,14 @@ if (BIOME == "SAHARA"){
             int yy = p.getLocation().getY() ;
             int radius = p.getRadius() ;
 
-            g.setColor(Color.blue);
+            g.setColor(Color.red);
             g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
             
             for(Point watchedP: p.getPOV().getCurrentlyWatched()){
                 g.setColor(new Color(181,19,234,48));
-                g.fillRect(watchedP.getX(),watchedP.getY(),1,1);
+                if(watchedP!= null){
+                    g.fillRect(watchedP.getX(),watchedP.getY(),1,1);
+                }
             }    
         }
 
@@ -618,13 +596,6 @@ if (BIOME == "SAHARA"){
                 g.fillOval((this.getWidth()-150)-player.getRadius()/scale/2+xxx,(this.getHeight()-150)-player.getRadius()/scale/2+yyy,player.getRadius()/scale,player.getRadius()/scale);
            }
         }
-        //   Player player = players.get(0);
-        // for (Point p: seenByAll) {
-        //         g.setColor(Color.green);
-        //         int xxx = p.getX()/scale ;
-        //         int yyy = p.getY()/scale ;
-        //         g.fillOval((this.getWidth()-150)-player.getRadius()/scale/2+xxx,(this.getHeight()-150)-player.getRadius()/scale/2+yyy,player.getRadius()/scale,player.getRadius()/scale);
-        //    }
             if(play)
                 tm.start();
 
@@ -633,19 +604,15 @@ if (BIOME == "SAHARA"){
         }
 
         public void actionPerformed(ActionEvent e) {
-            int u=0;
-                for (int i = 0; i < scenario.numGuards; i++) {
-
-                   //players.get(i).moveRndom();
-                    //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
-                    Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
-                    //B_Algorithm ben = new B_Algorithm(players.get(i));
-                    this.repaint();
-
-                }
+            //All possible algorithms
+            
+            for (int i = 0; i < scenario.numGuards; i++) {
+                Player player = players.get(i);//.moveRndom();
+                player.getAlgo().execute(player);
+                this.repaint();
             }
         }
-
+    }
         private static double noise(double x, double y, double z)
         {
             // Find the unit cube that contains the point

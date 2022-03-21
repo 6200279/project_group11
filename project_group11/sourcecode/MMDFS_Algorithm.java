@@ -13,7 +13,6 @@ public class MMDFS_Algorithm {
 
     public void execute(){
         Point location = player.getLocation();
-        //player.unSee();
 
         if(!location.getExploredMMDFS()) {  //if the current cell is unexplored
             location.setExploredMMdfs(true);     //set to explored
