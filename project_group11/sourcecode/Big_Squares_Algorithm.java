@@ -66,7 +66,9 @@ public class Big_Squares_Algorithm implements Algorithm {
                 if(location.getExplorerID().equals(player.getId())){
                     location.setVisitedMdfs(true);
                     player.getVisited_4_GUI().add(new Point(location.getX(),location.getY()));
-                    
+                    if(location.getParentMDFS()==null){
+                        System.err.println("parent is null");
+                    }
                     if(location.getParentMDFS().getX()!= location.getX() || location.getParentMDFS().getX()!= location.getX()) {
                         chosenTarget = location.getParentMDFS();
                         getLineWalk(location, chosenTarget);
@@ -98,8 +100,6 @@ public class Big_Squares_Algorithm implements Algorithm {
             }
         }
     }
-
-
     public ArrayList<Point> big_UnExploredAround(Point myLocation){
         ArrayList<Point> unExploredNeighbours = new ArrayList<>(); 
         ArrayList<Point> farNeighbours = get_big_square_neighbours(location);
@@ -119,17 +119,27 @@ public class Big_Squares_Algorithm implements Algorithm {
         int distance = radius;
         
         Point left,right,up,down;
-        if(player.getPoint(x-distance,y)== null) player.addPoint2Map(x-distance, y);
-        if(player.getPoint(x+distance,y)== null) player.addPoint2Map(x+distance, y);
-        if(player.getPoint(x,y-distance)== null) player.addPoint2Map(x, y-distance);
-        if(player.getPoint(x,y+distance)== null) player.addPoint2Map(x, y+distance);
+        if(player.getPoint(x-distance,y)== null) {
+            if(x-distance>=0) 
+            player.addPoint2Map(x-distance, y);
+        }
+        if(player.getPoint(x+distance,y)== null){
+            if(x+distance<player.getWidth()) 
+            player.addPoint2Map(x+distance, y);
+        }
+        if(player.getPoint(x,y-distance)== null) {
+            if(y-distance>=0) 
+            player.addPoint2Map(x, y-distance);
+        }
+        if(player.getPoint(x,y+distance)== null) {
+            if(y+distance< player.getHeight()) 
+            player.addPoint2Map(x, y+distance);
+        }
         left = player.getPoint(x-distance, y);
         right = player.getPoint(x+distance, y);
         up = player.getPoint(x, y-distance);
         down = player.getPoint(x, y+distance);
-        if(down==null || up==null || right==null || left==null){
-            int yyy=7;
-        }
+      
 
         if(left != null && !player.collision(left) && !left.getIsWall() &&  !left.getIsWindow())        big_neighbours.add(left); //Point to the left
         if(right != null && !player.collision(right) && !right.getIsWall()&& !right.getIsWindow())      big_neighbours.add(right);
@@ -142,10 +152,38 @@ public class Big_Squares_Algorithm implements Algorithm {
         
         String facing = getFacingDirection(location,target);
         ArrayList<Point> pathArray = pov.getStraightPath(location, facing, radius);
+        //ArrayList<Point> pathArray = getStraightLine(location, target);
         for(Point p : pathArray){
             bestPath.add(p);
         }
-        int d= 0;
+    }
+
+    public ArrayList<Point> getStraightLine(Point loc, Point target){
+        ArrayList<Point> line = new ArrayList<>();
+        String face2 = getFacingDirection(loc, target);
+        int xLoc = loc.getX();
+        int yLoc = loc.getY();
+        int xTar = target.getX();
+        int yTar = target.getY();
+        Point next=null;
+        while(true){
+            if(face2.equals("U")){
+                next = player.getPoint(xLoc, yLoc-1);
+            }
+            if(face2.equals("D")){
+                next = player.getPoint(xLoc, yLoc+1);
+            }
+            if(face2.equals("L")){
+                next = player.getPoint(xLoc-1, yLoc);
+            }
+            if(face2.equals("R")){
+                next = player.getPoint(xLoc+1, yLoc);
+            }
+            if(next.sameCoord(target) && !player.collision(next) && !next.getIsWall())
+                    break;
+            line.add(next);
+        }
+        return line;
     }
 
     public int getDistance(Point a, Point b ){

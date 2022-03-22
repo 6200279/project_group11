@@ -17,7 +17,6 @@ public class POV {
     private String facing="D";
     private Player player ;
     private boolean firstViewSet;
-   // private terraingenerator.Map map ;
 
     public POV(ArrayList<Point> myMap, int radius,Player player, terraingenerator.Map map){
         this.myMap = myMap;
@@ -38,6 +37,10 @@ public class POV {
 
 
     public void seeNextView( String nextfacing) {
+        if(currently_watched.contains(null)){
+            facing = nextfacing;
+            setFirstView();
+        }
         location = player.getLocation();
         int distanceX = 0;
         int distanceY = 0;
@@ -410,47 +413,51 @@ public class POV {
         ArrayList<Point> straightPath = new ArrayList<>();
         int i=0;
         straightPath.add(current);
-        while(i<=amount){
+        while(i<amount){
             int x = current.getX();
             int y = current.getY();
             Point next = null;
             if(direction.equals("R")){
                 next = getPoint(x+1, y);
                 if(next == null){
-                    addPoint2Map(x+1, y);
+                    if(x+1< player.getWidth()) addPoint2Map(x+1, y);
                     next = getPoint(x+1, y);
+                    if(next==null) break;
                 }
-                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
-                    break;}
+                // if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
+                //     break;}
             }
             else if(direction.equals("L")){
                 next = getPoint(x-1, y);
                 if(next == null){
-                    addPoint2Map(x-1, y);
+                    if(x-1 >=0) addPoint2Map(x-1, y);
                     next = getPoint(x-1, y);
+                    if(next==null) break;
                 }
-                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
-                    break;}
+                // if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
+                //     break;}
             }
             else if(direction.equals("U")){
                 next = getPoint(x, y-1);
                 if(next == null){
-                    addPoint2Map(x, y-1);
+                    if(y-1 >=0) addPoint2Map(x, y-1);
                     next = getPoint(x, y-1);
+                    if(next==null) break;
                 }
-                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
-                    break;}
+                // if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
+                //     break;}
             }
             else if(direction.equals("D")){
                 next = getPoint(x, y+1);
                 if(next == null){
-                    addPoint2Map(x, y+1);
+                    if(y+1< player.getHeight()) addPoint2Map(x, y+1);
                     next = getPoint(x, y+1);
+                    if(next==null) break;
                 }
-                if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
-                    break;}
+                // if(collision(next) || next.getIsWall()|| next.getIsDoor()){ 
+                //     break;}
             }
-            straightPath.add(next);
+            if (next!=null) straightPath.add(next);
             current = next;
             i++;
         }
@@ -473,32 +480,34 @@ public class POV {
             if(direction.equals("UR")){ //Up right on the diagonal
                 current = getPoint(x+1, y-1);
                 if(current == null){
-                    addPoint2Map(x+1, y-1);
+                    if(x+1< player.getWidth() && y-1>=0) addPoint2Map(x+1, y-1);
                     current = getPoint(x+1, y-1);
+                    if(current == null) break;
 
                 }
             }
             else if(direction.equals("DR")){ //Down right on the diagonal
                 current = getPoint(x+1, y+1);
                 if(current == null){
-                    addPoint2Map(x+1, y+1);
+                    if(x+1< player.getWidth() && y+1< player.getHeight()) addPoint2Map(x+1, y+1);
                     current = getPoint(x+1, y+1);
-
+                    if(current == null) break;
                 } 
             }
             else if(direction.equals("UL")){ //Up Left on the diagonal
                 current = getPoint(x-1, y-1);
                 if(current == null){
-                    addPoint2Map(x-1, y-1);
+                    if(x-1>=0  && y-1>=0) addPoint2Map(x-1, y-1);
                     current = getPoint(x-1, y-1);
-
+                    if(current == null) break;
                 }
             }
             else if(direction.equals("DL")){ //Down Left on the diagonal
                 current = getPoint(x-1, y+1);
                 if(current == null){
-                    addPoint2Map(x-1, y+1);
+                    if(x-1>=0 && y+1<player.getHeight()) addPoint2Map(x-1, y+1);
                     current = getPoint(x-1, y+1);
+                    if(current == null) break;               
                 }
             }
             i++;

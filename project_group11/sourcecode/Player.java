@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Player {
 
-    private final int radius = 25 ;
-    private final int pov_radius = 50;
+    private final int radius = 10 ;
+    private final int pov_radius = 20;
     private final int width;
     private final int height;
     private Point location;
@@ -37,7 +37,7 @@ public class Player {
         this.algo = algo; 
         this.scale = scale;
         myMap = new ArrayList<>(width*scale*height*scale);
-        for(int i=0; i<width*height*scale*scale-1; i++){
+        for(int i=0; i<width*height*scale*scale; i++){
             myMap.add(null);
         }
         addPoint2Map(location.getX(), location.getY());
@@ -56,12 +56,12 @@ public class Player {
     public Point getLastLocation(){ return lastLoc;}
     public ArrayList<Point> getVisited_4_GUI() {return visited_4_GUI;}
     public int getWidth(){ return width;}
-    public int getHeighth(){ return height;}
+    public int getHeight(){ return height;}
     public terraingenerator.Map getTMap(){ return tMap;}
     public Algorithm getAlgo(){ return algo;}
     public ArrayList<Point> getVisited4GUI() { return visited_4_GUI;}
     public int getScale(){ return scale;}
-    
+    public ArrayList<Point> getMyMap(){ return myMap;}
 
     public void setLocation(Point location){ this.location =  location;  }
     public void setSpeed(double speed){ this.speed = speed;}
@@ -95,19 +95,19 @@ public class Player {
         getVisited_4_GUI().add(new Point(location.getX(),location.getY()));
         if (direction.equals("U")) {
             
-            Point t = getPoint(location.getX(),location.getY()-1);
+            Point t = getPoint(location.getX(),location.getY()-10);
             if(t==null) {
-                addPoint2Map(location.getX(), location.getY()-1);
-                t = getPoint(location.getX(), location.getY()-1);
+                addPoint2Map(location.getX(), location.getY()-10);
+                t = getPoint(location.getX(), location.getY()-10);
             }
             if(t==null || collision(t) || t.getIsWall()) return;
              location =t;
             
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
-                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 1);
+                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 10);
                 if (p == null) {
-                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 1);
-                    p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 1);
+                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 10);
+                    p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 10);
                 }
                 pov.getNextCurrentlyWatched().add(p);
             }
@@ -118,29 +118,21 @@ public class Player {
                 }
                 pov.getNextCurrentlyWatched().clear();
 
-            //if (target == null) {
-             //   addPoint2Map(x, y-1);
-              //  target = getPoint(x,y-1) ;
-           // }
-
         } else if (direction.equals("D")) {
             //if(y+1 >= grid.get(0).size()){ System.out.println("Ilegal move"); return;}
-            Point t = getPoint(location.getX(),location.getY()+1);
+            Point t = getPoint(location.getX(),location.getY()+10);
             if(t==null) {
-                addPoint2Map(location.getX(), location.getY()+1);
-                t = getPoint(location.getX(), location.getY()+1);
+                addPoint2Map(location.getX(), location.getY()+10);
+                t = getPoint(location.getX(), location.getY()+10);
             }
             if(t==null || collision(t) || t.getIsWall()) return;
              location =t;
-                //  location.setX(location.getX());
-                //  location.setY(location.getY()+1);
-             
 
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
-                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 1);
+                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 10);
                 if (p == null) {
-                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 1);
-                    p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 1);
+                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 10);
+                    p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() + 10);
                 }
                 pov.getNextCurrentlyWatched().add(p);
             }
@@ -155,22 +147,19 @@ public class Player {
             }*/
         } else if (direction.equals("L")) {
 
-            Point t = getPoint(location.getX()-1,location.getY());
+            Point t = getPoint(location.getX()-10,location.getY());
             if(t==null) {
-                addPoint2Map(location.getX()-1, location.getY());
-                t = getPoint(location.getX()-1, location.getY());
+                addPoint2Map(location.getX()-10, location.getY());
+                t = getPoint(location.getX()-10, location.getY());
             }
             if(t==null || collision(t) || t.getIsWall()) return;
              location =t;
-            //      location.setX(location.getX()-1);
-            //      location.setY(location.getY());
-             
 
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
-                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX()-1, pov.getCurrentlyWatched().get(i).getY());
+                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX()-10, pov.getCurrentlyWatched().get(i).getY());
                 if (p == null) {
-                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX()-1, pov.getCurrentlyWatched().get(i).getY());
-                    p = getPoint(pov.getCurrentlyWatched().get(i).getX()-1, pov.getCurrentlyWatched().get(i).getY());
+                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX()-10, pov.getCurrentlyWatched().get(i).getY());
+                    p = getPoint(pov.getCurrentlyWatched().get(i).getX()-10, pov.getCurrentlyWatched().get(i).getY());
                 }
                 pov.getNextCurrentlyWatched().add(p);
             }
@@ -184,19 +173,26 @@ public class Player {
                 target = getPoint(x-1,y) ;
             }*/
         } else if (direction.equals("R")) {
-            Point t = getPoint(location.getX()+1,location.getY());
+            Point t = getPoint(location.getX()+10,location.getY());
             if(t==null) {
-                addPoint2Map(location.getX()+1, location.getY());
-                t = getPoint(location.getX()+1, location.getY());
+                addPoint2Map(location.getX()+10, location.getY());
+                t = getPoint(location.getX()+10, location.getY());
             }
-            if(t==null || collision(t) || t.getIsWall()) return;
+            if(t==null )
+            return;
+            if(collision(t)){
+            System.out.println("colision");
+            return; 
+        }
+            if(t.getIsWall()) 
+            return;
              location =t;
 
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
-                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX()+1, pov.getCurrentlyWatched().get(i).getY());
+                Point p = getPoint(pov.getCurrentlyWatched().get(i).getX()+10, pov.getCurrentlyWatched().get(i).getY());
                 if (p == null) {
-                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX()+1, pov.getCurrentlyWatched().get(i).getY());
-                    p = getPoint(pov.getCurrentlyWatched().get(i).getX()+1, pov.getCurrentlyWatched().get(i).getY());
+                    addPoint2Map(pov.getCurrentlyWatched().get(i).getX()+10, pov.getCurrentlyWatched().get(i).getY());
+                    p = getPoint(pov.getCurrentlyWatched().get(i).getX()+10, pov.getCurrentlyWatched().get(i).getY());
                 }
                 pov.getNextCurrentlyWatched().add(p);
             }
@@ -265,14 +261,14 @@ public class Player {
         int x = current.getX();
         int y = current.getY();
         Point left,right,up,down;
-        if(getPoint(x-1,y)== null) addPoint2Map(x-1, y);
-        if(getPoint(x+1,y)== null) addPoint2Map(x+1, y);
-        if(getPoint(x,y-1)== null) addPoint2Map(x, y-1);
-        if(getPoint(x,y+1)== null) addPoint2Map(x, y+1);
-        left = getPoint(x-1, y);
-        right = getPoint(x+1, y);
-        up = getPoint(x, y-1);
-        down = getPoint(x, y+1);
+        if(getPoint(x-10,y)== null) addPoint2Map(x-10, y);
+        if(getPoint(x+10,y)== null) addPoint2Map(x+10, y);
+        if(getPoint(x,y-10)== null) addPoint2Map(x, y-10);
+        if(getPoint(x,y+10)== null) addPoint2Map(x, y+10);
+        left = getPoint(x-10, y);
+        right = getPoint(x+10, y);
+        up = getPoint(x, y-10);
+        down = getPoint(x, y+10);
 
         if( !collision(left) && !left.getIsWall() &&  !left.getIsWindow())      neighbours.add(left); //Point to the left
         if( !collision(right) && !right.getIsWall()&& !right.getIsWindow())     neighbours.add(right);
@@ -361,10 +357,10 @@ public class Player {
     }
 
     public Point getPoint(int x, int y){
-        //if( x<0+scale+1 || x>=width-scale-1 || y<0+scale+1 || y>=height-scale-1){
-        //     System.out.println("point : " +x+ ","+y +" out of bounds"); 
-        //     return null;
-        // }
+        if( x<0 || x>=width-scale-1 || y<0 || y>=height-scale-1){
+            System.out.println("point : " +x+ ","+y +" out of bounds"); 
+            return null;
+        }
         int hash = ((x+y)*(x+y+1)/2)+y;
         return myMap.get(hash); 
     }

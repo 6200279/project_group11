@@ -298,10 +298,10 @@ if (BIOME == "SAHARA"){
                 
                 double speed = scenario.baseSpeedGuard ;
 
-                Point locationTest = new Point(140,140);
+                Point locationTest = new Point(14,34);
 
                 seenByAll = new ArrayList<>();
-                Player player = new Player(locationTest,speed,scenario.mapWidth*scale, scenario.mapHeight*scale,String.valueOf(i),scale,this, bigSqaures);
+                Player player = new Player(location,speed,scenario.mapWidth*scale, scenario.mapHeight*scale,String.valueOf(i),scale,this, bigSqaures);
                 players.add(player);
             }
 
@@ -572,7 +572,8 @@ if (BIOME == "SAHARA"){
             int radius = p.getRadius() ;
 
             g.setColor(Color.red);
-            g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
+            g.fillRect(xx-radius/2,yy-radius/2,radius,radius);
+            // g.fillRec(xx-radius/2,yy-radius/2,radius,radius);
             
             for(Point watchedP: p.getPOV().getCurrentlyWatched()){
                 g.setColor(new Color(181,19,234,48));
@@ -589,10 +590,11 @@ if (BIOME == "SAHARA"){
 
         for (int j = 0; j <players.size() ; j++) {
             Player player = players.get(j);
-            for(int k=0 ; k<player.getVisited_4_GUI().size() ; k++){
+            for(int k=0 ; k<player.getMyMap().size() ; k++){
+                if(player.getMyMap().get(k)==null) continue;
                 g.setColor(Color.green);
-                int xxx = player.getVisited_4_GUI().get(k).getX()/scale ;
-                int yyy = player.getVisited_4_GUI().get(k).getY()/scale ;
+                int xxx = player.getMyMap().get(k).getX()/scale ;
+                int yyy = player.getMyMap().get(k).getY()/scale ;
                 g.fillOval((this.getWidth()-150)-player.getRadius()/scale/2+xxx,(this.getHeight()-150)-player.getRadius()/scale/2+yyy,player.getRadius()/scale,player.getRadius()/scale);
            }
         }

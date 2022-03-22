@@ -181,4 +181,9 @@ public class Point {
       return Math.sqrt(a+b);
       
     } 
+
+    public boolean sameCoord(Point other){
+        if(x == other.getX() && y == other.getY()) return true;
+        return false;
+    } 
 }
