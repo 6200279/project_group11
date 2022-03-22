@@ -154,6 +154,9 @@ public final class terraingenerator {
         private boolean obstacleIsSet = false;
         private boolean play = false;
         private boolean arrinstantiated = false;
+        double percentage;
+        ArrayList<Point> shared =  new ArrayList<>();
+
 
 
 
@@ -766,6 +769,7 @@ public final class terraingenerator {
                     //players.get(i).moveRndom();
                     //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
                     //B_Algorithm ben = new B_Algorithm(players.get(i));
+                    updateRealPercentage();
                     long tempend = System.currentTimeMillis();
                     long wait = (tempend - start);
                     Thread.sleep(Math.abs((players.get(i).getMovespersec(wait))/4));
@@ -778,6 +782,29 @@ public final class terraingenerator {
                 this.repaint();
 
             }
+        }
+
+        private void updatePercentage(Player p1){
+
+            for(Point p : p1.getVisited_4_GUI())
+            {
+                if(!shared.contains(p)) {
+                    shared.add(p);
+                    System.out.println("Point in shared" + p);
+                    System.out.println("Size: " + shared.size());
+                    System.out.println(scenario.mapWidth);
+                    System.out.println(scenario.mapHeight);
+                    percentage = (shared.size() * 100.00) / (scenario.mapWidth * scenario.mapHeight * 4);
+                    System.out.println("Percentage : " + percentage);
+                }
+            }
+
+        }
+
+        public void updateRealPercentage(){
+
+            for(Player p : players)
+                updatePercentage(p);
         }
     }
 
