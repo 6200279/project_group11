@@ -305,7 +305,7 @@ public class Player {
             Rectangle obsRect= new Rectangle(obstacle.get(i).get(0),obstacle.get(i).get(1),obstacle.get(i).get(2),obstacle.get(i).get(3));
             if (rectangle1.intersects(obsRect)&&obstacle.get(i).get(4)==1) {
                 target.setIsWall(true);
-                //System.out.println("in a wall");
+                //System.out.println("can't go through a wall");
                 return true;
             }
             if (rectangle1.intersects(obsRect)&&obstacle.get(i).get(4)==2) {
@@ -315,7 +315,7 @@ public class Player {
             }
             if (rectangle1.intersects(obsRect)&&obstacle.get(i).get(4)==3) {
                 target.setIsWindow(true);
-                //System.out.println("in a window");
+                //System.out.println("can't go through a window");
                 return true;
             }
         }
