@@ -699,8 +699,8 @@ public final class terraingenerator {
 
                 g.setColor(Color.blue);
                 g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
-                System.out.println("terrain: "+getPlace(p));
-                //getPlace(p);
+                //System.out.println("terrain: "+getPlace(p));
+                getPlace(p);
 
                 for (Point watchedP : p.getPOV().getCurrentlyWatched()) {
                     g.setColor(new Color(181, 19, 234, 48));
@@ -775,7 +775,7 @@ public final class terraingenerator {
                     Thread.sleep(Math.abs((players.get(i).getMovespersec(wait))/4));
                     long end = System.currentTimeMillis();
                     float sec = (end - start) / 1000F;
-                    System.out.println( players.get(i).getActualSpeed()+" Moves per "+ sec*players.get(i).getActualSpeed()*4);
+                    //System.out.println( players.get(i).getActualSpeed()+" Moves per "+ sec*players.get(i).getActualSpeed()*4);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
