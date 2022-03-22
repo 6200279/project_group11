@@ -321,7 +321,7 @@ public class POV {
 
         // parseArray(next_currently_watched,currently_watched);
         currently_watched.clear();
-        if(currently_watched.size()!=next_currently_watched.size()){
+        if(currently_watched.size()!=next_currently_watched.size()||currently_watched.size()==0){
             location = player.getLocation();
             setFirstView();
         }
@@ -503,17 +503,17 @@ public class POV {
         Rectangle obsRect= new Rectangle(obstacle.get(i).get(0),obstacle.get(i).get(1),obstacle.get(i).get(2),obstacle.get(i).get(3));
         if (obsRect.contains(target.getX(),target.getY())&&obstacle.get(i).get(4)==1) {
             target.setIsWall(true);
-            //System.out.println("is a wall");
+            //System.out.println("I see a wall");
             return true;
         }
         if (obsRect.contains(target.getX(),target.getY())&&obstacle.get(i).get(4)==2) {
             target.setIsDoor(true);
-            //System.out.println("is a door");
+            //System.out.println("I see a door");
             return true;
         }
         if (obsRect.contains(target.getX(),target.getY())&&obstacle.get(i).get(4)==3) {
             target.setIsWindow(true);
-            //System.out.println("is a window");
+            //System.out.println("I see a window");
             return false;
         }
     }
