@@ -1,11 +1,8 @@
 package sourcecode ;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.awt.Rectangle;
-import java.util.List;
-import java.util.Stack;
 
 public class Player {
 
@@ -25,13 +22,23 @@ public class Player {
     private Point targetTeleport;
     private ArrayList<Point> myMap;
     private ArrayList<Point> visitedBFS = new ArrayList<>();
+    private long movespersec;
+    private double actualSpeed;
 
-    public Player(Point location, double speed, int width, int height,String myId, int scale){
+    public double getActualSpeed() {
+        return actualSpeed;
+    }
+
+    public void setactualSpeed(double actualSpeed) {
+        this.actualSpeed = actualSpeed;
+    }
+
+    public Player(Point location, double speed, int width, int height, String myId, int scale){
         this.location = location;
         this.speed = speed;
         this.myId = myId;
-        myMap = new ArrayList<>(width*7*height*7);
-        for(int i=0; i<width*height*scale*scale-1; i++){
+        myMap = new ArrayList<>(width*10*height*10);
+        for(int i=0; i<width*height*100; i++){
             myMap.add(null);
         }
         addPoint2Map(location.getX(), location.getY());
@@ -50,7 +57,7 @@ public class Player {
     public ArrayList<Point> getVisited_4_GUI() {return visited_4_GUI;}
 
     public void setLocation(Point location){ this.location =  location;  }
-    public void setSpeed(double speed){ this.speed = speed;}
+    public void setActualSpeed(double speed){ this.speed = speed;}
     public void setFacing(String new_direction){ this.facing = new_direction;}
     
     public void setObstacle(ArrayList<List<Integer>> obstacle) {
@@ -65,6 +72,9 @@ public class Player {
         int hash = ((x+y)*(x+y+1)/2)+y;
         return sharedArr[hash];
    }
+   public int movedistance(){
+        return (int) (Math.random()*speed+1);
+   }
 
     public void moveToPoint(Point target){
         String facing = getWhereFacing(location, target);
@@ -75,16 +85,26 @@ public class Player {
        // pov.see(facing, location);
         int x = location.getX();
         int y = location.getY();
+        int viewSize = pov.getCurrentlyWatched().size();
+        if(viewSize==0){
+            pov.setFirstView();
+        }
+        Point target = null;
         pov.seeNextView(direction);
         getVisited_4_GUI().add(new Point(location.getX(),location.getY()));
         if (direction.equals("U")) {
-            
-            Point t = getPoint(location.getX(),location.getY()-1);
-            if(t==null) {
-                addPoint2Map(location.getX(), location.getY()-1);
-                t = getPoint(location.getX(), location.getY()-1);
+            if(location.getX()>0&&location.getY()-1>0) {
+                Point t = getPoint(location.getX(), location.getY() - 1);
+                if (t == null) {
+                    addPoint2Map(location.getX(), location.getY() - 1);
+                    t = getPoint(location.getX(), location.getY() - 1);
+                }
+
+                if (collision(t) || t.getIsWall() || t.getIsWindow()) {
+                    return;
+                }
+                location = t;
             }
-            location =t;
             
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
                 Point p = getPoint(pov.getCurrentlyWatched().get(i).getX(), pov.getCurrentlyWatched().get(i).getY() - 1);
@@ -100,21 +120,26 @@ public class Player {
                 }
                 pov.getNextCurrentlyWatched().clear();
 
-            //if (target == null) {
-             //   addPoint2Map(x, y-1);
-              //  target = getPoint(x,y-1) ;
-           // }
+            if (target == null) {
+                addPoint2Map(x, y-1);
+                target = getPoint(x,y-1) ;
+           }
 
         } else if (direction.equals("D")) {
             //if(y+1 >= grid.get(0).size()){ System.out.println("Ilegal move"); return;}
-            Point t = getPoint(location.getX(),location.getY()+1);
-            if(t==null) {
-                addPoint2Map(location.getX(), location.getY()+1);
-                t = getPoint(location.getX(), location.getY()+1);
-            }
+            if(location.getX()>0&&location.getY()+1>0) {
+                Point t = getPoint(location.getX(), location.getY() + 1);
+                if (t == null) {
+                    addPoint2Map(location.getX(), location.getY() + 1);
+                    t = getPoint(location.getX(), location.getY() + 1);
+                }
+                if (collision(t) || t.getIsWall() || t.getIsWindow()) {
+                    return;
+                }
                 location = t;
                 //  location.setX(location.getX());
                 //  location.setY(location.getY()+1);
+            }
              
 
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
@@ -130,20 +155,24 @@ public class Player {
                 pov.getCurrentlyWatched().add(pov.getNextCurrentlyWatched().get(i));
             }
             pov.getNextCurrentlyWatched().clear();
-           /* if (target == null) {
+            if (target == null) {
                 addPoint2Map(x, y+1);
                 target = getPoint(x,y+1) ;
-            }*/
-        } else if (direction.equals("L")) {
-
-            Point t = getPoint(location.getX()-1,location.getY());
-            if(t==null) {
-                addPoint2Map(location.getX()-1, location.getY());
-                t = getPoint(location.getX()-1, location.getY());
             }
-            location =t;
-            //      location.setX(location.getX()-1);
-            //      location.setY(location.getY());
+        } else if (direction.equals("L")) {
+            if(location.getX()-1>0&&location.getY()>0) {
+                Point t = getPoint(location.getX() - 1, location.getY());
+                if (t == null) {
+                    addPoint2Map(location.getX() - 1, location.getY());
+                    t = getPoint(location.getX() - 1, location.getY());
+                }
+                if (collision(t) || t.getIsWall() || t.getIsWindow()) {
+                    return;
+                }
+                location = t;
+                //      location.setX(location.getX()-1);
+                //      location.setY(location.getY());
+            }
              
 
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
@@ -159,17 +188,22 @@ public class Player {
                 pov.getCurrentlyWatched().add(pov.getNextCurrentlyWatched().get(i));
             }
             pov.getNextCurrentlyWatched().clear();
-           /* if (target == null) {
+            if (target == null) {
                 addPoint2Map(x-1, y);
                 target = getPoint(x-1,y) ;
-            }*/
-        } else if (direction.equals("R")) {
-            Point t = getPoint(location.getX()+1,location.getY());
-            if(t==null) {
-                addPoint2Map(location.getX()+1, location.getY());
-                t = getPoint(location.getX()+1, location.getY());
             }
-            location =t;
+        } else if (direction.equals("R")) {
+            if(location.getX()+1>0&&location.getY()>0) {
+                Point t = getPoint(location.getX() + 1, location.getY());
+                if (t == null) {
+                    addPoint2Map(location.getX() + 1, location.getY());
+                    t = getPoint(location.getX() + 1, location.getY());
+                }
+                if (collision(t) || t.getIsWall() || t.getIsWindow()) {
+                    return;
+                }
+                location = t;
+            }
 
             for (int i = 0; i < pov.getCurrentlyWatched().size(); i++) {
                 Point p = getPoint(pov.getCurrentlyWatched().get(i).getX()+1, pov.getCurrentlyWatched().get(i).getY());
@@ -184,10 +218,10 @@ public class Player {
                 pov.getCurrentlyWatched().add(pov.getNextCurrentlyWatched().get(i));
             }
             pov.getNextCurrentlyWatched().clear();
-           /* if (target == null) {
+            if (target == null) {
                 addPoint2Map(x+1, y);
                 target = getPoint(x+1,y) ;
-            }*/
+            }
         }
         
      /*   if (collision(target) || target.getIsWall() || target.getIsWindow()) {
@@ -198,16 +232,16 @@ public class Player {
       //  pov.see(facing, location);
 
 
-      //  if (teleport(target)) {
-         //   System.out.println("teleporting");
-         //   lastLoc = location;
-         //   location = targetTeleport;
-         //   unSee();
+        if (teleport(target)) {
+            System.out.println("teleporting");
+            lastLoc = location;
+            location = targetTeleport;
+            unSee();
 
-       // } else {
+        } else {
             lastLoc = location;
         }
-     //}
+     }
 
     public void moveInPath(ArrayList<Point> path){
         for(Point p: path){
@@ -328,7 +362,7 @@ public class Player {
 
        }
        if (randomFace == 4) {
-
+           facing="U";
            moveInDirection(facing);
 
        }
@@ -400,13 +434,23 @@ public class Player {
     
    public void addPoint2Map(int x, int y){
         int hash = ((x+y)*(x+y+1)/2)+y;
+       if(hash<0){
+           return;
+       }
         if(getPoint(x,y)==null) myMap.set(hash, new Point(x,y));
    }
 
    public Point getPoint(int x, int y){
         int hash = ((x+y)*(x+y+1)/2)+y;
+        if(hash<0){
+            return null;
+        }
         return myMap.get(hash);
    
+    }
+    public long getMovespersec(long wait){
+        movespersec=(1000-wait)/(long)actualSpeed;
+        return movespersec;
     }
 
     // public static void main(String[] args) {

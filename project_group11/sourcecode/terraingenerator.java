@@ -1,12 +1,12 @@
 package sourcecode;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.Timer;
 import java.util.List;
 
 
@@ -153,6 +153,46 @@ public final class terraingenerator {
         private boolean tpIsSet = false;
         private boolean obstacleIsSet = false;
         private boolean play = false;
+        private boolean arrinstantiated = false;
+
+
+
+
+        public String getPlace(Player player) {
+            Point p = new Point(player.getLocation().getX()/7,player.getLocation().getY()/7);
+            String land="";
+            if (Terrain_mapper("FOREST").contains(p)){
+                land="FOREST";
+                player.setactualSpeed(player.getSpeed()-1);
+            } else if (Terrain_mapper("HILLS").contains(p)){
+                land="HILLS";
+                player.setactualSpeed(player.getSpeed()-2);
+            } else if (Terrain_mapper("DESERT").contains(p)){
+                land="DESERT";
+                player.setactualSpeed(player.getSpeed()+1);
+            } else if (Terrain_mapper("PLAINS").contains(p)){
+                land="PLAINS";
+                player.setactualSpeed(player.getSpeed()-4);
+            } else if (Terrain_mapper("MOUNTAINS").contains(p)){
+                land="MOUNTAINS";
+                player.setactualSpeed(player.getSpeed()-2);
+            } else if (Terrain_mapper("LAKE").contains(p)){
+                land="LAKE";
+                player.setactualSpeed(player.getSpeed());
+            } else if(Terrain_mapper("SNOW").contains(p)){
+                land="SNOW";
+                player.setactualSpeed(player.getSpeed()-2);
+            }
+            /*else{
+                land="empty";
+                player.setSpeed(14);
+            }
+
+             */
+            //System.out.println(p);
+            //System.out.println(Terrain_mapper("FOREST"));
+            return land;
+        }
 
         private final Timer tm;
 
@@ -171,8 +211,8 @@ public final class terraingenerator {
             obstacle = new ArrayList<List<Integer>>();
 
 
-            Map.height = height;
-            Map.width = width;
+            this.height = height;
+            this.width = width;
             System.out.println(height + "height");
             Map.z = z;
             BIOME = biome;
@@ -496,15 +536,16 @@ public final class terraingenerator {
                 y2 = walls.get(i).getY2() * scale;
 
 
-                x = Math.min(x1, x2);
-                // int xB = Math.max(x1,x2);
-                y = Math.min(y1, y2);
+                x = Math.min(x1,x2);
+               // int xB = Math.max(x1,x2);
+                y = Math.min(y1,y2) ;
                 //yB = Math.max(y1,y2) ;
-                int width = Math.abs(x1 - x2);
-                int height = Math.abs(y1 - y2);
-
-                List<Integer> tmp = Arrays.asList(x, y, width, height, 1);
-                obstacle.add(tmp);
+                int width = Math.abs(x1-x2) ;
+                int height = Math.abs(y1-y2) ;
+                if(!arrinstantiated) {
+                    List<Integer> tmp = Arrays.asList(x, y, width, height, 1);
+                    obstacle.add(tmp);
+                }
 
                 g.setColor(Color.black);
                 g.drawRect(x, y, width, height);
@@ -517,13 +558,14 @@ public final class terraingenerator {
                 y1 = doors.get(i).getY1() * scale;
                 y2 = doors.get(i).getY2() * scale;
 
-                x = Math.min(x1, x2);
-                y = Math.min(y1, y2);
-                int width = Math.abs(x1 - x2);
-                int height = Math.abs(y1 - y2);
-
-                List<Integer> tmp = Arrays.asList(x, y, width, height, 2);
-                obstacle.add(tmp);
+                x = Math.min(x1,x2);
+                y = Math.min(y1,y2) ;
+                int width = Math.abs(x1-x2) ;
+                int height = Math.abs(y1-y2) ;
+                if(!arrinstantiated) {
+                    List<Integer> tmp= Arrays.asList(x,y,width,height,2);
+                    obstacle.add(tmp);
+                }
 
                 g.setColor(Color.yellow);
                 g.drawRect(x, y, width, height);
@@ -537,16 +579,17 @@ public final class terraingenerator {
                 y2 = windows.get(i).getY2() * scale;
 
 
-                x = Math.min(x1, x2);
-                y = Math.min(y1, y2);
-                int width = Math.abs(x1 - x2);
-                int height = Math.abs(y1 - y2);
-                List<Integer> tmp = Arrays.asList(x, y, width, height, 3);
-                obstacle.add(tmp);
-
+                x = Math.min(x1,x2);
+                y = Math.min(y1,y2) ;
+                int width = Math.abs(x1-x2) ;
+                int height = Math.abs(y1-y2) ;
+                if (!arrinstantiated) {
+                    List<Integer> tmp = Arrays.asList(x, y, width, height, 3);
+                    obstacle.add(tmp);
+                }
                 g.setColor(Color.blue);
-                g.drawRect(x, y, width, height);
-                g.fillRect(x, y, width, height);
+                g.drawRect(x,y,width,height);
+                g.fillRect(x,y,width,height);
 
             }
 
@@ -563,18 +606,20 @@ public final class terraingenerator {
                 y1 = telePortals.get(i).getY1() * scale;
                 y2 = telePortals.get(i).getY2() * scale;
 
-                x = Math.min(x1, x2);
-                y = Math.min(y1, y2);
-                int width = Math.abs(x1 - x2);
-                int height = Math.abs(y1 - y2);
-
-                List<Integer> teleport = Arrays.asList(x, y, width, height, telePortals.get(i).xTarget * scale, telePortals.get(i).yTarget * scale, (int) telePortals.get(i).getNewOrientation() * scale);
-                tp.add(teleport);
+                x = Math.min(x1,x2);
+                y = Math.min(y1,y2) ;
+                int width = Math.abs(x1-x2) ;
+                int height = Math.abs(y1-y2) ;
+                if(!arrinstantiated) {
+                    List<Integer> teleport = Arrays.asList(x, y, width, height, telePortals.get(i).xTarget * scale, telePortals.get(i).yTarget * scale, (int) telePortals.get(i).getNewOrientation() * scale);
+                    tp.add(teleport);
+                }
                 g.setColor(Color.cyan);
-                g.drawRect(x, y, width, height);
-                g.fillRect(x, y, width, height);
+                g.drawRect(x,y,width,height);
+                g.fillRect(x,y,width,height);
 
-            }
+        }
+        arrinstantiated=true;
 
             for (int i = 0; i < shaded.size(); i++) {
                 x1 = shaded.get(i).getX1() * scale;
@@ -650,7 +695,8 @@ public final class terraingenerator {
                 int radius = p.getRadius();
 
                 g.setColor(Color.blue);
-                g.fillOval(xx - radius / 2, yy - radius / 2, radius, radius);
+                g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
+                System.out.println("terrain: "+getPlace(p));
 
                 for (Point watchedP : p.getPOV().getCurrentlyWatched()) {
                     g.setColor(new Color(181, 19, 234, 48));
@@ -684,13 +730,15 @@ public final class terraingenerator {
             long start = System.currentTimeMillis();
 
             try {
-                Thread.sleep(TIME_PER_MOVE);
+                Thread.sleep(50);
                 long end = System.currentTimeMillis();
-                //float sec = (end - start) / 1000F; System.out.println(" time per move"+ sec + " seconds");
+                float sec = (end - start) / 1000F;
+                System.out.println(" time per move"+ sec + " seconds");
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
 
 
             if (!play) {
@@ -709,10 +757,21 @@ public final class terraingenerator {
             int u = 0;
             for (int i = 0; i < scenario.numGuards; i++) {
 
-                //players.get(i).moveRndom();
-                //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
-                Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
-                //B_Algorithm ben = new B_Algorithm(players.get(i));
+                try {
+                    long start = System.currentTimeMillis();
+                    Ants_Algorithm ants = new Ants_Algorithm(players.get(i));
+                    //players.get(i).moveRndom();
+                    //MDFS_Algorithm mdfs = new MDFS_Algorithm(players.get(i));
+                    //B_Algorithm ben = new B_Algorithm(players.get(i));
+                    long tempend = System.currentTimeMillis();
+                    long wait = (tempend - start);
+                    Thread.sleep((players.get(i).getMovespersec(wait))/4);
+                    long end = System.currentTimeMillis();
+                    float sec = (end - start) / 1000F;
+                    System.out.println( players.get(i).getActualSpeed()+" Moves per "+ sec*players.get(i).getActualSpeed()*4);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
                 this.repaint();
 
             }
