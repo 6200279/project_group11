@@ -98,8 +98,8 @@ public class MenuFrame extends JFrame {
                     width = scenario.mapWidth ;
                     z = rand.nextDouble();
 
-                    //terrainnull =new terraingenerator.Map(height, width, z,scale, "NULL",scenario);
-                    terrain1 = new terraingenerator.Map(height, width, z,scale, "GREEK",scenario);
+                    //terrainnull =new terraingenerator.Map(height, width, z,7, "NULL",scenario);
+                    terrain1 = new terraingenerator.Map(scenario.mapHeight, scenario.mapWidth, z,7, "GREEK",scenario);
                     snow = terraingenerator.Map.Terrain_mapper("SNOW");
                     forest = terraingenerator.Map.Terrain_mapper("FOREST");
                     hills = terraingenerator.Map.Terrain_mapper("HILLS");
@@ -133,7 +133,7 @@ public class MenuFrame extends JFrame {
                     width = scenario.mapWidth ;
                     z = rand.nextDouble();
 
-                    terrain2 = new terraingenerator.Map(height, width, z,scale,"SAHARA",scenario);
+                    terrain2 = new terraingenerator.Map(scenario.mapHeight,scenario.mapWidth, z,7,"SAHARA",scenario);
                     snow = terraingenerator.Map.Terrain_mapper("SNOW");
                     forest = terraingenerator.Map.Terrain_mapper("FOREST");
                     hills = terraingenerator.Map.Terrain_mapper("HILLS");
