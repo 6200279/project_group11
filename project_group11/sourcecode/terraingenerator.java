@@ -166,25 +166,25 @@ public final class terraingenerator {
             String land="";
             if (Terrain_mapper("FOREST").contains(p)){
                 land="FOREST";
-                player.setactualSpeed(player.getSpeed()-1);
+                player.setactualSpeed(player.getSpeed()+1);
             } else if (Terrain_mapper("HILLS").contains(p)){
                 land="HILLS";
-                player.setactualSpeed(player.getSpeed()-2);
+                player.setactualSpeed(player.getSpeed()-1);
             } else if (Terrain_mapper("DESERT").contains(p)){
                 land="DESERT";
-                player.setactualSpeed(player.getSpeed()+1);
+                player.setactualSpeed(player.getSpeed());
             } else if (Terrain_mapper("PLAINS").contains(p)){
                 land="PLAINS";
-                player.setactualSpeed(player.getSpeed());
+                player.setactualSpeed(player.getSpeed()+2);
             } else if (Terrain_mapper("MOUNTAINS").contains(p)){
                 land="MOUNTAINS";
-                player.setactualSpeed(player.getSpeed()-2);
+                player.setactualSpeed(player.getSpeed()-1);
             } else if (Terrain_mapper("LAKE").contains(p)){
                 land="LAKE";
-                player.setactualSpeed(player.getSpeed()-4);
+                player.setactualSpeed(player.getSpeed()-1);
             } else if(Terrain_mapper("SNOW").contains(p)){
                 land="SNOW";
-                player.setactualSpeed(player.getSpeed()-2);
+                player.setactualSpeed(player.getSpeed()-1);
             }
             /*else{
                 land="empty";
@@ -699,8 +699,8 @@ public final class terraingenerator {
 
                 g.setColor(Color.blue);
                 g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
-                //System.out.println("terrain: "+getPlace(p));
-                getPlace(p);
+                System.out.println("terrain: "+getPlace(p));
+                //getPlace(p);
 
                 for (Point watchedP : p.getPOV().getCurrentlyWatched()) {
                     g.setColor(new Color(181, 19, 234, 48));
@@ -775,7 +775,7 @@ public final class terraingenerator {
                     Thread.sleep(Math.abs((players.get(i).getMovespersec(wait))/4));
                     long end = System.currentTimeMillis();
                     float sec = (end - start) / 1000F;
-                    //System.out.println( players.get(i).getActualSpeed()+" Moves per "+ sec*players.get(i).getActualSpeed()*4);
+                    System.out.println( players.get(i).getActualSpeed()+" Moves per "+ sec*players.get(i).getActualSpeed()*4);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
