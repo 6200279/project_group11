@@ -172,13 +172,13 @@ public final class terraingenerator {
                 player.setactualSpeed(player.getSpeed()+1);
             } else if (Terrain_mapper("PLAINS").contains(p)){
                 land="PLAINS";
-                player.setactualSpeed(player.getSpeed()-4);
+                player.setactualSpeed(player.getSpeed());
             } else if (Terrain_mapper("MOUNTAINS").contains(p)){
                 land="MOUNTAINS";
                 player.setactualSpeed(player.getSpeed()-2);
             } else if (Terrain_mapper("LAKE").contains(p)){
                 land="LAKE";
-                player.setactualSpeed(player.getSpeed());
+                player.setactualSpeed(player.getSpeed()-4);
             } else if(Terrain_mapper("SNOW").contains(p)){
                 land="SNOW";
                 player.setactualSpeed(player.getSpeed()-2);
@@ -696,7 +696,8 @@ public final class terraingenerator {
 
                 g.setColor(Color.blue);
                 g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
-                System.out.println("terrain: "+getPlace(p));
+                //System.out.println("terrain: "+getPlace(p));
+                getPlace(p);
 
                 for (Point watchedP : p.getPOV().getCurrentlyWatched()) {
                     g.setColor(new Color(181, 19, 234, 48));
@@ -729,8 +730,8 @@ public final class terraingenerator {
                 tm.start();
             long start = System.currentTimeMillis();
 
-            try {
-                Thread.sleep(50);
+            /*try {
+                Thread.sleep(TIME_PER_MOVE);
                 long end = System.currentTimeMillis();
                 float sec = (end - start) / 1000F;
                 System.out.println(" time per move"+ sec + " seconds");
@@ -739,13 +740,15 @@ public final class terraingenerator {
                 e.printStackTrace();
             }
 
+             */
+
 
 
             if (!play) {
                 tm.stop();
                 long end = System.currentTimeMillis();
                 float sec = (end - start) / 1000F;
-                System.out.println(" time per move" + sec + " seconds");
+                //System.out.println(" time per move" + sec + " seconds");
 
 
             }
@@ -765,10 +768,10 @@ public final class terraingenerator {
                     //B_Algorithm ben = new B_Algorithm(players.get(i));
                     long tempend = System.currentTimeMillis();
                     long wait = (tempend - start);
-                    Thread.sleep((players.get(i).getMovespersec(wait))/4);
+                    Thread.sleep(Math.abs((players.get(i).getMovespersec(wait))/4));
                     long end = System.currentTimeMillis();
                     float sec = (end - start) / 1000F;
-                    System.out.println( players.get(i).getActualSpeed()+" Moves per "+ sec*players.get(i).getActualSpeed()*4);
+                    //System.out.println( players.get(i).getActualSpeed()+" Moves per "+ sec*players.get(i).getActualSpeed()*4);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
