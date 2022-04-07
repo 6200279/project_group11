@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23585820-d569-4c37-b909-c63c06b12b61" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/presstest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examinermap_phase1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examinermap_phase1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/GameFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/MapFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/MapFiles.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/MenuFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/POV.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/POV.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/Point.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/project_group11/sourcecode/terraingenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="pierre" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -226,6 +230,8 @@
       <workItem from="1647876425635" duration="496000" />
       <workItem from="1647876983627" duration="314000" />
       <workItem from="1647877358285" duration="7373000" />
+      <workItem from="1648151948752" duration="594000" />
+      <workItem from="1649061217320" duration="3598000" />
     </task>
     <task id="LOCAL-00001" summary="change package">
       <created>1644309170098</created>
@@ -420,7 +426,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

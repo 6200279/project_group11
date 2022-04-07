@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public final class terraingenerator {
-    public static final int TIME_PER_MOVE = 50; //in milli seconds (now 20 moves per second)
+    public static final int TIME_PER_MOVE = 50; //in milli seconds (now 200 moves per second)
     public static final Color CITY = new Color(214, 217, 223);
     public static final Color DESERT = new Color(255, 204, 102);
     public static final Color DESERT2 = new Color(255, 160, 102);
@@ -49,7 +49,7 @@ public final class terraingenerator {
             p[256 + i] = p[i] = permutation[i];
     }
 
-    private static double noise(double x, double y, double z) {
+    private static double pernil_noise(double x, double y, double z) {
         // Find the unit cube that contains the point
         int X = (int) Math.floor(x) & 255;
         int Y = (int) Math.floor(y) & 255;
@@ -80,11 +80,12 @@ public final class terraingenerator {
                         lerp(u, gradiant(p[AB], x, y - 1, z), gradiant(p[BB], x - 1, y - 1, z))),
                 lerp(v, lerp(u, gradiant(p[AA + 1], x, y, z - 1), gradiant(p[BA + 1], x - 1, y, z - 1)),
                         lerp(u, gradiant(p[AB + 1], x, y - 1, z - 1), gradiant(p[BB + 1], x - 1, y - 1, z - 1))));
-        return (res + 1.0) / 2.0;
+        return (res + 1.0) /2.0;
     }
 
     private static double fading(double constant) {
-        return constant * constant * constant * (constant * (constant * 6 - 15) + 10);
+        //return constant * constant * constant * (constant * (constant * 6 - 15) + 10);
+        return constant;
     }
 
     private static double lerp(double t, double a, double b) {
@@ -98,7 +99,7 @@ public final class terraingenerator {
         return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
     }
 
-    // TODO hashmap is useless ill keep it in for now, use arraylist<point>
+
     static class MyCoord {
         private int X;
         private int Y;
@@ -149,11 +150,20 @@ public final class terraingenerator {
         private final HashMap<String, MyCoord> map = new HashMap<String, MyCoord>();
         private final ArrayList<Player> players;
         private ArrayList<Point> seenByAll;
+        public ArrayList<Point> all_map_points;
         private ArrayList<Point> locationspawn;
         private boolean tpIsSet = false;
         private boolean obstacleIsSet = false;
         private boolean play = false;
         private boolean arrinstantiated = false;
+        public List<Point> FOREST_points2 = new ArrayList<>();
+        public List<Point> HILLs_points2 = new ArrayList<>();
+        public List<Point> Desert_points2 = new ArrayList<>();
+        public List<Point> LAKE_points2 = new ArrayList<>();
+        public List<Point> MOUNTAINS_points2 = new ArrayList<>();
+        public List<Point> PLAINS_points2 = new ArrayList<>();
+        public List<Point> SNOW_points2 = new ArrayList<>();
+        public List<Point> Dirt_Road2 = new ArrayList<>();
         double percentage;
         ArrayList<Point> shared =  new ArrayList<>();
 
@@ -162,27 +172,28 @@ public final class terraingenerator {
 
 
         public String getPlace(Player player) {
-            Point p = new Point(player.getLocation().getX()/7,player.getLocation().getY()/7);
+            Point p = new Point((int) player.getLocation().getY()/scale,(int)player.getLocation().getX()/scale);
+           // System.out.println("get place poitn :"+ p);
             String land="";
-            if (Terrain_mapper("FOREST").contains(p)){
+            if (FOREST_points2.contains(p)){
                 land="FOREST";
                 player.setactualSpeed(player.getSpeed()+1);
-            } else if (Terrain_mapper("HILLS").contains(p)){
+            } else if (HILLs_points2.contains(p)){
                 land="HILLS";
                 player.setactualSpeed(player.getSpeed()-1);
-            } else if (Terrain_mapper("DESERT").contains(p)){
+            } else if (Desert_points2.contains(p)){
                 land="DESERT";
                 player.setactualSpeed(player.getSpeed());
-            } else if (Terrain_mapper("PLAINS").contains(p)){
+            } else if (PLAINS_points2.contains(p)){
                 land="PLAINS";
                 player.setactualSpeed(player.getSpeed()+2);
-            } else if (Terrain_mapper("MOUNTAINS").contains(p)){
+            } else if (MOUNTAINS_points2.contains(p)){
                 land="MOUNTAINS";
                 player.setactualSpeed(player.getSpeed()-1);
-            } else if (Terrain_mapper("LAKE").contains(p)){
+            } else if (LAKE_points2.contains(p)){
                 land="LAKE";
                 player.setactualSpeed(player.getSpeed()-1);
-            } else if(Terrain_mapper("SNOW").contains(p)){
+            } else if(SNOW_points2.contains(p)){
                 land="SNOW";
                 player.setactualSpeed(player.getSpeed()-1);
             }
@@ -202,7 +213,7 @@ public final class terraingenerator {
 
         public Map(int height, int width, double z, int scale, String biome, Scenario scenario) {
             this.scenario = scenario;
-            tm = new Timer(1, this);
+            tm = new Timer(0, this);
 
             walls = scenario.getWalls();
             doors = scenario.getDoors();
@@ -216,151 +227,17 @@ public final class terraingenerator {
 
             this.height = height;
             this.width = width;
-            System.out.println(height + "height");
-            Map.z = z;
+            //System.out.println(height + "height");
+            this.z = z;
             BIOME = biome;
             this.scale = scale;
             sc = scale;
             createPlayers();
+
         }
 
-        public static List<Point> Terrain_mapper(String terrainTYPE) {
-            List<Point> listempty = new ArrayList<>();
-            List<Point> FOREST_points = new ArrayList<>();
-            List<Point> HILLs_points = new ArrayList<>();
-            List<Point> Desert_points = new ArrayList<>();
-            List<Point> LAKE_points = new ArrayList<>();
-            List<Point> MOUNTAINS_points = new ArrayList<>();
-            List<Point> PLAINS_points = new ArrayList<>();
-            List<Point> SNOW_points = new ArrayList<>();
-
-            if (BIOME == "GREEK") {
-                for (int i = 0; i < width; ++i) { // y
-                    for (int j = 0; j < height; ++j) { // x
-                        double x = (double) j / ((double) width);
-                        double y = (double) i / ((double) height);
-                        double n = noise(10 * x, 10 * y, z);
-                        Point p = new Point(j, i);
 
 
-                        if (n < 0.25) {
-                            // FOREST
-                            FOREST_points.add(p);
-                            //allPoint.add(p);
-                            // System.out.println("forestpoints:"+FOREST_points.size());
-
-
-                        } else if (n >= 0.25 && n < 0.30) {
-                            // HILLS
-                            HILLs_points.add(p);
-                            //allPoint.add(p);
-                        }
-                        // DESERT
-                        else if (n >= 0.30 && n < 0.40) {
-
-                            Desert_points.add(p);
-                            //allPoint.add(p);
-                        } else if (n >= 0.40 && n < 0.5) {
-                            //LAKE
-                            LAKE_points.add(p);
-                            // allPoint.add(p);
-                        } else if (n >= 0.5 && n < 0.70) {
-                            // PLAINS
-                            PLAINS_points.add(p);
-                            //allPoint.add(p);
-                        } else if (n >= 0.70 && n < 0.75) {
-                            // FOREST
-                            FOREST_points.add(p);
-                            //allPoint.add(p);
-                        }
-                        // MOUNTAINS
-                        else if (n >= 0.75 && n < 0.85) {
-
-                            MOUNTAINS_points.add(p);
-                            //allPoint.add(p);
-                        }
-                        // Ice (or Snow)
-                        else {
-                            SNOW_points.add(p);
-                            //allPoint.add(p);
-                            //System.out.println("Snowpoints:"+SNOW_points.size());
-                        }
-                    }
-                }
-            }
-            if (BIOME == "SAHARA") {
-                for (int i = 0; i < width; ++i) { // y
-                    for (int j = 0; j < height; ++j) { // x
-                        double y = (double) j / ((double) width);
-                        double x = (double) i / ((double) height);
-                        double n = noise(10 * x, 10 * y, z);
-                        Point p = new Point(j, i);
-
-                        if (n < 0.25) {
-                            // FOREST
-                            Desert_points.add(p);
-                            //allPoint.add(p);
-                            // System.out.println("forestpoints:"+FOREST_points.size());
-
-
-                        } else if (n >= 0.25 && n < 0.30) {
-                            // HILLS
-                            Desert_points.add(p);
-                            //allPoint.add(p);
-                        }
-                        // DESERT
-                        else if (n >= 0.30 && n < 0.40) {
-
-                            Desert_points.add(p);
-                            //allPoint.add(p);
-
-                        } else if (n >= 0.40 && n < 0.5) {
-                            //LAKE
-                            Desert_points.add(p);
-                            ////// allPoint.add(p);
-                        } else if (n >= 0.5 && n < 0.70) {
-                            // PLAINS
-                            Desert_points.add(p);
-                            ///  allPoint.add(p);
-                        } else if (n >= 0.70 && n < 0.75) {
-                            // FOREST
-                            Desert_points.add(p);
-                            // allPoint.add(p);
-                        }
-                        // MOUNTAINS
-                        else if (n >= 0.75 && n < 0.85) {
-
-                            MOUNTAINS_points.add(p);
-                            //  allPoint.add(p);
-                        }
-                        // Ice (or Snow)
-                        else {
-                            SNOW_points.add(p);
-                            //  allPoint.add(p);
-                            //System.out.println("Snowpoints:"+SNOW_points.size());
-                        }
-                    }
-                }
-
-            }
-
-            if (terrainTYPE == "SNOW")
-                return SNOW_points;
-            if (terrainTYPE == "PLAINS")
-                return PLAINS_points;
-            if (terrainTYPE == "LAKE")
-                return LAKE_points;
-            if (terrainTYPE == "MOUNTAINS")
-                return MOUNTAINS_points;
-            if (terrainTYPE == "FOREST")
-                return FOREST_points;
-            if (terrainTYPE == "HILLS")
-                return HILLs_points;
-            if (terrainTYPE == "DESERT")
-                return Desert_points;
-            else
-                return listempty;
-        }
 
         public void changePlayToTrue() {
             if (!play) play = true;
@@ -432,50 +309,59 @@ public final class terraingenerator {
 
         public void paint(Graphics g) {
             if (BIOME == "GREEK") {
-                for (int i = 0; i < width; ++i) { // y
+                for (int i = 0; i < width; ++i) { //y
                     for (int j = 0; j < height; ++j) { // x
                         double x = (double) j / ((double) width);
                         double y = (double) i / ((double) height);
-                        double n = noise(10 * x, 10 * y, z);
-
+                        double n = pernil_noise(10 * x, 10 * y, z);
+                        Point p = new Point(j, i);
+                        //System.out.println("paint point p "+ p);
                         // Watter (or a Lakes)
 
                         if (n < 0.25) {
                             g.setColor(FOREST);
+                            FOREST_points2.add(p);
 
                             map.put("FOREST", new MyCoord(j, i));
 
 
                         } else if (n >= 0.25 && n < 0.30) {
                             g.setColor(HILLS);
+                            HILLs_points2.add(p);
                             map.put("HILLS", new MyCoord(j, i));
                         }
                         // Floors (or Planes)
                         else if (n >= 0.30 && n < 0.40) {
+                            Desert_points2.add(p);
                             g.setColor(DESERT);
                             map.put("DESERT", new MyCoord(j, i));
 
                         } else if (n >= 0.40 && n < 0.5) {
                             g.setColor(LAKE);
+                            LAKE_points2.add(p);
                             map.put("LAKE", new MyCoord(j, i));
                         } else if (n >= 0.5 && n < 0.70) {
                             g.setColor(PLAINS);
+                            PLAINS_points2.add(p);
                             map.put("PLAINS", new MyCoord(j, i));
                         } else if (n >= 0.70 && n < 0.75) {
+                            FOREST_points2.add(p);
                             g.setColor(FOREST);
                             map.put("FOREST", new MyCoord(j, i));
                         }
                         // Walls (or Mountains)
                         else if (n >= 0.75 && n < 0.85) {
                             g.setColor(Color.GRAY);
+                            MOUNTAINS_points2.add(p);
                             map.put("MOUNTAINS", new MyCoord(j, i));
                         }
                         // Ice (or Snow)
                         else {
                             g.setColor(Color.white);
+                            SNOW_points2.add(p);
                             map.put("SNOW", new MyCoord(j, i));
                         }
-                        g.fillRect(i * 10, j * 10, 10, 10);
+                        g.fillRect(i*scale  , j *scale , scale, scale);
                         MyCoord coord = map.get("FOREST");
 
 
@@ -489,41 +375,49 @@ public final class terraingenerator {
                     for (int j = 0; j < height; ++j) { // x
                         double x = (double) j / ((double) width);
                         double y = (double) i / ((double) height);
-                        double n = noise(10 * x, 10 * y, z);
-
+                        double n = pernil_noise(10 * x, 10 * y, z);
+                        Point p = new Point(j, i);
                         // Watter (or a Lakes)
 
                         if (n < 0.25) {
                             g.setColor(DESERT);
+                            Desert_points2.add(p);
 
                         } else if (n >= 0.25 && n < 0.30) {
                             g.setColor(DESERT);
+                            Desert_points2.add(p);
 
                         }
                         // Floors (or Planes)
                         else if (n >= 0.30 && n < 0.40) {
                             g.setColor(DESERT2);
+                            Desert_points2.add(p);
+
 
 
                         } else if (n >= 0.40 && n < 0.5) {
                             g.setColor(DIRT_ROAD);
+                            Dirt_Road2.add(p);
 
                         } else if (n >= 0.50 && n < 0.75) {
                             g.setColor(DESERT);
+                            Desert_points2.add(p);
                         }
 
 
                         // Walls (or Mountains)
                         else if (n >= 0.75 && n < 0.85) {
                             g.setColor(Color.GRAY);
+                            MOUNTAINS_points2.add(p);
 
                         }
                         // Ice (or Snow)
                         else {
                             g.setColor(Color.white);
+                            SNOW_points2.add(p);
 
                         }
-                        g.fillRect(i * 10, j * 10, 10, 10);
+                        g.fillRect(i * scale, j * scale, scale, scale);
                         MyCoord coord = map.get("FOREST");
 
                         // System.out.println(coord.getX() +" : "+coord.getY());
@@ -699,7 +593,7 @@ public final class terraingenerator {
 
                 g.setColor(Color.blue);
                 g.fillOval(xx-radius/2,yy-radius/2,radius,radius);
-                //System.out.println("terrain: "+getPlace(p));
+                System.out.println("terrain: "+getPlace(p));
                 getPlace(p);
 
                 for (Point watchedP : p.getPOV().getCurrentlyWatched()) {

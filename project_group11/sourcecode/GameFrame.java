@@ -7,8 +7,12 @@ import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
 
+
+
+
+
     private Scenario scenario;
-    private int scale = 10;
+    private int scale = 7;
     private boolean isVisible;
     private ArrayList<Player> players;
     private JPanel panelWest;
@@ -31,7 +35,7 @@ public class GameFrame extends JFrame {
         setLayout(new BorderLayout());
 
         createPanelWest();
-       // createPanelEAST();
+        //createPanelEAST();
 
         getContentPane().add(BorderLayout.CENTER, this.terrain);
         setTitle("Testing");
@@ -69,12 +73,14 @@ private void createPanelEAST(){
         panelEast = new JPanel();
         panelEast.setBackground(new Color(36, 95, 131));
         panelEast.setLayout(new BoxLayout(panelEast, BoxLayout.PAGE_AXIS));
-        JLabel label2 = new JLabel();
+        JTextField timer = new JTextField(10);
+       /* JLabel label2 = new JLabel();
         label2.setText("starting time : " +terraingenerator.starttimer);
         JLabel label3 = new JLabel();
-        label3.setText("ending time : "+ terraingenerator.endtimer);
-        panelEast.add(label2);
-        panelEast.add(label3);
+        label3.setText("ending time : "+ terraingenerator.endtimer);*/
+
+
+
         add(BorderLayout.EAST, panelEast);
 
     }
@@ -99,10 +105,12 @@ private void createPanelEAST(){
     private JButton createButtonPlay() {
 
         buttonPlay = new JButton("Play");
+       // long starttime = System.currentTimeMillis();
         buttonPlay.addActionListener(e -> {
+            //t.setText(String.valueOf(starttime));
             this.terrain.changePlayToTrue();
         });
-        long starttime = System.currentTimeMillis();
+
 
         return buttonPlay;
 

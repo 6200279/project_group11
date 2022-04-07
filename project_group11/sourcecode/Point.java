@@ -3,7 +3,7 @@ package sourcecode;
 import java.util.Objects;
 
 public class Point {
-    private  int x, y;
+    private  double x, y;
     private  boolean isWall;
     private  boolean isTeleport;
     private  boolean isDoor;
@@ -35,11 +35,11 @@ public class Point {
     public Point(){}
 
     public int getX() {
-        return x;
+        return (int) x;
     }
 
     public int getY() {
-        return y;
+        return (int) y;
     }
 
     public void setIsWall(boolean isWall){
@@ -101,10 +101,10 @@ public class Point {
         return "Point [x=" + x + ", y=" + y + "]";
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
-    }
+  //  @Override
+   // public int hashCode() {
+  //      return Objects.hash(x, y);
+ //   }
 
     @Override
     public boolean equals(Object obj) {

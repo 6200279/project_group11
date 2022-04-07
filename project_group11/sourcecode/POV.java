@@ -10,6 +10,7 @@ public class POV {
     private final int radius;
     private ArrayList<Point> myMap;
     private ArrayList<Point> currently_watched;
+    private ArrayList<Point> all_watched;
     private ArrayList<Point> next_currently_watched;
     private ArrayList<List<Integer>> obstacle = new ArrayList<>();
     private Point location; 
